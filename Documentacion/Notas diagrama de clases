@@ -1,6 +1,8 @@
 El fichero .uxf es el exportado de la herramienta de UML que utilizamos en clase,
 se puede importar en la misma y modificar. El PNG también está sacado de ahí. Dejo
 un par de anotaciones que podemos discutir para ver cómo implementar la app.
+No están puestos los métodos de las clases (salvo algunos de GestorGastos como
+ejemplo), pero sí una base de los que pueden ser sus atributos.
 
 1. Persona no contemplada como clase. Sería para cuenta compartida, o bien clase o
    bien (ahora mismo) atributo en forma de lista de String.
