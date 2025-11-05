@@ -1,0 +1,88 @@
+<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><element><id>UMLClass</id><coordinates><x>531</x><y>162</y><w>333</w><h>225</h></coordinates><panel_attributes>GestorGastos (Controlador, singleton)
+--
+-List&lt;Cuenta&gt; cuentas
+-List&lt;Categoria&gt; categorías
+-List &lt;Alerta&gt; alertas
+-List&lt;Notificacion&gt; notificaciones
+--
++crearCuenta()
++eliminarCuenta()
++crearCategoria()
++eliminarCategoria()
++crearAlerta()
++eliminarAlerta()
++getGastos()
++getGastosPorCuenta()
++getGastosFiltrados(filtro: Filtro)
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>333</x><y>252</y><w>117</w><h>54</h></coordinates><panel_attributes>/Cuenta/
+--
+-String nombre
+-List&lt;Gasto&gt; gastos</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>99</x><y>243</y><w>117</w><h>45</h></coordinates><panel_attributes>CuentaPersonal
+--
+-String propietario</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>72</x><y>324</y><w>180</w><h>54</h></coordinates><panel_attributes>CuentaCompartida
+--
+-List&lt;String&gt; personas
+-EstrategiaDistribucion estrategia</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>333</x><y>459</y><w>126</w><h>99</h></coordinates><panel_attributes>Gasto
+-
+-String nombre
+-double cantidad
+-LocalDate fecha
+-String descripcion
+-Categoria categoria</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>81</x><y>486</y><w>144</w><h>36</h></coordinates><panel_attributes>&lt;&lt;EstrategiaDistribucion&gt;&gt;
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>594</y><w>144</w><h>45</h></coordinates><panel_attributes>DistribucionEquitativa
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>171</x><y>594</y><w>189</w><h>45</h></coordinates><panel_attributes>DistribucionPersonalizada
+--
+-Map&lt;String, Double&gt; porcentajes</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>441</x><y>261</y><w>108</w><h>45</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1
+tiene</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>243</x><y>270</y><w>108</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>207</x><y>261</y><w>144</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>144</x><y>369</y><w>45</w><h>135</h></coordinates><panel_attributes>lt=-&gt;
+m1=0..n
+m2=1
+usa </panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>63</x><y>513</y><w>108</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>100;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>153</x><y>513</y><w>108</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;100;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>621</x><y>459</y><w>144</w><h>54</h></coordinates><panel_attributes>Categoria
+--
+-String nombre
+-boolean predefinida</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>387</x><y>297</y><w>72</w><h>180</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n
+contiene </panel_attributes><additional_attributes>10;10;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>468</y><w>189</w><h>45</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..n
+tiene</panel_attributes><additional_attributes>190;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>684</x><y>378</y><w>72</w><h>99</h></coordinates><panel_attributes>lt=-&gt;
+m1=1
+m2=1..n
+gestiona</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1017</x><y>225</y><w>144</w><h>90</h></coordinates><panel_attributes>Alerta
+--
+-String nombre
+-double limite
+-PeriodoAlerta periodo
+-Categoria categoria
+-boolean activa</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1017</x><y>441</y><w>90</w><h>99</h></coordinates><panel_attributes>Notificacion
+--
+-String id
+-String mensaje
+-LocalDateTime fechaHora
+-Alerta alertaOrigen
+-boolean leida</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>855</x><y>261</y><w>180</w><h>45</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..1
+gestiona</panel_attributes><additional_attributes>10;20;180;20</additional_attributes></element><element><id>Relation</id><coordinates><x>756</x><y>306</y><w>279</w><h>171</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..n
+
+
+tiene</panel_attributes><additional_attributes>10;170;290;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1053</x><y>306</y><w>63</w><h>153</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=1..n
+genera</panel_attributes><additional_attributes>10;150;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1152</x><y>261</y><w>117</w><h>45</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=1..n
+tiene</panel_attributes><additional_attributes>110;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1251</x><y>243</y><w>90</w><h>54</h></coordinates><panel_attributes>PeriodoAlerta
+--
+SEMANAL
+MENSUAL</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>684</x><y>90</y><w>693</w><h>396</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..n
+guarda</panel_attributes><additional_attributes>10;80;10;20;750;20;750;410;470;410</additional_attributes></element></diagram>

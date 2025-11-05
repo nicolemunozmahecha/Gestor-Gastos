@@ -1,0 +1,25 @@
+El fichero .uxf es el exportado de la herramienta de UML que utilizamos en clase,
+se puede importar en la misma y modificar. El PNG también está sacado de ahí. Dejo
+un par de anotaciones que podemos discutir para ver cómo implementar la app.
+No están puestos los métodos de las clases (salvo algunos de GestorGastos como
+ejemplo), pero sí una base de los que pueden ser sus atributos.
+
+1. Persona no contemplada como clase. Sería para cuenta compartida, o bien clase o
+   bien (ahora mismo) atributo en forma de lista de String.
+ 
+2. Alertas gestionadas desde el controlador, no desde la cuenta. A priori una alerta
+   puede estar vinculada a todos los gastos (en caso de que haya 2 cuentas). Creo que
+   es una decisión de diseño, lo que veamos. Esto también afecta a las notificaciones,
+   si quisieramos que cada notificación estuviese asociada a una cuenta entonces sería
+   distinto. (Lo dicho, yo creo que es mejor así pero lo que veamos, creo que están 
+   bien las dos opciones).
+ 
+3. No sé si una alerta se "desactiva" después de enviar una notificación (en principio
+   yo no lo haría así), por eso pongo relación 1..n, por si al seguir añadiendo gastos
+   se sigue produciendo la notificación de haber sobrepasado la alerta.
+
+4. Filtro seguramente debería ser una clase, de hecho en GestorGastos.getGastosFiltrados
+   he puesto como parámetro un objeto de ese tipo, pero no lo he diseñado porque no lo
+   tengo claro. Le preguntaré al profesor.
+   
+
