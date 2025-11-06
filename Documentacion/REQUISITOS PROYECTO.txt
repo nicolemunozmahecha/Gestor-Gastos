@@ -11,7 +11,7 @@ Para controlar mis gastos personales
 
 Criterios de adaptación:
 - Se debe solicitar una categoría(alimentación, transporte, entretenimiento
-- Se debe solicitar el importe del gasto
+- Se debe solicitar  el importe del gasto
 - Se debe solicitar la fecha del gasto
 
 ----------
@@ -46,7 +46,7 @@ Quiero crear una nueva categoría
 Para registrar unos gastos específicos
 
 Criterios de adaptación:
-- Se debe crear un gasto y elegir la opción crear categoría
+- Se debe elegir la opción crear categoría
 - Se debe introducir el nombre de la nueva categoría
 
 -------------
@@ -58,7 +58,8 @@ Para corregir errores
 
 Criterios de adaptación:
 - Se debe clicar en el gasto
-- Se elige el campo a modificar
+- Se elige la opción modificar gasto
+- Se elige que campo modificar
 - Se modifica el campo
 - Se guarda el cambio
 
@@ -71,7 +72,7 @@ Para corregir errores
 
 Criterios de adaptación:
 - Se debe clicar en el gasto
-- Se borra el gasto
+- Se clica en borrar el gasto
 
 ---------------
 CONSULTA TABLA |
@@ -109,15 +110,15 @@ Criterios de adaptación:
 - Se eligen los filtros para filtrar
 - Por campo: mes: mes válido; categoría: transporte
 
--------------------------
-ESTABLECER LÍMITE GASTOS |
--------------------------
+--------------------
+ESTABLECER ALERTAS |
+--------------------
 Como usuario
 Quiero establecer un limite de gastos
 Para no gastar de más
 
 Criterios de adaptación:
-- Opción de límites
+- Opción de añadir alerta
 - Se elige qué límite se quiere poner (semanal, mensual + categoría(opc))
 - Si es por mes, configurar para ir haciendo el calculo del mes
 - Se introduce el importe que no se quiere sobrepasar
@@ -132,7 +133,7 @@ Quiero importar un gasto
 Para registrar más gastos de forma no individual
 
 Criterios de adaptación:
-- A la hora de registrar un dato debe estar la opción importar gastos
+- A la hora de registrar un dato debe estar la opción importar gastos, junto con crear gastos
 - Se elige un fichero de texto del ordenador
 - Se lee el fichero linea por linea y se identifican los campos. Una vez identificados, por cada linea, se van introduciendo los gastos en la app.
 - Se deben aceptar distintos formatos (orden de campos?)
