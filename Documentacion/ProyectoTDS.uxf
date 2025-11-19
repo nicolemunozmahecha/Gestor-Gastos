@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><element><id>UMLClass</id><coordinates><x>531</x><y>162</y><w>333</w><h>225</h></coordinates><panel_attributes>GestorGastos (Controlador, singleton)
+<diagram program="umletino" version="15.1"><zoom_level>6</zoom_level><element><id>UMLClass</id><coordinates><x>732</x><y>372</y><w>222</w><h>150</h></coordinates><panel_attributes>GestorGastos (Controlador, singleton)
 --
 -List&lt;Cuenta&gt; cuentas
 -List&lt;Categoria&gt; categorías
@@ -12,77 +12,113 @@
 +crearAlerta()
 +eliminarAlerta()
 +getGastos()
-+getGastosPorCuenta()
-+getGastosFiltrados(filtro: Filtro)
++getGastosPorCuenta(cuenta: Cuenta): List&lt;Gasto&gt;
++getGastosFiltrados(filtro: Filtro): List&lt;Gasto&gt;
++getTotalCuenta(cuenta: Cuenta): double
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>333</x><y>252</y><w>117</w><h>54</h></coordinates><panel_attributes>/Cuenta/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>504</x><y>384</y><w>156</w><h>108</h></coordinates><panel_attributes>/Cuenta/
 --
 -String nombre
--List&lt;Gasto&gt; gastos</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>99</x><y>243</y><w>117</w><h>45</h></coordinates><panel_attributes>CuentaPersonal
+-List&lt;Gasto&gt; gastos
 --
--String propietario</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>72</x><y>324</y><w>180</w><h>54</h></coordinates><panel_attributes>CuentaCompartida
++agregarGasto(gasto: Gasto)
++eliminarGasto(gasto: Gasto)
++getNombre(): String
++getGastos(): List&lt;Gasto&gt;
++calcularTotal(): double
++calcularTotal(categoria: Categoria): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>336</x><y>384</y><w>132</w><h>30</h></coordinates><panel_attributes>CuentaPersonal
 --
--List&lt;String&gt; personas
--EstrategiaDistribucion estrategia</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>333</x><y>459</y><w>126</w><h>99</h></coordinates><panel_attributes>Gasto
--
+-String propietario</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>468</y><w>216</w><h>78</h></coordinates><panel_attributes>CuentaCompartida
+--
+-List&lt;Persona&gt; personas
+-EstrategiaDistribucion estrategia
+--
++calcularSaldos(): Map&lt;Persona, double&gt;
++getSaldo(persona: Persona): double
++getEstrategiaDistribucion(): EstrategiaDistribucion
++setEstrategiaDistribucion(estrategia: EstrategiaDistribucion)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>576</x><y>582</y><w>84</w><h>78</h></coordinates><panel_attributes>Gasto
+--
 -String nombre
 -double cantidad
 -LocalDate fecha
 -String descripcion
--Categoria categoria</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>81</x><y>486</y><w>144</w><h>36</h></coordinates><panel_attributes>&lt;&lt;EstrategiaDistribucion&gt;&gt;
+-Categoria categoria
+-Persona pagador</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>294</x><y>612</y><w>96</w><h>36</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+EstrategiaDistribucion
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>594</y><w>144</w><h>45</h></coordinates><panel_attributes>DistribucionEquitativa
++calcularPorcentaje(persona: Persona): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>222</x><y>696</y><w>96</w><h>30</h></coordinates><panel_attributes>DistribucionEquitativa
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>171</x><y>594</y><w>189</w><h>45</h></coordinates><panel_attributes>DistribucionPersonalizada
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>366</x><y>696</y><w>126</w><h>36</h></coordinates><panel_attributes>DistribucionPersonalizada
 --
--Map&lt;String, Double&gt; porcentajes</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>441</x><y>261</y><w>108</w><h>45</h></coordinates><panel_attributes>lt=-
+-Map&lt;Persona, Double&gt; porcentajes</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>654</x><y>438</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=-
 m1=1..n
 m2=1
-tiene</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>243</x><y>270</y><w>108</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>207</x><y>261</y><w>144</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>144</x><y>369</y><w>45</w><h>135</h></coordinates><panel_attributes>lt=-&gt;
+tiene</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>Relation</id><coordinates><x>462</x><y>444</y><w>54</w><h>54</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>70;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>462</x><y>396</y><w>54</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>70;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>336</x><y>540</y><w>30</w><h>84</h></coordinates><panel_attributes>lt=-&gt;
 m1=0..n
 m2=1
-usa </panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>63</x><y>513</y><w>108</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>100;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>153</x><y>513</y><w>108</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;100;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>621</x><y>459</y><w>144</w><h>54</h></coordinates><panel_attributes>Categoria
+usa </panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>264</x><y>642</y><w>78</w><h>66</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>110;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>342</x><y>642</y><w>84</w><h>66</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;120;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>792</x><y>582</y><w>96</w><h>36</h></coordinates><panel_attributes>Categoria
 --
 -String nombre
--boolean predefinida</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>387</x><y>297</y><w>72</w><h>180</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+-boolean predefinida</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>612</x><y>486</y><w>48</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
 m2=0..n
-contiene </panel_attributes><additional_attributes>10;10;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>468</y><w>189</w><h>45</h></coordinates><panel_attributes>lt=&lt;-
+contiene </panel_attributes><additional_attributes>10;10;10;160</additional_attributes></element><element><id>Relation</id><coordinates><x>654</x><y>588</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=0..n
-tiene</panel_attributes><additional_attributes>190;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>684</x><y>378</y><w>72</w><h>99</h></coordinates><panel_attributes>lt=-&gt;
+tiene</panel_attributes><additional_attributes>230;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>834</x><y>516</y><w>48</w><h>78</h></coordinates><panel_attributes>lt=-&gt;
 m1=1
 m2=1..n
-gestiona</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1017</x><y>225</y><w>144</w><h>90</h></coordinates><panel_attributes>Alerta
+gestiona</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1056</x><y>414</y><w>96</w><h>60</h></coordinates><panel_attributes>Alerta
 --
 -String nombre
 -double limite
 -PeriodoAlerta periodo
 -Categoria categoria
--boolean activa</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1017</x><y>441</y><w>90</w><h>99</h></coordinates><panel_attributes>Notificacion
+-boolean activa</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1056</x><y>558</y><w>96</w><h>66</h></coordinates><panel_attributes>Notificacion
 --
 -String id
 -String mensaje
 -LocalDateTime fechaHora
 -Alerta alertaOrigen
--boolean leida</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>855</x><y>261</y><w>180</w><h>45</h></coordinates><panel_attributes>lt=-
+-boolean leida</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>948</x><y>438</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-
 m1=1
 m2=0..1
-gestiona</panel_attributes><additional_attributes>10;20;180;20</additional_attributes></element><element><id>Relation</id><coordinates><x>756</x><y>306</y><w>279</w><h>171</h></coordinates><panel_attributes>lt=&lt;-
+gestiona</panel_attributes><additional_attributes>10;20;180;20</additional_attributes></element><element><id>Relation</id><coordinates><x>882</x><y>468</y><w>186</w><h>126</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=0..n
 
 
-tiene</panel_attributes><additional_attributes>10;170;290;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1053</x><y>306</y><w>63</w><h>153</h></coordinates><panel_attributes>lt=&lt;-
+tiene</panel_attributes><additional_attributes>10;190;290;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1080</x><y>468</y><w>42</w><h>102</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1..n
-genera</panel_attributes><additional_attributes>10;150;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1152</x><y>261</y><w>117</w><h>45</h></coordinates><panel_attributes>lt=&lt;-
+genera</panel_attributes><additional_attributes>10;150;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1146</x><y>438</y><w>78</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1..n
-tiene</panel_attributes><additional_attributes>110;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1251</x><y>243</y><w>90</w><h>54</h></coordinates><panel_attributes>PeriodoAlerta
+tiene</panel_attributes><additional_attributes>110;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1212</x><y>426</y><w>60</w><h>48</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+PeriodoAlerta
 --
 SEMANAL
-MENSUAL</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>684</x><y>90</y><w>693</w><h>396</h></coordinates><panel_attributes>lt=&lt;-
+MENSUAL</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>834</x><y>324</y><w>462</w><h>264</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=0..n
-guarda</panel_attributes><additional_attributes>10;80;10;20;750;20;750;410;470;410</additional_attributes></element></diagram>
+guarda</panel_attributes><additional_attributes>10;80;10;20;750;20;750;410;530;410</additional_attributes></element><element><id>UMLClass</id><coordinates><x>438</x><y>600</y><w>84</w><h>36</h></coordinates><panel_attributes>Persona
+--
+-String nombre
+-double saldo</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>396</x><y>540</y><w>114</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=2..n
+compuesta por</panel_attributes><additional_attributes>10;10;10;60;150;60;150;100</additional_attributes></element><element><id>Relation</id><coordinates><x>516</x><y>600</y><w>72</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1
+m2=0..n
+paga</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>984</x><y>204</y><w>138</w><h>84</h></coordinates><panel_attributes>Filtro
+--
+-List&lt;String&gt; meses
+-LocalDate fechaInicio
+-LocalDate fechaFin
+-List&lt;Categoria&gt; categorias
+--
++aplicar(gastos: List&lt;Gasto&gt;): List&lt;Gasto&gt;
++cumpleFiltro(gasto: Gasto): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>948</x><y>234</y><w>48</w><h>156</h></coordinates><panel_attributes>lt=&lt;.
+usa</panel_attributes><additional_attributes>60;10;10;10;10;240</additional_attributes></element></diagram>
