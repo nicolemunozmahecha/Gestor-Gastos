@@ -12,19 +12,34 @@
             <Menu mnemonicParsing="false" text="Cuentas">
                <items>
                   <MenuItem mnemonicParsing="false" text="Crear Cuenta" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Cuenta" />
+                  <Menu mnemonicParsing="false" text="Eliminar Cuenta">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="cuenta 1" />
+                        <MenuItem mnemonicParsing="false" text="cuenta 2" />
+                    </items>
+                  </Menu>
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Categorias">
                <items>
                   <MenuItem mnemonicParsing="false" text="Crear Categoria" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Categoria" />
+                  <Menu mnemonicParsing="false" text="Eliminar Categoria">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="categoria 1" />
+                        <MenuItem mnemonicParsing="false" text="categoria 2" />
+                     </items>
+                  </Menu>
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Alertas">
                <items>
                   <MenuItem mnemonicParsing="false" text="Crear Alerta" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar Alerta" />
+                  <Menu mnemonicParsing="false" text="Eliminar Alerta">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="alerta 1" />
+                        <MenuItem mnemonicParsing="false" text="alerta 2" />
+                     </items>
+                  </Menu>
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Notificaciones">
