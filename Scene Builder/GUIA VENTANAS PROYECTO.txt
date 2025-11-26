@@ -1,0 +1,36 @@
+GUIA VENTANAS PROYECTO:
+
+menuVentanaPrincipal:
+Cuentas -> Crear Cuenta -> crearCuenta.fxml		HECHO
+	-> Eliminar Cuenta -> eliminarCuenta.fxml (muestra listado de cuentas, elimina una)
+Categorías -> Crear Categoria -> crearCategoria.fxml
+	   -> Eliminar categoría -> eliminarCategoria.fxml(muestra listado de categorías, elimina una)
+alertas -> Crear alerta -> crearAlerta.fxml
+	-> Eliminar alerta -> eliminarAlerta.fxml(muestra listado de alertas, elimina una)
+Notificaciones -> Historial -> historial.fxml(muestra listado de notificaciones)
+salir -> HECHO YA
+
+---------------------------------------------------------------------------------------------------------
+| IMPORTANTE: AL CREAR CUENTAS, LAS VENTANAS DE CUENTA NUEVAS SON CUENTAS COMPARTIDAS, MENOS LA PRIMERA |
+---------------------------------------------------------------------------------------------------------
+
+cuentaPrincipal: 
+crearGasto -> Crear gasto -> crearGasto.fxml
+	   -> Importar gasto -> VER COMO IMPORTAR FICHEROS, PONER NOMBRE DE FICHERO EXISTENTE?
+	   -> Eliminar gasto -> eliminarGasto.fxml(muestra listado de gastos, elimina uno)
+visualización -> Tabla -> visualizacionTabla.fxml
+	      -> Gráfica -> visualizacionGrafica.fxml
+
+cuentaSecundaria: 
+crearGasto -> Crear gasto -> crearGasto.fxml
+	   -> Importar gasto -> VER COMO IMPORTAR FICHEROS, PONER NOMBRE DE FICHERO EXISTENTE?
+	   -> Eliminar gasto -> eliminarGasto.fxml(muestra listado de gastos, elimina uno)
+visualización -> Tabla -> visualizacionTabla.fxml
+	      -> Gráfica -> visualizacionGrafica.fxml
+saldo -> Por persona -> gastoPorPersona.fxml
+distribución -> personalizar -> distribucionPersonalizada.fxml
+
+----------------------------------------------------------------------------------------------------------------
+| IMPORTANTE: AL CREAR GASTOS, ESTOS DEBEN APARECER EN LA VENTANA PRINCIPAL, ASÍ COMO LA VISUALIZACIÓN ELEGIDA |
+----------------------------------------------------------------------------------------------------------------
+
