@@ -17,15 +17,16 @@
                <content>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="419.0" prefWidth="114.0" translateX="540.0">
+                        <VBox prefHeight="419.0" prefWidth="114.0" translateX="555.0">
                            <children>
-                              <MenuButton mnemonicParsing="false" prefWidth="112.0" text="Crear Gasto" translateX="16.0">
+                              <MenuButton mnemonicParsing="false" prefWidth="112.0" text="Crear Gasto">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Gasto nuevo" />
                                   <MenuItem mnemonicParsing="false" text="Importar Gasto" />
+                                    <MenuItem mnemonicParsing="false" text="Eliminar Gasto" />
                                 </items>
                               </MenuButton>
-                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Visualización" translateX="16.0">
+                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Visualización">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Tabla" />
                                   <MenuItem mnemonicParsing="false" text="Gráfica" />
