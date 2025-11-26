@@ -32,6 +32,16 @@
                                   <MenuItem mnemonicParsing="false" text="Gráfica" />
                                 </items>
                               </MenuButton>
+                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Saldo">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Por Persona" />
+                                 </items>
+                              </MenuButton>
+                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Distribución">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Personalizar" />
+                                 </items>
+                              </MenuButton>
                            </children>
                         </VBox>
                      </children>
