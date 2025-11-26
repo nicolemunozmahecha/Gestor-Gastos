@@ -2,11 +2,20 @@ GUIA VENTANAS PROYECTO:
 
 menuVentanaPrincipal:
 Cuentas -> Crear Cuenta -> crearCuenta.fxml		HECHO
-	-> Eliminar Cuenta -> eliminarCuenta.fxml (muestra listado de cuentas, elimina una)
-Categorías -> Crear Categoria -> crearCategoria.fxml
-	   -> Eliminar categoría -> eliminarCategoria.fxml(muestra listado de categorías, elimina una)
-alertas -> Crear alerta -> crearAlerta.fxml
-	-> Eliminar alerta -> eliminarAlerta.fxml(muestra listado de alertas, elimina una)
+	-> Eliminar Cuenta -> muestra listado de cuentas, elimina una
+Categorías -> Crear Categoria -> crearCategoria.fxml 	HECHO
+---------------------------------------------------------------------------------------------------------
+| CUANDO SE CREA UNA CATEGORIA ESTA DEBE APARECER:
+|	- EN EL DESPLEGABLE DE LAS ALERTAS PARA ELEGIR CATEGORIA 
+|	- EN EL DESPLEGABLE DE ELIMINAR CATEGORIAS
+|CUANDO SE CREA UNA CUENTA ESTA DEBE APARECER:
+|	- EN EL DESPLEGABLE DE ELIMINAR CUENTAS
+|CUANDO SE CREA UNA ALERTA ESTA DEBER APARECER:
+|	- EN EL DESPLEGABLE DE ELIMINAR ALERTA
+---------------------------------------------------------------------------------------------------------
+	   -> Eliminar categoría -> muestra listado de categorías, elimina una
+alertas -> Crear alerta -> crearAlerta.fxml		HECHO
+	-> Eliminar alerta -> muestra listado de alertas, elimina una
 Notificaciones -> Historial -> historial.fxml(muestra listado de notificaciones)
 salir -> HECHO YA
 
