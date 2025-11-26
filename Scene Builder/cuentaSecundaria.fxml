@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
@@ -11,45 +10,10 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="26.0" prefWidth="694.0">
-         <children>
-            <MenuBar cache="true" nodeOrientation="LEFT_TO_RIGHT">
-              <menus>
-                  <Menu mnemonicParsing="false" text="Cuentas">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Crear Cuenta" />
-                        <MenuItem mnemonicParsing="false" text="Eliminar Cuenta" />
-                        <MenuItem mnemonicParsing="false" text="Mis cuentas" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Categorias">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Crear Categoria" />
-                        <MenuItem mnemonicParsing="false" text="Eliminar Categoria" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Alertas">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Crear Alerta" />
-                        <MenuItem mnemonicParsing="false" text="Eliminar Alerta" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Notificaciones">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Historial" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Salir">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Salir" />
-                     </items></Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </HBox>
+      <HBox prefHeight="26.0" prefWidth="694.0" />
       <TabPane prefHeight="448.0" prefWidth="667.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="nombre_cuenta">
+          <Tab>
                <content>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -72,6 +36,36 @@
                      </children>
                   </HBox>
                </content>
+               <graphic>
+                  <Label prefWidth="100.0" />
+               </graphic>
+            </Tab>
+            <Tab>
+               <content>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="419.0" prefWidth="114.0" translateX="540.0">
+                           <children>
+                              <MenuButton mnemonicParsing="false" prefWidth="112.0" text="Crear Gasto" translateX="16.0">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Gasto nuevo" />
+                                    <MenuItem mnemonicParsing="false" text="Importar Gasto" />
+                                 </items>
+                              </MenuButton>
+                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Visualización" translateX="16.0">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Tabla" />
+                                    <MenuItem mnemonicParsing="false" text="Gráfica" />
+                                 </items>
+                              </MenuButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+               <graphic>
+                  <Label prefWidth="100.0" />
+               </graphic>
             </Tab>
         </tabs>
       </TabPane>
