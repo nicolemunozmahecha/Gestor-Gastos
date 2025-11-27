@@ -51,7 +51,7 @@ cuentaPrincipal:
 **visualización -> Tabla -> aparece como tabla por defecto?**
 	      **-> Gráfica -> visualizacionGrafica.fxml**
 
-
+     
 
 cuentaSecundaria: 
 
