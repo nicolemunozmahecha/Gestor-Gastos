@@ -13,7 +13,7 @@ Gastos
 **-> Obtener Gastos/cuenta -> VER COMO HACER PUES LOS GASTOS APARECEN EN CADA VENTANA DE LA CUENTA**
 **-> Filtrar Gastos -> filtrarGastos.fxml -> se ponen los filtros y los gastos que los cumplen aparecen en la ventana**
 
-Categorías -> Crear Categoria -> crearCategoria.fxml 							HECHO
+Categorías -> Crear Categoria -> crearCategoria.fxml 									HECHO
 
 *---------------------------------------------------------------------------------------------------------*
 
@@ -32,7 +32,7 @@ Categorías -> Crear Categoria -> crearCategoria.fxml 							HECHO
 alertas -> Crear alerta -> crearAlerta.fxml										HECHO
  	-> Eliminar alerta -> muestra listado de alertas, elimina una
 
-Notificaciones -> Historial -> historial.fxml(muestra listado de notificaciones) HECHO
+Notificaciones -> Historial -> historial.fxml(muestra listado de notificaciones)					HECHO
 
 salir -> HECHO YA
 
@@ -47,20 +47,12 @@ salir -> HECHO YA
 
 
 cuentaPrincipal:
-**crearGasto -> Crear gasto -> crearGasto.fxml**	--> Falta el calendario.
-
------------------------------------------------------------------------------------------------------------
-
-| EN LA PESTAÑA crearGasto, faltaría ver cómo poner la fecha. ¿Un calendario desplegable?
-
------------------------------------------------------------------------------------------------------------
-
-
+crearGasto -> Crear gasto -> crearGasto.fxml						HECHO
 **-> Importar gasto -> VER COMO IMPORTAR FICHEROS, PONER NOMBRE DE FICHERO EXISTENTE?**
 **-> Eliminar gasto -> eliminarGasto.fxml(muestra listado de gastos, elimina uno)**
 
 **visualización -> Tabla -> aparece como tabla por defecto?**
-**-> Gráfica -> visualizacionGrafica.fxml**
+-> Gráfica -> La he metido en la propia interfaz de las cuentas, tanto la principal como las compartidas.		HECHO
 
 
 
