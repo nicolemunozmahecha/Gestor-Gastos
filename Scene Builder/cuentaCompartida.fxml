@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -7,63 +11,99 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="26.0" prefWidth="694.0" />
-      <TabPane prefHeight="448.0" prefWidth="667.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab>
+      <HBox prefHeight="58.0" prefWidth="591.0" />
+      <TabPane prefHeight="436.0" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="                       ">
                <content>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="407.0" prefWidth="590.0">
                      <children>
-                        <TableView prefHeight="419.0" prefWidth="554.0">
-                          <columns>
-                            <TableColumn prefWidth="92.5" text="Nombre" />
-                            <TableColumn prefWidth="92.5" text="Cantidad" />
-                              <TableColumn prefWidth="92.5" text="Fecha" />
-                              <TableColumn prefWidth="92.5" text="Descripción" />
-                              <TableColumn prefWidth="92.5" text="Categoria" />
-                              <TableColumn prefWidth="92.5" text="Pagador" />
-                          </columns>
-                        </TableView>
-                        <VBox prefHeight="419.0" prefWidth="114.0">
+                        <VBox layoutX="450.0" prefHeight="406.0" prefWidth="143.0">
                            <children>
-                              <MenuButton mnemonicParsing="false" prefWidth="112.0" text="Crear Gasto">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Gasto nuevo" />
-                                  <MenuItem mnemonicParsing="false" text="Importar Gasto" />
-                                    <MenuItem mnemonicParsing="false" text="Eliminar Gasto" />
-                                </items>
-                              </MenuButton>
-                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Visualización">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Tabla" />
-                                  <MenuItem mnemonicParsing="false" text="Gráfica" />
-                                </items>
-                              </MenuButton>
-                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Saldo">
+                              <MenuButton mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Crear Gasto">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Por Persona" />
+                                    <MenuItem mnemonicParsing="false" text="Gasto nuevo" />
+                                    <MenuItem mnemonicParsing="false" text="Importar gasto" />
+                                    <MenuItem mnemonicParsing="false" text="Eliminar gasto" />
                                  </items>
                               </MenuButton>
-                              <MenuButton maxWidth="112.0" mnemonicParsing="false" text="Distribución">
+                              <MenuButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Saldo">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Por persona" />
+                                 </items>
+                              </MenuButton>
+                              <MenuButton layoutX="10.0" layoutY="36.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Distribución">
                                  <items>
                                     <MenuItem mnemonicParsing="false" text="Personalizar" />
                                  </items>
                               </MenuButton>
                            </children>
                         </VBox>
+                        <TabPane prefHeight="410.0" prefWidth="449.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Tabla">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="486.0">
+                                       <children>
+                                          <HBox prefHeight="380.0" prefWidth="450.0">
+                                             <children>
+                                                <TableView prefHeight="316.0" prefWidth="450.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="75.0" text="Nombre" />
+                                                      <TableColumn prefWidth="75.0" text="Cantidad" />
+                                                      <TableColumn prefWidth="75.0" text="Fecha" />
+                                                      <TableColumn prefWidth="75.0" text="Descripción" />
+                                                      <TableColumn prefWidth="75.0" text="Categoría" />
+                                                      <TableColumn prefWidth="75.0" text="Pagador" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Gráfica de barras">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <BarChart layoutX="2.0" layoutY="10.0" prefHeight="335.0" prefWidth="447.0">
+                                             <xAxis>
+                                                <CategoryAxis side="BOTTOM" />
+                                             </xAxis>
+                                             <yAxis>
+                                                <NumberAxis side="LEFT" />
+                                             </yAxis>
+                                          </BarChart>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Gráfica circular">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <PieChart prefHeight="349.0" prefWidth="454.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
                      </children>
-                  </HBox>
+                  </AnchorPane>
                </content>
                <graphic>
-                  <Label prefWidth="100.0" />
+                  <Label />
                </graphic>
             </Tab>
-        </tabs>
+         </tabs>
       </TabPane>
    </children>
 </VBox>
