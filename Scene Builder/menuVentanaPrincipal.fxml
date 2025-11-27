@@ -18,6 +18,17 @@
                         <MenuItem mnemonicParsing="false" text="cuenta 2" />
                     </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Total Cuenta">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="cuenta 1" />
+                        <MenuItem mnemonicParsing="false" text="cuenta 2" />
+                     </items>
+                  </Menu>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Gastos">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Filtrar Gastos" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Categorias">

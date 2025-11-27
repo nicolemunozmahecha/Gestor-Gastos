@@ -5,6 +5,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
@@ -15,9 +17,19 @@
         <tabs>
           <Tab>
                <content>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="419.0" prefWidth="460.0">
                      <children>
-                        <VBox prefHeight="419.0" prefWidth="114.0" translateX="555.0">
+                        <TableView prefHeight="419.0" prefWidth="555.0">
+                          <columns>
+                            <TableColumn prefWidth="92.5" text="Nombre" />
+                            <TableColumn prefWidth="92.5" text="Cantidad" />
+                              <TableColumn prefWidth="92.5" text="Fecha" />
+                              <TableColumn prefWidth="92.5" text="Descripción" />
+                              <TableColumn prefWidth="92.5" text="Categoria" />
+                              <TableColumn prefWidth="92.5" text="Pagador" />
+                          </columns>
+                        </TableView>
+                        <VBox prefHeight="419.0" prefWidth="114.0">
                            <children>
                               <MenuButton mnemonicParsing="false" prefWidth="112.0" text="Crear Gasto">
                                 <items>
