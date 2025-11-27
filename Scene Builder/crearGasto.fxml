@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.TextField?>
@@ -13,7 +14,6 @@
       <Label layoutX="24.0" layoutY="69.0" text="Introduzca la cantidad de gasto:" />
       <TextField layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="332.0" />
       <Label layoutX="23.0" layoutY="129.0" text="Introduzca la fecha del gasto:" />
-      <Label layoutX="31.0" layoutY="155.0" text="AQUÍ UN CALENDARIO?!" />
       <Label layoutX="24.0" layoutY="193.0" text="Introduzca la descripción del gasto:" />
       <TextField layoutX="24.0" layoutY="210.0" prefHeight="70.0" prefWidth="332.0" />
       <Label layoutX="24.0" layoutY="289.0" text="Elija la categoría del gasto:" />
@@ -32,5 +32,6 @@
             <CheckMenuItem mnemonicParsing="false" text="Persona 3" />
          </items>
       </MenuButton>
+      <DatePicker layoutX="21.0" layoutY="154.0" />
    </children>
 </Pane>
