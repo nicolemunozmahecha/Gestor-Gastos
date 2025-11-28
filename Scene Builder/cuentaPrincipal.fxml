@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="58.0" prefWidth="591.0" />
@@ -31,8 +30,12 @@
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Gasto nuevo" />
                                   <MenuItem mnemonicParsing="false" text="Importar gasto" />
-                                    <MenuItem mnemonicParsing="false" text="Eliminar gasto" />
                                 </items>
+                              </MenuButton>
+                              <MenuButton mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Eliminar Gasto">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Gasto 1" />
+                                 </items>
                               </MenuButton>
                            </children>
                         </VBox>
