@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
-
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -15,8 +15,12 @@
       <Label layoutX="24.0" layoutY="69.0" text="Introduzca el límite de gasto:" />
       <TextField layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="332.0" />
       <Label layoutX="23.0" layoutY="129.0" text="Elija el periodo de la alerta:" />
-      <RadioButton layoutX="24.0" layoutY="161.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="SEMANAL" />
-      <RadioButton layoutX="241.0" layoutY="161.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="MENSUAL" />
+      <ToggleButtonGroup layoutX="26.0" layoutY="157.0" prefHeight="25.0" prefWidth="277.0" selectionType="SINGLE">
+          <toggles>
+            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="SEMANAL" />
+            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="116.0" text="MENSUAL" />
+          </toggles>
+      </ToggleButtonGroup>
       <Label layoutX="21.0" layoutY="192.0" text="Elija la categoría de la alerta:" />
       <MenuButton layoutX="21.0" layoutY="220.0" mnemonicParsing="false" text="Categorias">
          <items>
@@ -26,7 +30,11 @@
          </items>
       </MenuButton>
       <Label layoutX="22.0" layoutY="257.0" text="¿Desea activar la categoria?" />
-      <RadioButton layoutX="24.0" layoutY="288.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="SI" />
-      <RadioButton layoutX="241.0" layoutY="288.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="NO" />
+      <ToggleButtonGroup layoutX="26.0" layoutY="284.0" selectionType="SINGLE">
+          <toggles>
+            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="SI" />
+            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="NO" />
+          </toggles>
+      </ToggleButtonGroup>
    </children>
 </Pane>
