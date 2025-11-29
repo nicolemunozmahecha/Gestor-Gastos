@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.TotalCuentaController">
+   <children>
+      <HBox prefHeight="51.0" prefWidth="236.0">
+         <children>
+            <Label text="Total cuenta: " translateX="10.0" translateY="20.0" />
+            <Label translateX="100.0" translateY="20.0" />
+         </children>
+      </HBox>
+      <Button fx:id="botonOK" mnemonicParsing="false" onAction="#totalCuenta" text="OK" translateX="100.0" translateY="20.0" />
+   </children>
+</VBox>

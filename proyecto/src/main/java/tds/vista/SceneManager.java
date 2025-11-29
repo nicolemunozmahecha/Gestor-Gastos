@@ -34,14 +34,54 @@ public class SceneManager {
         stage.setTitle("Gestión de Gastos");
         stage.show();
     }
+    public void showVentanaCompartida() {
+        cambiarEscena("cuentaCompartida");
+        stage.setTitle("Gestión de Gastos");
+        stage.show();
+    }
     
     public void showCrearCuenta() throws IOException {
         cambiarEscena("crearCuenta");
         stage.setTitle("Creando cuenta");
         stage.show();
     }
-
-
+    
+    public void showTotalCuenta() throws IOException {
+        cambiarEscena("totalCuenta");
+        stage.setTitle("Total cuenta");
+        stage.show();
+    }
+    
+    public void showFiltrarGastos() throws IOException {
+        cambiarEscena("filtrarGastos");
+        stage.setTitle("Filtrando gastos");
+        stage.show();
+    }
+    
+    public void showCrearCategoria() throws IOException {
+        cambiarEscena("crearCategoria");
+        stage.setTitle("Creando categoria");
+        stage.show();
+    }
+    
+    public void showCrearAlerta() throws IOException {
+        cambiarEscena("crearAlerta");
+        stage.setTitle("Creando alerta");
+        stage.show();
+    }
+    
+    public void showMostrarHistorial() throws IOException {
+        cambiarEscena("historial");
+        stage.setTitle("Historial");
+        stage.show();
+    }
+    
+    public void showCrearGasto() throws IOException {
+        cambiarEscena("crearGasto");
+        stage.setTitle("Creando gasto");
+        stage.show();
+    }
+    
     /**
      * Muestra un diálogo modal a partir de un FXML.
      * (Por si en el futuro quieres diálogos de ayuda, etc.)

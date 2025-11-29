@@ -54,22 +54,80 @@ public class VentanaPrincipalController {
         }
     }
     @FXML private void eliminarCuenta() { System.out.println("Eliminar Cuenta"); }
-    @FXML private void mostrarMisCuentas() { System.out.println("Mis Cuentas"); }
+    @FXML 
+    private void totalCuenta() {
+    	try {
+            Configuracion.getInstancia().getSceneManager().showTotalCuenta();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    @FXML private void crearCategoria() { System.out.println("Crear Categoria"); }
+    @FXML 
+    private void filtrarGastos() { 
+    	try {
+            Configuracion.getInstancia().getSceneManager().showFiltrarGastos();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+   }
+    
+    @FXML 
+    private void crearCategoria() { 
+    	try {
+            Configuracion.getInstancia().getSceneManager().showCrearCategoria();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML private void eliminarCategoria() { System.out.println("Eliminar Categoria"); }
 
-    @FXML private void crearAlerta() { System.out.println("Crear Alerta"); }
+    
+    // VER POR QUE NO VA ESTA
+    @FXML 
+    private void crearAlerta() { 
+    	try {
+            Configuracion.getInstancia().getSceneManager().showCrearAlerta();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	//System.out.println("creando Alerta");
+    }
     @FXML private void eliminarAlerta() { System.out.println("Eliminar Alerta"); }
 
-    @FXML private void mostrarHistorial() { System.out.println("Historial Notificaciones"); }
+    @FXML 
+    private void mostrarHistorial() {
+    	try {
+            Configuracion.getInstancia().getSceneManager().showMostrarHistorial();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    @FXML private void crearGastoNuevo() { System.out.println("Crear Gasto Nuevo"); }
+    @FXML private void crearGasto() {
+    	try {
+            Configuracion.getInstancia().getSceneManager().showCrearGasto();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML private void importarGasto() { System.out.println("Importar Gasto"); }
 
-    @FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }
-    @FXML private void mostrarGrafica() { System.out.println("Mostrar Gráfica"); }
+    //@FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }
+    //@FXML private void mostrarGrafica() { System.out.println("Mostrar Gráfica"); }
 
+    // ESTO ES DE LAS CUENTAS COMPARTIDAS, NO SE SI PONERLO AQUI O EN UN CONTROLADOR PARA LAS CUENTAS COMPARTIDAS
+    @FXML private void saldoPorPersona() {
+    	System.out.println("Saldo por persona");
+    }
+    
+    @FXML private void personalizarDistribución() {
+    	System.out.println("Personalizar Distribución");
+    }
+    
+    // HASTA AQUI
+    
+    
     @FXML
     private void salirAplicacion() {
         Alert a = new Alert(AlertType.CONFIRMATION, "¿Salir?");

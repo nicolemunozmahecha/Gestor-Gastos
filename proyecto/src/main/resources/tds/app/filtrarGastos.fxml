@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.7189171122994651" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.FiltrarGastosController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="574.0" prefWidth="427.0">
+         <children>
+            <TableView layoutY="-1.0" prefHeight="642.0" prefWidth="454.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Nombre" />
+                <TableColumn prefWidth="75.0" text="Cantidad" />
+                  <TableColumn prefWidth="75.0" text="Fecha" />
+                  <TableColumn prefWidth="75.0" text="Descripción" />
+                  <TableColumn prefWidth="75.0" text="Categoría" />
+                  <TableColumn prefWidth="75.0" text="Pagador" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="618.0" prefWidth="176.0">
+         <children>
+            <VBox prefHeight="568.0" prefWidth="176.0">
+               <children>
+                  <TitledPane animated="false" prefHeight="142.0" prefWidth="166.0" text="Meses">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <FlowPane layoutX="1.0" layoutY="4.0" orientation="VERTICAL" prefHeight="114.0" prefWidth="176.0">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" text="Enero" />
+                                    <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Febrero" />
+                                    <RadioButton layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Marzo" />
+                                    <RadioButton layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="Abril" />
+                                    <RadioButton layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="Mayo" />
+                                    <RadioButton layoutX="56.0" layoutY="28.0" mnemonicParsing="false" text="Junio" />
+                                    <RadioButton layoutX="103.0" layoutY="28.0" mnemonicParsing="false" text="Julio" />
+                                    <RadioButton layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="Agosto" />
+                                    <RadioButton layoutX="56.0" layoutY="45.0" mnemonicParsing="false" text="Septiembre" />
+                                    <RadioButton layoutX="56.0" layoutY="45.0" mnemonicParsing="false" text="Octubre" />
+                                    <RadioButton layoutX="92.0" layoutY="63.0" mnemonicParsing="false" text="Noviembre" />
+                                    <RadioButton layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="Diciembre" />
+                                 </children>
+                              </FlowPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" prefHeight="142.0" prefWidth="166.0" text="Intervalo de fechas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="7.0" layoutY="6.0" text="Introduzca la fecha desde:">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker layoutX="5.0" layoutY="26.0" prefHeight="26.0" prefWidth="163.0" />
+                              <Label layoutX="7.0" layoutY="61.0" text="Introduzca la fecha hasta:">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker layoutX="5.0" layoutY="76.0" prefHeight="26.0" prefWidth="163.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="152.0" prefHeight="142.0" prefWidth="166.0" text="Categorías">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView layoutX="-2.0" layoutY="-2.0" prefHeight="117.0" prefWidth="176.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ListView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <FlowPane prefHeight="137.0" prefWidth="176.0">
+                     <children>
+                        <Label text="Filtros activos:" />
+                     </children>
+                  </FlowPane>
+               </children>
+            </VBox>
+            <Button layoutY="568.0" mnemonicParsing="false" text="Aplicar filtros" />
+            <Button layoutX="114.0" layoutY="568.0" mnemonicParsing="false" text="Limpiar" />
+            <Button fx:id="filtrosAplicados" layoutX="67.0" layoutY="609.0" mnemonicParsing="false" onAction="#filtrarGastos" text="Salir" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

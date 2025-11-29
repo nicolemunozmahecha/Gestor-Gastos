@@ -98,6 +98,7 @@ public class GestorGastos {
     // ========== GESTIÓN DE CUENTAS ==========
 
     // NO SE PUEDEN CREAR CUENTAS PERSONALES, SOLO HAY UNA.
+    /*
     public CuentaPersonal crearCuentaPersonal(String nombre, String propietario) {
         CuentaPersonalImpl cuenta = new CuentaPersonalImpl(nombre, propietario);
         try {
@@ -107,7 +108,7 @@ public class GestorGastos {
             System.err.println("Error al crear cuenta personal: " + e.getMessage());
         }
         return cuenta;
-    }
+    }*/
     
     
     public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas) {
@@ -120,7 +121,8 @@ public class GestorGastos {
         }
         return cuenta;
     }
-
+    
+    /* SE CREA DISTRBICUION EQUITATIVA POR DEFECTO Y LUEGO SE PUEDE MODIFICAR
     public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas, EstrategiaDistribucion estrategia) {
         CuentaCompartidaImpl cuenta = new CuentaCompartidaImpl(nombre, personas, estrategia);
         try {
@@ -130,7 +132,7 @@ public class GestorGastos {
             System.err.println("Error al crear cuenta compartida: " + e.getMessage());
         }
         return cuenta;
-    }
+    }*/
 
     public boolean eliminarCuenta(Cuenta cuenta) {
         try {
@@ -145,6 +147,11 @@ public class GestorGastos {
     public Cuenta buscarCuenta(String nombre) {
         return cuentas.stream().filter(c -> c.getNombre().equals(nombre)).findFirst().orElse(null);
     }
+    
+    /*
+    public double totalCuenta(Cuenta cuenta) {
+    	
+    }*/
     
     // ========== GESTIÓN DE CATEGORÍAS ==========
     

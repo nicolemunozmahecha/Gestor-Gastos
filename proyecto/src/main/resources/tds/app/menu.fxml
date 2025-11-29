@@ -5,101 +5,75 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="tds.vista.VentanaPrincipalController"
-      maxHeight="50.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0"
-      prefHeight="20.0" prefWidth="600.0">
-
+<VBox maxHeight="50.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0" prefHeight="20.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
    <children>
-      <MenuBar prefHeight="20.0">
-
+      <MenuBar cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0">
          <menus>
-
-            <!-- ========= CUENTAS ========= -->
-            <Menu text="Cuentas">
+         <!--============= CUENTAS ==================-->
+            <Menu mnemonicParsing="false" text="Cuentas">
                <items>
-
-                  <MenuItem fx:id="menuCrearCuenta"
-                            text="Crear Cuenta"
-                            onAction="#crearCuenta"/>
-
-                  <Menu text="Eliminar Cuenta">
+                  <MenuItem fx:id="menuCrearCuenta" mnemonicParsing="false" onAction="#crearCuenta" text="Crear Cuenta" />
+                  <Menu mnemonicParsing="false" text="Eliminar Cuenta">
+                    <items>
+                      <MenuItem fx:id="menuEliminarCuenta1" mnemonicParsing="false" onAction="#eliminarCuenta" text="cuenta 1" />
+                        <MenuItem fx:id="menuEliminarCuenta2" mnemonicParsing="false" onAction="#eliminarCuenta" text="cuenta 2" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Total Cuenta">
                      <items>
-                        <MenuItem fx:id="menuEliminarCuenta1"
-                                  text="cuenta 1"
-                                  onAction="#eliminarCuenta" />
-                        <MenuItem fx:id="menuEliminarCuenta2"
-                                  text="cuenta 2"
-                                  onAction="#eliminarCuenta" />
+                        <MenuItem fx:id="menuTotalCuenta1" mnemonicParsing="false" onAction="#totalCuenta" text="cuenta 1" />
+                        <MenuItem fx:id="menuTotalCuenta2" mnemonicParsing="false" onAction="#totalCuenta" text="cuenta 2" />
                      </items>
                   </Menu>
-
                </items>
             </Menu>
-
-            <!-- ========= CATEGORÍAS ========= -->
-            <Menu text="Categorias">
+            
+			<!--============= GASTOS ==================-->
+            <Menu mnemonicParsing="false" text="Gastos">
                <items>
-
-                  <MenuItem fx:id="menuCrearCategoria"
-                            text="Crear Categoria"
-                            onAction="#crearCategoria" />
-
-                  <Menu text="Eliminar Categoria">
+                  <MenuItem fx:id="menuFiltrarGastos" mnemonicParsing="false" onAction="#filtrarGastos" text="Filtrar Gastos" />
+               </items>
+            </Menu>
+            
+			<!--============= CATEGORIAS ==================-->
+            <Menu mnemonicParsing="false" text="Categorias">
+               <items>
+                  <MenuItem fx:id="menuCrearCategoria" mnemonicParsing="false" onAction="#crearCategoria" text="Crear Categoria" />
+                  <Menu mnemonicParsing="false" text="Eliminar Categoria">
                      <items>
-                        <MenuItem fx:id="menuEliminarCategoria1"
-                                  text="categoria 1"
-                                  onAction="#eliminarCategoria"/>
-                        <MenuItem fx:id="menuEliminarCategoria2"
-                                  text="categoria 2"
-                                  onAction="#eliminarCategoria"/>
+                        <MenuItem fx:id="menuEliminarCategoria1" mnemonicParsing="false" onAction="#eliminarCategoria" text="categoria 1" />
+                        <MenuItem fx:id="menuEliminarCategoria2" mnemonicParsing="false" onAction="#eliminarCategoria" text="categoria 2" />
                      </items>
                   </Menu>
-
                </items>
             </Menu>
-
-            <!-- ========= ALERTAS ========= -->
-            <Menu text="Alertas">
+            
+			<!--============= ALERTAS ==================-->
+            <Menu mnemonicParsing="false" text="Alertas">
                <items>
-
-                  <MenuItem fx:id="menuCrearAlerta"
-                            text="Crear Alerta"
-                            onAction="#crearAlerta"/>
-
-                  <Menu text="Eliminar Alerta">
+                  <MenuItem fx:id="menuCrearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" />
+                  <Menu mnemonicParsing="false" text="Eliminar Alerta">
                      <items>
-                        <MenuItem fx:id="menuEliminarAlerta1"
-                                  text="alerta 1"
-                                  onAction="#eliminarAlerta"/>
-                        <MenuItem fx:id="menuEliminarAlerta2"
-                                  text="alerta 2"
-                                  onAction="#eliminarAlerta"/>
+                        <MenuItem fx:id="menuEliminarAlerta1" mnemonicParsing="false" onAction="#eliminarAlerta" text="alerta 1" />
+                        <MenuItem fx:id="menuEliminarAlerta2" mnemonicParsing="false" onAction="#eliminarAlerta" text="alerta 2" />
                      </items>
                   </Menu>
-
                </items>
             </Menu>
-
-            <!-- ========= NOTIFICACIONES ========= -->
-            <Menu text="Notificaciones">
+            
+			<!--============= NOTIFICACIONES ==================-->
+            <Menu mnemonicParsing="false" text="Notificaciones">
                <items>
-                  <MenuItem fx:id="menuHistorialNotificaciones"
-                            text="Historial"
-                            onAction="#mostrarHistorial"/>
+                  <MenuItem fx:id="menuHistorialNotificaciones" mnemonicParsing="false" onAction="#mostrarHistorial" text="Historial" />
                </items>
             </Menu>
 
-            <!-- ========= SALIR ========= -->
-            <Menu text="Salir">
+			<!--============= SALIR ==================-->
+            <Menu mnemonicParsing="false" text="Salir">
                <items>
-                  <MenuItem fx:id="menuSalir"
-                            text="Salir"
-                            onAction="#salirAplicacion"/>
+                  <MenuItem fx:id="menuSalir" mnemonicParsing="false" onAction="#salirAplicacion" text="Salir" />
                </items>
             </Menu>
-
          </menus>
       </MenuBar>
    </children>
