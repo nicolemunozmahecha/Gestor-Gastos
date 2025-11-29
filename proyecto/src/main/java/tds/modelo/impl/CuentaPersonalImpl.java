@@ -1,11 +1,19 @@
 package tds.modelo.impl;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
 
 public class CuentaPersonalImpl extends CuentaImpl implements CuentaPersonal {
 	
-    private String propietario;
+	@JsonProperty("propietario")
+	private String propietario;
+
+	public CuentaPersonalImpl() {
+	    super();
+	    this.propietario = "";
+	}
     
     public CuentaPersonalImpl(String nombre, String propietario) {
         super(nombre);

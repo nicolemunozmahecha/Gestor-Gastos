@@ -22,7 +22,7 @@ import tds.modelo.impl.DatosGastos;
 public class CuentaRepositoryJSONImpl implements CuentaRepository {
     
     private List<CuentaImpl> cuentas = null;
-    private String rutaFichero;
+    private String rutaFichero = "/data/gastos.json";
     
     private void cargaCuentas() throws ErrorPersistenciaException {
         try {
@@ -66,6 +66,10 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
     public void addCuenta(CuentaImpl cuenta) throws ElementoExistenteException, ErrorPersistenciaException {
         if (cuentas == null) {
             getCuentas();
+        }
+        
+        if (rutaFichero == null) {
+            rutaFichero = Configuracion.getInstancia().getRutaDatos();
         }
         
         // Si la cuenta ya existe no puedo insertarla
@@ -136,6 +140,11 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
 
     private void guardarCuentas(List<CuentaImpl> cuentas, String rutaFichero) throws Exception {
         // Se carga mediante URL para prevenir problemas con rutas con espacios en blanco o caracteres no estandar
+    	
+    	if (rutaFichero == null) {
+            rutaFichero = Configuracion.getInstancia().getRutaDatos();
+        }
+    	
         URL url = getClass().getResource(rutaFichero);
         
         // Cargo el fichero a partir de la URL local

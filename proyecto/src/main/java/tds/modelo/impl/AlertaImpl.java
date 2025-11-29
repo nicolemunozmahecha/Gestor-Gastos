@@ -4,13 +4,29 @@ import tds.modelo.Alerta;
 import tds.modelo.Categoria;
 import tds.modelo.PeriodoAlerta;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AlertaImpl implements Alerta {
 	
+    @JsonProperty("nombre")
     private String nombre;
+    
+    @JsonProperty("limite")
     private double limite;
+    
+    @JsonProperty("periodo")
     private PeriodoAlerta periodo;
-    private Categoria categoria; // null si la alerta es general (no específica de categoría)    
+    
+    @JsonProperty("categoria")
+    private CategoriaImpl categoria; // null si la alerta es general (no específica de categoría)    
+
+    // Constructor sin argumentos para Jackson
+    public AlertaImpl() {
+        this.nombre = "";
+        this.limite = 0.0;
+        this.periodo = PeriodoAlerta.MENSUAL;
+        this.categoria = null;
+    }
 
     public AlertaImpl(String nombre, double limite, PeriodoAlerta periodo) {
         this(nombre, limite, periodo, null);
@@ -20,7 +36,9 @@ public class AlertaImpl implements Alerta {
         this.nombre = nombre;
         this.limite = limite;
         this.periodo = periodo;
-        this.categoria = categoria;
+        // Convertir a implementación concreta
+        this.categoria = categoria instanceof CategoriaImpl ? (CategoriaImpl) categoria :
+                        (categoria != null ? new CategoriaImpl(categoria.getNombre(), categoria.isPredefinida()) : null);
     }
     
     @Override
@@ -69,9 +87,10 @@ public class AlertaImpl implements Alerta {
         return categoria;
     }
     
+    //TODO casting
     @Override
     public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+        this.categoria = (CategoriaImpl) categoria;
     }
     
     @Override

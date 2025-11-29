@@ -34,7 +34,7 @@ public class ConfiguracionImpl extends Configuracion {
 
     @Override
     public String getRutaDatos() {
-        return "/data/gastos.json";
+        return "/classes/data/gastos.json";
     }
     
     @Override
