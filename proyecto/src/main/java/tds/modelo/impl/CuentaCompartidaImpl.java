@@ -9,9 +9,14 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida {
+    @JsonProperty("personas")
     private List<PersonaImpl> personas;
+    
+    @JsonIgnore  // Ignorar la estrategia en la serialización porque es una interfaz
     private EstrategiaDistribucion estrategia;
     
     // Constructor sin argumentos para Jackson
@@ -77,6 +82,11 @@ public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida
         Persona pagador = gasto.getPagador();
         double cantidad = gasto.getCantidad();
         
+        // Asegurar que la estrategia no sea null
+        if (estrategia == null) {
+            estrategia = new DistribucionEquitativaImpl(new ArrayList<>(personas));
+        }
+        
         for (Persona persona : personas) {
             double porcentaje = estrategia.calcularPorcentaje(persona);
             double deuda = cantidad * porcentaje;
@@ -140,6 +150,10 @@ public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida
     
     @Override
     public EstrategiaDistribucion getEstrategiaDistribucion() {
+        // Si la estrategia es null (por deserialización), crear una por defecto
+        if (estrategia == null && personas != null && !personas.isEmpty()) {
+            estrategia = new DistribucionEquitativaImpl(new ArrayList<>(personas));
+        }
         return estrategia;
     }
     

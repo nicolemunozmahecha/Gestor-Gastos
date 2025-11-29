@@ -2,10 +2,20 @@ package tds.modelo.impl;
 
 import tds.modelo.Persona;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PersonaImpl implements Persona {
+    @JsonProperty("nombre")
     private String nombre;
+    
+    @JsonProperty("saldo")
     private double saldo;
+    
+    // Constructor sin argumentos para Jackson
+    public PersonaImpl() {
+        this.nombre = "";
+        this.saldo = 0.0;
+    }
     
     public PersonaImpl(String nombre) {
         this.nombre = nombre;

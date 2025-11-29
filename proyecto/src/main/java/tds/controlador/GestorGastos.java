@@ -112,12 +112,21 @@ public class GestorGastos {
     
     
     public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas) {
+        System.out.println("DEBUG: Creando cuenta compartida: " + nombre);
+        System.out.println("DEBUG: Número de personas: " + personas.size());
+        
         CuentaCompartidaImpl cuenta = new CuentaCompartidaImpl(nombre, personas);
+        System.out.println("DEBUG: Cuenta creada en memoria");
+        
         try {
+            System.out.println("DEBUG: Intentando añadir al repositorio...");
             repositorioCuentas.addCuenta(cuenta);
+            System.out.println("DEBUG: Cuenta añadida al repositorio");
             cuentas.add(cuenta);
+            System.out.println("DEBUG: Cuenta añadida a la lista local");
         } catch (Exception e) {
             System.err.println("Error al crear cuenta compartida: " + e.getMessage());
+            e.printStackTrace();  // Imprimir el stack trace completo
         }
         return cuenta;
     }
@@ -449,4 +458,4 @@ public class GestorGastos {
         return crearCuentaCompartida(nombreCuenta, personas);
     }
 
-}
+}	

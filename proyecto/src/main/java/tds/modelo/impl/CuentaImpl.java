@@ -6,19 +6,30 @@ import tds.modelo.Gasto;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public abstract class CuentaImpl implements Cuenta {
+    @JsonProperty("nombre")
     protected String nombre;
-    protected List<Gasto> gastos;
+    
+    @JsonProperty("gastos")
+    protected List<GastoImpl> gastos;
+    
+    // Constructor sin argumentos para Jackson
+    public CuentaImpl() {
+        this.nombre = "";
+        this.gastos = new ArrayList<>();
+    }
     
     public CuentaImpl(String nombre) {
         this.nombre = nombre;
         this.gastos = new ArrayList<>();
     }
     
+    //TODO lo mismo, ver si en vez del casting es mejor que llegue un GastoImpl
     @Override
     public void agregarGasto(Gasto gasto) {
-        gastos.add(gasto);
+        gastos.add((GastoImpl) gasto);
     }
     
     @Override

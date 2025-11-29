@@ -5,23 +5,48 @@ import tds.modelo.Categoria;
 import tds.modelo.Persona;
 import java.time.LocalDate;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GastoImpl implements Gasto {
 	
+    @JsonProperty("nombre")
     private String nombre;
+    
+    @JsonProperty("cantidad")
     private double cantidad;
+    
+    @JsonProperty("fecha")
     private LocalDate fecha;
+    
+    @JsonProperty("descripcion")
     private String descripcion;
-    private Categoria categoria;
-    private Persona pagador;
+    
+    @JsonProperty("categoria")
+    private CategoriaImpl categoria;  // Usar implementación concreta
+    
+    @JsonProperty("pagador")
+    private PersonaImpl pagador;  // Usar implementación concreta
+
+    // Constructor sin argumentos para Jackson
+    public GastoImpl() {
+        this.nombre = "";
+        this.cantidad = 0.0;
+        this.fecha = LocalDate.now();
+        this.descripcion = "";
+        this.categoria = null;
+        this.pagador = null;
+    }
 
     public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.descripcion = descripcion != null ? descripcion : "";
-        this.categoria = categoria;
-        this.pagador = pagador;
+        // Convertir a implementaciones concretas
+        this.categoria = categoria instanceof CategoriaImpl ? (CategoriaImpl) categoria : 
+                        (categoria != null ? new CategoriaImpl(categoria.getNombre(), categoria.isPredefinida()) : null);
+        this.pagador = pagador instanceof PersonaImpl ? (PersonaImpl) pagador :
+                      (pagador != null ? new PersonaImpl(pagador.getNombre(), pagador.getSaldo()) : null);
     }
 
     public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
@@ -83,7 +108,7 @@ public class GastoImpl implements Gasto {
         if (categoria == null) {
             throw new IllegalArgumentException("La categoría no puede ser nula");
         }
-        this.categoria = categoria;
+        this.categoria = (CategoriaImpl) categoria;
     }
     
     @Override
@@ -91,9 +116,10 @@ public class GastoImpl implements Gasto {
         return pagador;
     }
     
+    //TODO chequear si en lugar del casting es mejor cambiar el tipo del parametro
     @Override
     public void setPagador(Persona pagador) {
-        this.pagador = pagador;
+        this.pagador = (PersonaImpl) pagador;
     }
     
     @Override
