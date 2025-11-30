@@ -5,29 +5,91 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearAlertaController">
-   <children>
-      <Label layoutX="24.0" layoutY="16.0" text="Introduzca el nombre de la nueva alerta:" />
-      <TextField layoutX="24.0" layoutY="44.0" prefHeight="25.0" prefWidth="332.0" />
-      <Label layoutX="24.0" layoutY="69.0" text="Introduzca el límite de gasto:" />
-      <TextField layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="332.0" />
-      <Label layoutX="23.0" layoutY="129.0" text="Elija el periodo de la alerta:" />
-      <RadioButton layoutX="206.0" layoutY="161.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="SEMANAL" />
-      <RadioButton layoutX="24.0" layoutY="161.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="116.0" text="MENSUAL" />
-      <Label layoutX="21.0" layoutY="192.0" text="Elija la categoría de la alerta:" />
-      <MenuButton layoutX="21.0" layoutY="220.0" mnemonicParsing="false" text="Categorias">
-         <items>
-            <CheckMenuItem mnemonicParsing="false" text="categoria 1" />
-            <CheckMenuItem mnemonicParsing="false" text="categoria 2" />
-            <CheckMenuItem mnemonicParsing="false" text="categoria 3" />
-         </items>
-      </MenuButton>
-      <Label layoutX="22.0" layoutY="257.0" text="¿Desea activar la categoria?" />
-      <RadioButton layoutX="24.0" layoutY="274.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="SI" />
-      <RadioButton layoutX="206.0" layoutY="274.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="96.0" text="NO" />
-      <Button fx:id="crearAlerta" layoutX="151.0" layoutY="302.0" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" />
-   </children>
-</Pane>
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="tds.vista.CrearAlertaController">
+   <content>
+      <VBox alignment="TOP_CENTER" spacing="15">
+         <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+         </padding>
+         <children>
+            <VBox spacing="5" maxWidth="500">
+               <children>
+                  <Label text="Introduzca el nombre de la nueva alerta:" />
+                  <TextField maxWidth="Infinity" />
+               </children>
+            </VBox>
+            
+            <VBox spacing="5" maxWidth="500">
+               <children>
+                  <Label text="Introduzca el límite de gasto:" />
+                  <TextField maxWidth="Infinity" />
+               </children>
+            </VBox>
+            
+            <VBox spacing="10" maxWidth="500">
+               <children>
+                  <Label text="Elija el periodo de la alerta:" />
+                  <HBox spacing="30" alignment="CENTER_LEFT">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="MENSUAL">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="periodoGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="SEMANAL" toggleGroup="$periodoGroup" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            
+            <VBox spacing="5" maxWidth="500">
+               <children>
+                  <Label text="Elija la categoría de la alerta:" />
+                  <MenuButton mnemonicParsing="false" text="Categorias" maxWidth="200">
+                     <items>
+                        <CheckMenuItem mnemonicParsing="false" text="categoria 1" />
+                        <CheckMenuItem mnemonicParsing="false" text="categoria 2" />
+                        <CheckMenuItem mnemonicParsing="false" text="categoria 3" />
+                     </items>
+                  </MenuButton>
+               </children>
+            </VBox>
+            
+            <VBox spacing="10" maxWidth="500">
+               <children>
+                  <Label text="¿Desea activar la categoria?" />
+                  <HBox spacing="30" alignment="CENTER_LEFT">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="SI">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="activarGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="NO" toggleGroup="$activarGroup" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            
+            <HBox alignment="CENTER">
+               <padding>
+                  <Insets top="10" />
+               </padding>
+               <children>
+                  <Button fx:id="crearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

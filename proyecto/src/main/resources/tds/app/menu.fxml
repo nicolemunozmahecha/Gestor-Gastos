@@ -4,10 +4,11 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Priority?>
 
-<VBox maxHeight="50.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="50.0" prefHeight="20.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
    <children>
-      <MenuBar cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0">
+      <MenuBar VBox.vgrow="NEVER" useSystemMenuBar="false">
          <menus>
          <!--============= CUENTAS ==================-->
             <Menu mnemonicParsing="false" text="Cuentas">

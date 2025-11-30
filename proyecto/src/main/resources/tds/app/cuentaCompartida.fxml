@@ -11,76 +11,62 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.geometry.Insets?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
-		prefHeight="436.0" prefWidth="591.0" 
-		xmlns="http://javafx.com/javafx/25" 
+<VBox xmlns="http://javafx.com/javafx/21" 
 		xmlns:fx="http://javafx.com/fxml/1" 
 		fx:controller="tds.vista.VentanaPrincipalController">
    <children>
     <!-- INCLUIMOS EL MENÚ NUEVO -->
       <fx:include fx:id="menu" source="menu.fxml" />
       
-      <HBox prefHeight="4.0" prefWidth="591.0" />
-      <TabPane prefHeight="436.0" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
+      <HBox VBox.vgrow="NEVER">
+         <padding>
+            <Insets top="5" bottom="5" left="5" right="5"/>
+         </padding>
+      </HBox>
+      
+      <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab text="                       ">
+            <Tab text="Cuenta Compartida">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="407.0" prefWidth="590.0">
+                  <HBox spacing="10">
+                     <padding>
+                        <Insets top="10" bottom="10" left="10" right="10"/>
+                     </padding>
                      <children>
-                        <VBox layoutX="450.0" prefHeight="406.0" prefWidth="143.0">
-                           <children>
-                              <MenuButton mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Crear Gasto">
-                                 <items>
-                                    <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGasto" text="Gasto nuevo" />
-                                    <MenuItem mnemonicParsing="false" text="Importar gasto" />
-                                    <MenuItem mnemonicParsing="false" text="Eliminar gasto" />
-                                 </items>
-                              </MenuButton>
-                              <MenuButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Saldo">
-                                 <items>
-                                    <MenuItem fx:id="saldoPorPersona" mnemonicParsing="false" onAction="#saldoPorPersona" text="Por persona" />
-                                 </items>
-                              </MenuButton>
-                              <MenuButton layoutX="10.0" layoutY="36.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="Distribución">
-                                 <items>
-                                    <MenuItem fx:id="personalizacion" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Personalizar" />
-                                 </items>
-                              </MenuButton>
-                           </children>
-                        </VBox>
-                        <TabPane prefHeight="410.0" prefWidth="449.0" tabClosingPolicy="UNAVAILABLE">
+                        <!-- Panel izquierdo con TabPane anidado -->
+                        <TabPane HBox.hgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
                               <Tab text="Tabla">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="486.0">
+                                    <VBox>
                                        <children>
-                                          <HBox prefHeight="380.0" prefWidth="450.0">
-                                             <children>
-                                                <TableView prefHeight="316.0" prefWidth="450.0">
-                                                   <columns>
-                                                      <TableColumn prefWidth="75.0" text="Nombre" />
-                                                      <TableColumn prefWidth="75.0" text="Cantidad" />
-                                                      <TableColumn prefWidth="75.0" text="Fecha" />
-                                                      <TableColumn prefWidth="75.0" text="Descripción" />
-                                                      <TableColumn prefWidth="75.0" text="Categoría" />
-                                                      <TableColumn prefWidth="75.0" text="Pagador" />
-                                                   </columns>
-                                                </TableView>
-                                             </children>
-                                          </HBox>
+                                          <TableView VBox.vgrow="ALWAYS">
+                                             <columns>
+                                                <TableColumn text="Nombre" prefWidth="100.0" />
+                                                <TableColumn text="Cantidad" prefWidth="80.0" />
+                                                <TableColumn text="Fecha" prefWidth="90.0" />
+                                                <TableColumn text="Descripción" prefWidth="120.0" />
+                                                <TableColumn text="Categoría" prefWidth="90.0" />
+                                                <TableColumn text="Pagador" prefWidth="90.0" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
                                        </children>
-                                    </AnchorPane>
+                                    </VBox>
                                  </content>
                               </Tab>
                               <Tab text="Gráfica de barras">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <VBox>
                                        <children>
-                                          <BarChart layoutX="2.0" layoutY="10.0" prefHeight="335.0" prefWidth="447.0">
+                                          <BarChart VBox.vgrow="ALWAYS">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" />
                                              </xAxis>
@@ -89,22 +75,45 @@
                                              </yAxis>
                                           </BarChart>
                                        </children>
-                                    </AnchorPane>
+                                    </VBox>
                                  </content>
                               </Tab>
                               <Tab text="Gráfica circular">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <VBox>
                                        <children>
-                                          <PieChart prefHeight="349.0" prefWidth="454.0" />
+                                          <PieChart VBox.vgrow="ALWAYS" />
                                        </children>
-                                    </AnchorPane>
+                                    </VBox>
                                  </content>
                               </Tab>
                            </tabs>
                         </TabPane>
+                        
+                        <!-- Panel derecho con botones -->
+                        <VBox spacing="10" minWidth="150" maxWidth="200" HBox.hgrow="NEVER">
+                           <children>
+                              <MenuButton mnemonicParsing="false" text="Crear Gasto" maxWidth="Infinity">
+                                 <items>
+                                    <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGasto" text="Gasto nuevo" />
+                                    <MenuItem mnemonicParsing="false" text="Importar gasto" />
+                                    <MenuItem mnemonicParsing="false" text="Eliminar gasto" />
+                                 </items>
+                              </MenuButton>
+                              <MenuButton mnemonicParsing="false" text="Saldo" maxWidth="Infinity">
+                                 <items>
+                                    <MenuItem fx:id="saldoPorPersona" mnemonicParsing="false" onAction="#saldoPorPersona" text="Por persona" />
+                                 </items>
+                              </MenuButton>
+                              <MenuButton mnemonicParsing="false" text="Distribución" maxWidth="Infinity">
+                                 <items>
+                                    <MenuItem fx:id="personalizacion" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Personalizar" />
+                                 </items>
+                              </MenuButton>
+                           </children>
+                        </VBox>
                      </children>
-                  </AnchorPane>
+                  </HBox>
                </content>
                <graphic>
                   <Label />

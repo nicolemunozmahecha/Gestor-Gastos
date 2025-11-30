@@ -4,18 +4,36 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.MostrarHistorialController">
+<VBox spacing="10" xmlns="http://javafx.com/javafx/21" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="tds.vista.MostrarHistorialController">
+   <padding>
+      <Insets top="10" right="10" bottom="10" left="10" />
+   </padding>
    <children>
-      <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="568.0">
+      <TableView VBox.vgrow="ALWAYS">
          <columns>
-            <TableColumn prefWidth="75.0" text="id" />
-            <TableColumn prefWidth="183.99994659423828" text="Mensaje" />
-            <TableColumn maxWidth="115.0" minWidth="4.0" prefWidth="115.0" text="FechaHora" />
-            <TableColumn maxWidth="115.0" prefWidth="115.0" text="Alerta" />
-            <TableColumn maxWidth="114.39999389648438" prefWidth="75.0" text="Leida" />
+            <TableColumn text="id" prefWidth="50.0" />
+            <TableColumn text="Mensaje" prefWidth="200.0" />
+            <TableColumn text="FechaHora" prefWidth="120.0" />
+            <TableColumn text="Alerta" prefWidth="100.0" />
+            <TableColumn text="Leida" prefWidth="60.0" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-      <Button fx:id="mostrarHistorial" alignment="CENTER" mnemonicParsing="false" onAction="#mostrarHistorial" text="Volver" translateX="250.0" />
+      
+      <HBox alignment="CENTER">
+         <children>
+            <Button fx:id="mostrarHistorial" mnemonicParsing="false" 
+                    onAction="#mostrarHistorial" text="Volver" />
+         </children>
+      </HBox>
    </children>
 </VBox>

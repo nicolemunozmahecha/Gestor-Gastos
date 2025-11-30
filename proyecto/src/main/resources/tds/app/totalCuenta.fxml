@@ -4,15 +4,33 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="236.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.TotalCuentaController">
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="tds.vista.TotalCuentaController">
+   <padding>
+      <Insets top="30" right="30" bottom="30" left="30" />
+   </padding>
    <children>
-      <HBox prefHeight="51.0" prefWidth="236.0">
+      <HBox alignment="CENTER" spacing="10">
          <children>
-            <Label text="Total cuenta: " translateX="10.0" translateY="20.0" />
-            <Label translateX="100.0" translateY="20.0" />
+            <Label text="Total cuenta:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="0.00 €">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
-      <Button fx:id="botonOK" mnemonicParsing="false" onAction="#totalCuenta" text="OK" translateX="100.0" translateY="20.0" />
+      
+      <Button fx:id="botonOK" mnemonicParsing="false" 
+              onAction="#totalCuenta" text="OK" prefWidth="60" />
    </children>
 </VBox>
