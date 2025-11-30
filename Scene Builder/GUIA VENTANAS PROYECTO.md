@@ -92,8 +92,12 @@ cuentaSecundaria:
 * visualización													HECHO
 
 saldo -> Por persona -> gastoPorPersona.fxml										HECHO
-**distribución -> personalizar -> distribucionPersonalizada.fxml**
+**distribución -> personalizar -> distribucionCuentaCompartida.fxml**							HECHO
 
+----------------------------------------------------------------------------------------------------------------------
+| EN LA DISTRIBUCIÓN AL PROGRAMAR EN JAVE HACER QUE LA COLUMNA DE PORCENTAJES SEA MODIFICABLE POR EL USUARIO. ¡LOS
+| PORCENTAJES DEBEN SUMAR 100%!
+----------------------------------------------------------------------------------------------------------------------
 
 
 *----------------------------------------------------------------------------------------------------------------------------------------*
