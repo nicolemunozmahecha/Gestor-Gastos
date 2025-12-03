@@ -8,9 +8,8 @@ import tds.controlador.GestorGastos;
 
 public class CrearCategoriaController {
 	
-	@FXML private TextField nombreCategoria;
-	@FXML private Button botonCreando;
-	
+	@FXML private TextField campoNombreCategoria;
+
 	private GestorGastos gestor;
 
     @FXML
@@ -20,6 +19,12 @@ public class CrearCategoriaController {
     
     @FXML
     private void crearCategoria() {
+    	String nombre = campoNombreCategoria.getText().trim();
+        if (nombre.isEmpty()) {
+        	System.out.println("La categoria debe tener nombre");
+            return;
+        }
+        gestor.crearCategoria(nombre);
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
     @FXML

@@ -15,7 +15,7 @@
       <VBox alignment="CENTER" maxWidth="400" spacing="10">
          <children>
             <Label text="Introduzca el nombre de la nueva categoría:" />
-            <TextField maxWidth="350" />
+            <TextField fx:id="campoNombreCategoria" maxWidth="350" />
          </children>
       </VBox>
       
