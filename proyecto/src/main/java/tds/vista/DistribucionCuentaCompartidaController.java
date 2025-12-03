@@ -16,8 +16,5 @@ public class DistribucionCuentaCompartidaController {
     private void personalizarDistribucion() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
-    @FXML
-    private void atras() {
-    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
-    }
+   
 }
