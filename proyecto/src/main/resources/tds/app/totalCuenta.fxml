@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -12,6 +14,12 @@
       <Insets bottom="30" left="30" right="30" top="30" />
    </padding>
    <children>
+      <Label text="Selecciona una cuenta:" />
+      <MenuButton fx:id="menuCuentas" mnemonicParsing="false" text="Cuentas">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Cuenta Principal" />
+        </items>
+      </MenuButton>
       <HBox alignment="CENTER" spacing="10">
          <children>
             <Label text="Total cuenta:">
@@ -19,7 +27,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="0.00 €">
+            <Label fx:id="campoTotal" text="0.00 €">
                <font>
                   <Font size="14.0" />
                </font>

@@ -2,27 +2,60 @@ package tds.vista;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
+import tds.modelo.Cuenta;
 import javafx.scene.control.Button;
-import tds.Configuracion;
-import tds.controlador.GestorGastos;
 
 public class TotalCuentaController {
 	
 	@FXML private Label campoTotal;
-	@FXML private Button btOK;
-
+    @FXML private Button btOK;
+    @FXML private MenuButton menuCuentas;
+    
+	private Cuenta cuentaSeleccionada;
 	private GestorGastos gestor;
 
     @FXML
     public void initialize() {
         gestor = Configuracion.getInstancia().getGestorGastos();
+        cargarCuentas();
+    }
+    
+    private void cargarCuentas() {
+    	// Borramos los items para no arriesgarnos a que haya repetidos.
+    	//menuCuentas.getItems().clear();
+    	
+        for (Cuenta cuenta : gestor.getCuentas()) {
+            MenuItem item = new MenuItem(cuenta.getNombre());
+            item.setOnAction(e -> {
+                cuentaSeleccionada = cuenta;
+                mostrarTotal();
+            });
+            menuCuentas.getItems().add(item);
+        }
+    }
+    
+    // Cogemos la cuenta que se haya seleccionado en ventana principal.
+    public void setCuentaSeleccionada(Cuenta cuenta) {
+        this.cuentaSeleccionada = cuenta;
+        mostrarTotal();
+    }
+    
+    // Mostramos en la label el total.
+    private void mostrarTotal() {
+        if (cuentaSeleccionada != null) {
+            double total = gestor.getTotalCuenta(cuentaSeleccionada);
+            campoTotal.setText(String.format("%.2f €", total));
+        } else {
+            campoTotal.setText("0.00 €");
+        }
     }
     
     @FXML
     private void btOK() {
-    	
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 

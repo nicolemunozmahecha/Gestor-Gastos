@@ -4,11 +4,10 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Priority?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
+<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
    <children>
-      <MenuBar VBox.vgrow="NEVER" useSystemMenuBar="false">
+      <MenuBar useSystemMenuBar="false" VBox.vgrow="NEVER">
          <menus>
          <!--============= CUENTAS ==================-->
             <Menu mnemonicParsing="false" text="Cuentas">
@@ -20,12 +19,7 @@
                         <MenuItem fx:id="menuEliminarCuenta2" mnemonicParsing="false" onAction="#eliminarCuenta" text="cuenta 2" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Total Cuenta">
-                     <items>
-                        <MenuItem fx:id="menuTotalCuenta1" mnemonicParsing="false" onAction="#totalCuenta" text="cuenta 1" />
-                        <MenuItem fx:id="menuTotalCuenta2" mnemonicParsing="false" onAction="#totalCuenta" text="cuenta 2" />
-                     </items>
-                  </Menu>
+                  <MenuItem fx:id="menuTotalCuenta" mnemonicParsing="false" text="Total Cuenta" onAction="#totalCuenta"/>
                </items>
             </Menu>
             
