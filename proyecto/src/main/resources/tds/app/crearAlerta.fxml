@@ -52,7 +52,7 @@
             <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Elija la categoría de la alerta:" />
-                  <MenuButton fx:id="categoria" maxWidth="200" mnemonicParsing="false" text="Categorias">
+                  <MenuButton fx:id="categorias" maxWidth="200" mnemonicParsing="false" text="Categorias">
                      <items>
                         <CheckMenuItem fx:id="categoriaAlimenatacion" mnemonicParsing="false" text="Alimentacion" />
                         <CheckMenuItem fx:id="categoriaTransporte" mnemonicParsing="false" text="Transporte" />
@@ -65,9 +65,9 @@
             <VBox maxWidth="500" spacing="10">
                <children>
                   <Label text="¿Desea activar la categoria?" />
-                  <HBox fx:id="activar" alignment="CENTER_LEFT" spacing="30">
+                  <HBox alignment="CENTER_LEFT" spacing="30">
                      <children>
-                        <RadioButton mnemonicParsing="false" text="SI">
+                        <RadioButton fx:id="activar" mnemonicParsing="false" text="SI">
                            <toggleGroup>
                               <ToggleGroup fx:id="activarGroup" />
                            </toggleGroup>
