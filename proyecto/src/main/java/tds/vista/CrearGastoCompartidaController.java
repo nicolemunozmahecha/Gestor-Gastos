@@ -14,19 +14,22 @@ import javafx.scene.control.TextField;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
+import tds.modelo.Persona;
 import tds.modelo.impl.CategoriaImpl;
 
-public class CrearGastoController {
+public class CrearGastoCompartidaController {
 	
 	@FXML private TextField campoNombreGasto;
 	@FXML private TextField campoCantidad;
 	@FXML private DatePicker campoFechaGasto;
 	@FXML private TextArea campoDescripcion;
 	@FXML private MenuButton categorias;
+	@FXML private MenuButton personas;
 
 	private GestorGastos gestor;
 	private List<Categoria> categoriasDisp;
 	private double cantidadFinal;
+	private Persona p;
 
 	@FXML
     public void initialize() {
@@ -61,6 +64,32 @@ public class CrearGastoController {
         }
     }
     
+    private boolean ningunaSeleccionada() {
+        return personas.getItems().stream()
+                .map(item -> (CheckMenuItem) item)               // Convertimos a CheckMenuItem
+                .noneMatch(CheckMenuItem::isSelected);          // Ninguno está seleccionado
+    }
+	
+    /* VER PORQUE FALTAN FUNCIONES 
+    private void cargarPersonas() {
+        categoriasDisp = gestor.getP();
+        for (Categoria c : categoriasDisp) {
+            final CheckMenuItem item = new CheckMenuItem(c.getNombre());
+            item.setUserData(c);
+            categorias.getItems().add(item);
+        }
+        for (MenuItem m : categorias.getItems()) {
+            m.setOnAction(e -> {
+			                if (((CheckMenuItem) m).isSelected()) {
+			                    for (MenuItem mi : categorias.getItems()) {
+			                        if (mi != m && mi instanceof CheckMenuItem) {
+			                            ((CheckMenuItem) mi).setSelected(false);
+			                        }
+			                    }
+			                }
+			});
+        }
+    }*/
     
     @FXML
     private void crearGasto() {
@@ -90,6 +119,11 @@ public class CrearGastoController {
             return;
         }
         
+        // FALTA VER COMO HACER LO DE LAS PERSONAS
+        if(ningunaSeleccionada()) {
+        	System.out.println("El gasto debe tener un pagador");
+        	return;
+        }
         
         if(ningunoSeleccionado()) {
         	System.out.println("El gasto debe tener una categoria");
@@ -106,9 +140,9 @@ public class CrearGastoController {
             Categoria cat = new CategoriaImpl(item.getText()); 
             String descripcion = campoDescripcion.getText().trim();
         	if (descripcion.isEmpty()) {
-        		gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat);
+        		gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat, p);
         	}else {
-        		gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
+        		gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
         	}
         }
         
@@ -119,3 +153,4 @@ public class CrearGastoController {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 }
+

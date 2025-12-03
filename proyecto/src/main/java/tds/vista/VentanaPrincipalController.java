@@ -114,6 +114,7 @@ public class VentanaPrincipalController {
             e.printStackTrace();
         }
     }
+    
     @FXML private void importarGasto() { System.out.println("Importar Gasto"); }
 
     //@FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }

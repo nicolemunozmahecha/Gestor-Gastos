@@ -52,6 +52,9 @@ public class GastoImpl implements Gasto {
     public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
         this(nombre, cantidad, fecha, descripcion, categoria, null);
     }
+    public GastoImpl(String nombre, double cantidad, LocalDate fecha, Categoria categoria) {
+        this(nombre, cantidad, fecha, "", categoria, null);
+    }
     
     public GastoImpl(String nombre, double cantidad, Categoria categoria) {
         this(nombre, cantidad, LocalDate.now(), "", categoria, null);

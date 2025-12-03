@@ -116,9 +116,9 @@ public class CuentaCompartidaController {
         }
     }
 
-    @FXML private void crearGasto() {
+    @FXML private void crearGastoCompartida() {
     	try {
-            Configuracion.getInstancia().getSceneManager().showCrearGasto();
+            Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida();
         } catch (Exception e) {
             e.printStackTrace();
         }

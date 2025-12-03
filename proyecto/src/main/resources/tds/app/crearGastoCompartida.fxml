@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearGastoController">
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearGastoCompartida">
    <content>
       <VBox alignment="TOP_CENTER" spacing="15">
          <padding>
@@ -25,28 +26,24 @@
                   <TextField fx:id="campoNombreGasto" maxWidth="Infinity" />
                </children>
             </VBox>
-            
             <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Introduzca la cantidad de gasto:" />
                   <TextField fx:id="campoCantidad" maxWidth="Infinity" />
                </children>
             </VBox>
-            
             <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Introduzca la fecha del gasto:" />
                   <DatePicker fx:id="campoFechaGasto" maxWidth="Infinity" />
                </children>
             </VBox>
-            
             <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Introduzca la descripción del gasto:" />
                   <TextArea fx:id="campoDescripcion" maxWidth="Infinity" prefRowCount="3" wrapText="true" />
                </children>
             </VBox>
-            
             <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Elija la categoría del gasto:" />
@@ -54,14 +51,23 @@
                      <items>
                         <CheckMenuItem mnemonicParsing="false" text="Alimentacion" />
                         <CheckMenuItem mnemonicParsing="false" text="Transporte" />
-                        <CheckMenuItem mnemonicParsing="false" text="Entretenimiento" />
+                        <CheckMenuItem mnemonicParsing="false" text="categoria 3" />
                      </items>
                   </MenuButton>
                </children>
             </VBox>
-            
-            <VBox maxWidth="500" spacing="5" />
-            
+            <VBox maxWidth="500" spacing="5">
+               <children>
+                  <Label text="Elija qué persona realizó el gasto:" />
+                  <MenuButton fx:id="personas" maxWidth="200" mnemonicParsing="false" text="Personas">
+                     <items>
+                        <CheckMenuItem mnemonicParsing="false" text="Yo" />
+                        <CheckMenuItem mnemonicParsing="false" text="Persona 2" />
+                        <CheckMenuItem mnemonicParsing="false" text="Persona 3" />
+                     </items>
+                  </MenuButton>
+               </children>
+            </VBox>
             <HBox alignment="CENTER">
                <padding>
                   <Insets top="10" />

@@ -81,6 +81,12 @@ public class SceneManager {
         stage.setTitle("Creando gasto");
         stage.show();
     }
+    
+    public void showCrearGastoCompartida() throws IOException {
+        cambiarEscena("crearGastoCompartida");
+        stage.setTitle("Creando gasto");
+        stage.show();
+    }
     public void showDistribucionCuentaCompartida() throws IOException {
         cambiarEscena("distribucionCuentaCompartida");
         stage.setTitle("Personalizar Distribución");

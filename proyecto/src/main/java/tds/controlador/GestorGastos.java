@@ -245,6 +245,31 @@ public class GestorGastos {
         }
     }
     
+ // ========== GESTIÓN DE GASTOS ==========
+    
+    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador) {
+        GastoImpl gasto = new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador);
+        try {
+            repositorioGastos.addGasto(gasto);
+            //gastos.add(gasto);
+        } catch (Exception e) {
+            System.err.println("Error al crear gasto: " + e.getMessage());
+        }
+        return gasto;
+    }
+    
+    
+    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
+        GastoImpl gasto = new GastoImpl(nombre, cantidad, fecha, descripcion, categoria);
+        try {
+            repositorioGastos.addGasto(gasto);
+            //gastos.add(gasto);
+        } catch (Exception e) {
+            System.err.println("Error al crear gasto: " + e.getMessage());
+        }
+        return gasto;
+    }
+    
     /**
      * Calcula el gasto para el período de una alerta
      * @param alerta Alerta a verificar

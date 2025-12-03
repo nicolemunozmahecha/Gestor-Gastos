@@ -81,7 +81,7 @@
                      <children>
                         <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Crear Gasto">
                            <items>
-                              <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGasto" text="Gasto nuevo" />
+                              <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGastoCompartida" text="Gasto nuevo" />
                               <MenuItem fx:id="importar" mnemonicParsing="false" onAction="#importarGasto" text="Importar gasto" />
                            </items>
                         </MenuButton>
