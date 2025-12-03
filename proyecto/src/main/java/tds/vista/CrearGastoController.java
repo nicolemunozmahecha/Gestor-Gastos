@@ -29,9 +29,12 @@ public class CrearGastoController {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
     
-    // FALTA FUNCIONALIDAD
     @FXML
     private void crearGasto() {
+    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+    }
+    @FXML
+    private void atras() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 }

@@ -70,6 +70,10 @@ public class CrearCuentaController {
         gestor.crearCuentaCompartidaConNombres(nombreCuenta, nombresPropietarios);
 
         // Volver a la ventana principal
-        Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+        Configuracion.getInstancia().getSceneManager().showVentanaCompartida();
+    }
+    @FXML
+    private void atras() {
+    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 }

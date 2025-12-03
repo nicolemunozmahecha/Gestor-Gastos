@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
@@ -8,74 +9,70 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
+<?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" 
-            xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="tds.vista.CrearAlertaController">
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearAlertaController">
    <content>
       <VBox alignment="TOP_CENTER" spacing="15">
          <padding>
-            <Insets top="20" right="20" bottom="20" left="20" />
+            <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
          <children>
-            <VBox spacing="5" maxWidth="500">
+            <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Introduzca el nombre de la nueva alerta:" />
-                  <TextField maxWidth="Infinity" />
+                  <TextField fx:id="campoNombreAlerta" maxWidth="Infinity" />
                </children>
             </VBox>
             
-            <VBox spacing="5" maxWidth="500">
+            <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Introduzca el límite de gasto:" />
-                  <TextField maxWidth="Infinity" />
+                  <TextField fx:id="campoLimiteGasto" maxWidth="Infinity" />
                </children>
             </VBox>
             
-            <VBox spacing="10" maxWidth="500">
+            <VBox maxWidth="500" spacing="10">
                <children>
                   <Label text="Elija el periodo de la alerta:" />
-                  <HBox spacing="30" alignment="CENTER_LEFT">
+                  <HBox alignment="CENTER_LEFT" spacing="30">
                      <children>
-                        <RadioButton mnemonicParsing="false" text="MENSUAL">
+                        <RadioButton fx:id="mensual" mnemonicParsing="false" text="MENSUAL">
                            <toggleGroup>
                               <ToggleGroup fx:id="periodoGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="SEMANAL" toggleGroup="$periodoGroup" />
+                        <RadioButton fx:id="semanal" mnemonicParsing="false" text="SEMANAL" toggleGroup="$periodoGroup" />
                      </children>
                   </HBox>
                </children>
             </VBox>
             
-            <VBox spacing="5" maxWidth="500">
+            <VBox maxWidth="500" spacing="5">
                <children>
                   <Label text="Elija la categoría de la alerta:" />
-                  <MenuButton mnemonicParsing="false" text="Categorias" maxWidth="200">
+                  <MenuButton fx:id="categoria" maxWidth="200" mnemonicParsing="false" text="Categorias">
                      <items>
-                        <CheckMenuItem mnemonicParsing="false" text="categoria 1" />
-                        <CheckMenuItem mnemonicParsing="false" text="categoria 2" />
-                        <CheckMenuItem mnemonicParsing="false" text="categoria 3" />
+                        <CheckMenuItem fx:id="categoriaAlimenatacion" mnemonicParsing="false" text="Alimentacion" />
+                        <CheckMenuItem fx:id="categoriaTransporte" mnemonicParsing="false" text="Transporte" />
+                        <CheckMenuItem fx:id="categoriaEntretenimiento" mnemonicParsing="false" text="Entretenimiento" />
                      </items>
                   </MenuButton>
                </children>
             </VBox>
             
-            <VBox spacing="10" maxWidth="500">
+            <VBox maxWidth="500" spacing="10">
                <children>
                   <Label text="¿Desea activar la categoria?" />
-                  <HBox spacing="30" alignment="CENTER_LEFT">
+                  <HBox fx:id="activar" alignment="CENTER_LEFT" spacing="30">
                      <children>
                         <RadioButton mnemonicParsing="false" text="SI">
                            <toggleGroup>
                               <ToggleGroup fx:id="activarGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="NO" toggleGroup="$activarGroup" />
+                        <RadioButton fx:id="noActivar" mnemonicParsing="false" text="NO" toggleGroup="$activarGroup" />
                      </children>
                   </HBox>
                </children>
@@ -86,7 +83,8 @@
                   <Insets top="10" />
                </padding>
                <children>
-                  <Button fx:id="crearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" />
+                  <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="-20.0" />
+                  <Button fx:id="crearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" translateX="20.0" />
                </children>
             </HBox>
          </children>

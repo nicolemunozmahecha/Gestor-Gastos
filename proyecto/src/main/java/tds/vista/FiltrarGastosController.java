@@ -37,9 +37,12 @@ public class FiltrarGastosController {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
     
-    // FALTA FUNCIONALIDAD
     @FXML
     private void filtrarGastos() {
+    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+    }
+    @FXML
+    private void atras() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 

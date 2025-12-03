@@ -7,8 +7,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" 
+	minHeight="-Infinity" minWidth="-Infinity" 
+	prefHeight="400.0" prefWidth="600.0" 
+	xmlns="http://javafx.com/javafx/25" 
+	xmlns:fx="http://javafx.com/fxml/1" 
+	fx:controller="tds.vista.DistribucionCuentaCompartida">
    <children>
       <Label text="Distribución de gastos de la cuenta compartida:" />
       <TableView prefHeight="200.0" prefWidth="200.0">
@@ -19,8 +23,8 @@
       </TableView>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" text="Aceptar" />
-            <Button mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="aceptar" mnemonicParsing="false" text="Aceptar" translateX="100.0" />
+            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="350.0" />
          </children>
       </HBox>
    </children>

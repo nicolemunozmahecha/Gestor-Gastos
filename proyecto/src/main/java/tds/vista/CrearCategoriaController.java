@@ -18,9 +18,12 @@ public class CrearCategoriaController {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
     
-    // FALTA FUNCIONALIDAD
     @FXML
     private void crearCategoria() {
+    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+    }
+    @FXML
+    private void atras() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 }

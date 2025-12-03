@@ -1,29 +1,23 @@
 package tds.vista;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import tds.Configuracion;
-import tds.controlador.GestorGastos;
-import javafx.scene.control.Button;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
 
-public class TotalCuentaController {
-	
-	@FXML private Label campoTotal;
-	@FXML private Button btOK;
-
+public class DistribucionCuentaCompartidaController {
 	private GestorGastos gestor;
 
-    @FXML
+	@FXML
     public void initialize() {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
     
     @FXML
-    private void btOK() {
-    	
+    private void personalizarDistribucion() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
-
+    @FXML
+    private void atras() {
+    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+    }
 }

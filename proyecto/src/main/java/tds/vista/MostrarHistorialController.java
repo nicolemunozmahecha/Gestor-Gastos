@@ -12,9 +12,8 @@ public class MostrarHistorialController {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
     
-    // FALTA FUNCIONALIDAD
     @FXML
-    private void mostrarHistorial() {
+    private void atras() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
 }

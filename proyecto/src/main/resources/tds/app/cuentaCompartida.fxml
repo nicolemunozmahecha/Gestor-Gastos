@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -13,113 +14,100 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Priority?>
-<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx/21" 
-		xmlns:fx="http://javafx.com/fxml/1" 
-		fx:controller="tds.vista.VentanaPrincipalController">
-   <children>
-    <!-- INCLUIMOS EL MENÚ NUEVO -->
-      <fx:include fx:id="menu" source="menu.fxml" />
-      
-      <HBox VBox.vgrow="NEVER">
-         <padding>
-            <Insets top="5" bottom="5" left="5" right="5"/>
-         </padding>
-      </HBox>
-      
-      <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-         <tabs>
-            <Tab text="Cuenta Compartida">
-               <content>
-                  <HBox spacing="10">
-                     <padding>
-                        <Insets top="10" bottom="10" left="10" right="10"/>
-                     </padding>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+	prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" 
+	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" 
+	fx:controller="tds.vista.CuentaCompartidaController">
+  <tabs>
+      <Tab text="Cuenta Compartida">
+         <content>
+            <HBox spacing="10">
+               <padding>
+                  <Insets bottom="10" left="10" right="10" top="10" />
+               </padding>
+               <children>
+                  <TabPane tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+                     <tabs>
+                        <Tab text="Tabla">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <TableView VBox.vgrow="ALWAYS">
+                                       <columns>
+                                          <TableColumn prefWidth="100.0" text="Nombre" />
+                                          <TableColumn prefWidth="80.0" text="Cantidad" />
+                                          <TableColumn prefWidth="90.0" text="Fecha" />
+                                          <TableColumn prefWidth="120.0" text="Descripción" />
+                                          <TableColumn prefWidth="90.0" text="Categoría" />
+                                          <TableColumn prefWidth="90.0" text="Pagador" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
+                        <Tab text="Gráfica de barras">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <BarChart VBox.vgrow="ALWAYS">
+                                       <xAxis>
+                                          <CategoryAxis side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis side="LEFT" />
+                                       </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
+                        <Tab text="Gráfica circular">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <PieChart VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+                  <VBox maxWidth="200" minWidth="150" spacing="10" HBox.hgrow="NEVER">
                      <children>
-                        <!-- Panel izquierdo con TabPane anidado -->
-                        <TabPane HBox.hgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-                           <tabs>
-                              <Tab text="Tabla">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <TableView VBox.vgrow="ALWAYS">
-                                             <columns>
-                                                <TableColumn text="Nombre" prefWidth="100.0" />
-                                                <TableColumn text="Cantidad" prefWidth="80.0" />
-                                                <TableColumn text="Fecha" prefWidth="90.0" />
-                                                <TableColumn text="Descripción" prefWidth="120.0" />
-                                                <TableColumn text="Categoría" prefWidth="90.0" />
-                                                <TableColumn text="Pagador" prefWidth="90.0" />
-                                             </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </Tab>
-                              <Tab text="Gráfica de barras">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <BarChart VBox.vgrow="ALWAYS">
-                                             <xAxis>
-                                                <CategoryAxis side="BOTTOM" />
-                                             </xAxis>
-                                             <yAxis>
-                                                <NumberAxis side="LEFT" />
-                                             </yAxis>
-                                          </BarChart>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </Tab>
-                              <Tab text="Gráfica circular">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <PieChart VBox.vgrow="ALWAYS" />
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </Tab>
-                           </tabs>
-                        </TabPane>
-                        
-                        <!-- Panel derecho con botones -->
-                        <VBox spacing="10" minWidth="150" maxWidth="200" HBox.hgrow="NEVER">
-                           <children>
-                              <MenuButton mnemonicParsing="false" text="Crear Gasto" maxWidth="Infinity">
-                                 <items>
-                                    <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGasto" text="Gasto nuevo" />
-                                    <MenuItem mnemonicParsing="false" text="Importar gasto" />
-                                    <MenuItem mnemonicParsing="false" text="Eliminar gasto" />
-                                 </items>
-                              </MenuButton>
-                              <MenuButton mnemonicParsing="false" text="Saldo" maxWidth="Infinity">
-                                 <items>
-                                    <MenuItem fx:id="saldoPorPersona" mnemonicParsing="false" onAction="#saldoPorPersona" text="Por persona" />
-                                 </items>
-                              </MenuButton>
-                              <MenuButton mnemonicParsing="false" text="Distribución" maxWidth="Infinity">
-                                 <items>
-                                    <MenuItem fx:id="personalizacion" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Personalizar" />
-                                 </items>
-                              </MenuButton>
-                           </children>
-                        </VBox>
+                        <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Crear Gasto">
+                           <items>
+                              <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGasto" text="Gasto nuevo" />
+                              <MenuItem fx:id="importar" mnemonicParsing="false" onAction="#importarGasto" text="Importar gasto" />
+                           </items>
+                        </MenuButton>
+                        <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Eliminar Gasto">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Gasto 1" />
+                           </items>
+                        </MenuButton>
+                        <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Saldo">
+                           <items>
+                              <MenuItem fx:id="saldoPorPersona" mnemonicParsing="false" onAction="#saldoPorPersona" text="Por persona" />
+                           </items>
+                        </MenuButton>
+                        <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Distribución">
+                           <items>
+                              <MenuItem fx:id="personalizacion" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Personalizar" />
+                           </items>
+                        </MenuButton>
                      </children>
-                  </HBox>
-               </content>
-               <graphic>
-                  <Label />
-               </graphic>
-            </Tab>
-         </tabs>
-      </TabPane>
-   </children>
-</VBox>
+                  </VBox>
+               </children>
+            </HBox>
+         </content>
+         <graphic>
+            <Label />
+         </graphic>
+      </Tab>
+  </tabs>
+</TabPane>

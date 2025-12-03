@@ -1,6 +1,9 @@
 package tds.vista;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
@@ -34,17 +37,17 @@ public class VentanaPrincipalController {
     @FXML private MenuButton btnCrearGasto;
     @FXML private MenuItem menuGastoNuevo;
     @FXML private MenuItem menuImportarGasto;
+    
 
-    @FXML private MenuButton btnVisualizacion;
-    @FXML private MenuItem menuVerTabla;
-    @FXML private MenuItem menuVerGrafica;
+  //  @FXML private MenuButton btnVisualizacion;
+  //  @FXML private MenuItem menuVerTabla;
+  //  @FXML private MenuItem menuVerGrafica;
 
     @FXML
     public void initialize() {
     }
 
     // ========== HANDLERS ==========
-
     @FXML
     private void crearCuenta() {
         try {
@@ -116,7 +119,6 @@ public class VentanaPrincipalController {
     //@FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }
     //@FXML private void mostrarGrafica() { System.out.println("Mostrar Gráfica"); }
 
-    // ESTO ES DE LAS CUENTAS COMPARTIDAS, NO SE SI PONERLO AQUI O EN UN CONTROLADOR PARA LAS CUENTAS COMPARTIDAS
     @FXML private void saldoPorPersona() {
     	System.out.println("Saldo por persona");
     }
