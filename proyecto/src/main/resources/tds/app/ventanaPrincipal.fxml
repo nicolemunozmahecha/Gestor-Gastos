@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -13,33 +14,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Priority?>
-<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx/21" 
-xmlns:fx="http://javafx.com/fxml/1" 
-fx:controller="tds.vista.VentanaPrincipalController">
+<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
    <children>
       <!-- INCLUIMOS EL MENÚ NUEVO -->
       <fx:include fx:id="menu" source="menu.fxml" />
       
-      <HBox VBox.vgrow="NEVER">
-         <padding>
-            <Insets top="10" bottom="10" left="10" right="10"/>
-         </padding>
-      </HBox>
-      
-      <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" prefWidth="754.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
           <Tab text="Principal">
             <content>
               <HBox spacing="10">
                  <padding>
-                    <Insets top="10" bottom="10" left="10" right="10"/>
+                    <Insets bottom="10" left="10" right="10" top="10" />
                  </padding>
                  <children>
                     <!-- Panel izquierdo con TabPane anidado -->
-                    <TabPane HBox.hgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                    <TabPane tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
                       <tabs>
                         <Tab text="Tabla">
                           <content>
@@ -47,12 +38,12 @@ fx:controller="tds.vista.VentanaPrincipalController">
                                <children>
                                   <TableView VBox.vgrow="ALWAYS">
                                     <columns>
-                                      <TableColumn text="Nombre" prefWidth="100.0" />
-                                      <TableColumn text="Cantidad" prefWidth="80.0" />
-                                      <TableColumn text="Fecha" prefWidth="90.0" />
-                                      <TableColumn text="Descripción" prefWidth="120.0" />
-                                      <TableColumn text="Categoría" prefWidth="90.0" />
-                                      <TableColumn text="Pagador" prefWidth="90.0" />
+                                      <TableColumn prefWidth="100.0" text="Nombre" />
+                                      <TableColumn prefWidth="80.0" text="Cantidad" />
+                                      <TableColumn prefWidth="90.0" text="Fecha" />
+                                      <TableColumn prefWidth="120.0" text="Descripción" />
+                                      <TableColumn prefWidth="90.0" text="Categoría" />
+                                      <TableColumn prefWidth="90.0" text="Pagador" />
                                     </columns>
                                     <columnResizePolicy>
                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -91,15 +82,15 @@ fx:controller="tds.vista.VentanaPrincipalController">
                     </TabPane>
                     
                     <!-- Panel derecho con botones -->
-                    <VBox spacing="10" minWidth="150" maxWidth="200" HBox.hgrow="NEVER">
+                    <VBox maxWidth="200" minWidth="150" spacing="10" HBox.hgrow="NEVER">
                        <children>
-                          <MenuButton mnemonicParsing="false" text="Crear Gasto" maxWidth="Infinity">
+                          <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Crear Gasto">
                             <items>
                               <MenuItem fx:id="cuentaCrearGasto" mnemonicParsing="false" onAction="#crearGasto" text="Gasto nuevo" />
                               <MenuItem mnemonicParsing="false" text="Importar gasto" />
                             </items>
                           </MenuButton>
-                          <MenuButton mnemonicParsing="false" text="Eliminar Gasto" maxWidth="Infinity">
+                          <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Eliminar Gasto">
                              <items>
                                 <MenuItem mnemonicParsing="false" text="Gasto 1" />
                              </items>

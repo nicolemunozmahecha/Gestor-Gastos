@@ -18,6 +18,8 @@ public class SceneManager {
 
     private Stage stage;
     private Scene escenaActual;
+    private VentanaPrincipalController ventanaPrincipalController; // NUEVO
+    private Parent ventanaPrincipalRoot; 
 
     /**
      * Inicializa el gestor de escenas con el stage principal.
@@ -30,9 +32,36 @@ public class SceneManager {
      * Muestra la ventana principal de la aplicación.
      */
     public void showVentanaPrincipal() {
-        cambiarEscena("ventanaPrincipal");
-        stage.setTitle("Gestión de Gastos");
+    	try {
+            // Si es la primera vez, cargar el FXML
+            if (ventanaPrincipalRoot == null) {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("ventanaPrincipal.fxml"));
+                ventanaPrincipalRoot = loader.load();
+                ventanaPrincipalController = loader.getController();
+            }
+            
+            // Usar la misma instancia siempre
+            if (escenaActual == null) {
+                escenaActual = new Scene(ventanaPrincipalRoot, 667, 474);
+                stage.setScene(escenaActual);
+            } else {
+                escenaActual.setRoot(ventanaPrincipalRoot);
+            }
+            
+            stage.setTitle("Gestión de Gastos");
+            stage.show();
+            
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo cargar ventanaPrincipal", e);
+        }
+    	
+        //cambiarEscena("ventanaPrincipal");
+        //stage.setTitle("Gestión de Gastos");
         stage.show();
+    }
+    
+    public VentanaPrincipalController getVentanaPrincipalController() {
+        return ventanaPrincipalController;
     }
     public void showVentanaCompartida() {
         cambiarEscena("cuentaCompartida");

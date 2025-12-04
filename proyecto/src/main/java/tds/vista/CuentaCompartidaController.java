@@ -3,11 +3,14 @@ package tds.vista;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
+import tds.controlador.GestorGastos;
+import tds.modelo.Cuenta;
 
 public class CuentaCompartidaController {
 	@FXML private TabPane tabPane;
@@ -46,14 +49,10 @@ public class CuentaCompartidaController {
     @FXML private MenuButton btnSaldo;
     @FXML private MenuItem saldoPorPersona;
 
-    
-    
-   // @FXML private MenuButton btnVisualizacion;
-   // @FXML private MenuItem menuVerTabla;
-   // @FXML private MenuItem menuVerGrafica;
 
+    // hemos añadido atributo cuenta al inicializar, para el nombre de la cuenta
     @FXML
-    public void initialize() {
+    public void inicializar(Cuenta cuenta) {
     }
 
     // ========== HANDLERS ==========
@@ -125,8 +124,6 @@ public class CuentaCompartidaController {
     }
     @FXML private void importarGasto() { System.out.println("Importar Gasto"); }
 
-    //@FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }
-    //@FXML private void mostrarGrafica() { System.out.println("Mostrar Gráfica"); }
 
     @FXML private void saldoPorPersona() {
     	System.out.println("Saldo por persona");

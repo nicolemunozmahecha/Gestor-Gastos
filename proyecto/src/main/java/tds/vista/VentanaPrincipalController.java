@@ -4,9 +4,12 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
+import tds.app.App;
+import tds.modelo.CuentaCompartida;
 
 public class VentanaPrincipalController {
 
@@ -52,10 +55,46 @@ public class VentanaPrincipalController {
     private void crearCuenta() {
         try {
             Configuracion.getInstancia().getSceneManager().showCrearCuenta();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    // NUEVO: Método público para añadir pestañas desde fuera
+    public void añadirPestañaCuentaCompartida(CuentaCompartida cuenta) {
+    	// si la pestaña a crear es vacia
+        if (tabPane == null) {
+            System.err.println("ERROR: tabPane es null!");
+            return;
+        }
+        
+        try {
+            // Cargar el FXML usando App.class (como en SceneManager)
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("cuentaCompartida.fxml"));
+            Parent contenido = loader.load();
+            
+            // Obtener el controlador de la cuenta compartida nueva y pasarle la cuenta
+            CuentaCompartidaController controller = loader.getController();
+            if (controller != null) {
+                controller.inicializar(cuenta);
+            }
+            
+            // Crear la pestaña
+            Tab nuevaTab = new Tab(cuenta.getNombre());
+            nuevaTab.setContent(contenido);
+            nuevaTab.setClosable(true);
+            nuevaTab.setUserData(cuenta);
+            
+            // Añadir al TabPane
+            tabPane.getTabs().add(nuevaTab);
+            tabPane.getSelectionModel().select(nuevaTab);
+            
+        } catch (IOException e) {
+            //System.err.println("ERROR al cargar la vista de cuenta compartida:");
+            e.printStackTrace();
+        }
+    }
+    
     @FXML private void eliminarCuenta() { System.out.println("Eliminar Cuenta"); }
     @FXML 
     private void totalCuenta() {

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
+import tds.modelo.CuentaCompartida;
 
 public class CrearCuentaController {
 
@@ -67,10 +68,23 @@ public class CrearCuentaController {
 
 
         // Llamar al gestor para crear la cuenta compartida
-        gestor.crearCuentaCompartidaConNombres(nombreCuenta, nombresPropietarios);
-
-        // Volver a la ventana principal
-        Configuracion.getInstancia().getSceneManager().showVentanaCompartida();
+        // Crear la cuenta
+        CuentaCompartida nuevaCuenta = gestor.crearCuentaCompartidaConNombres(nombreCuenta, nombresPropietarios);
+        //System.out.println("Cuenta creada: " + nuevaCuenta.getNombre());
+        
+        // IMPORTANTE: Primero añadir la pestaña, luego cambiar de ventana
+        VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
+        
+        if (controller != null) {
+            //System.out.println("Controller obtenido, añadiendo pestaña...");
+            controller.añadirPestañaCuentaCompartida(nuevaCuenta);
+        } else {
+            //System.err.println("ERROR: Controller es null");
+        }
+        
+        // Después volver a la ventana principal
+        Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+        
     }
     @FXML
     private void atras() {
