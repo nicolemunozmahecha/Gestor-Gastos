@@ -4,21 +4,48 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.DistribucionCuentaCompartida">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.DistribucionCuentaCompartidaController">
    <children>
-      <Label text="Distribución de gastos de la cuenta compartida:" />
+      <Label prefHeight="18.0" prefWidth="322.0" text="Distribución actual de gastos de la cuenta compartida:" />
       <TableView prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Persona" />
-          <TableColumn prefWidth="75.0" text="Porcentaje" />
+          <TableColumn prefWidth="142.4000244140625" text="Persona" />
+          <TableColumn prefWidth="94.39996337890625" text="Porcentaje" />
         </columns>
       </TableView>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <Label prefHeight="18.0" prefWidth="322.0" text="Personalizar Distribución:" />
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="300.0" translateX="100.0">
          <children>
-            <Button fx:id="aceptar" mnemonicParsing="false" text="Aceptar" translateX="270.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="322.0" text="Persona 1" />
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="322.0" text="Persona 2" />
+                  <Label layoutX="10.0" layoutY="28.0" prefHeight="25.0" prefWidth="322.0" text="Persona 3" />
+                  <Label layoutX="10.0" layoutY="47.0" prefHeight="25.0" prefWidth="322.0" text="Persona 4" />
+                  <Label layoutX="10.0" layoutY="65.0" prefHeight="25.0" prefWidth="322.0" text="Persona 5" />
+                  <Label layoutX="10.0" layoutY="80.0" prefHeight="25.0" prefWidth="322.0" text="Persona 6" />
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TextField />
+                  <TextField layoutX="10.0" layoutY="10.0" />
+                  <TextField layoutX="10.0" layoutY="36.0" />
+                  <TextField layoutX="10.0" layoutY="61.0" />
+                  <TextField layoutX="10.0" layoutY="61.0" />
+                  <TextField layoutX="10.0" layoutY="112.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="88.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="aplicar" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Aplicar" translateX="150.0" translateY="10.0" />
+            <Button fx:id="atras" mnemonicParsing="false" text="Atrás" translateX="320.0" translateY="10.0" />
          </children>
       </HBox>
    </children>

@@ -14,6 +14,11 @@ public class DistribucionCuentaCompartidaController {
     
     @FXML
     private void personalizarDistribucion() {
+    	//METER AQUI FUNCIONALIDAD PARA RELLENO DE HUECOS
+    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+    }
+    @FXML
+    private void atras() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
    

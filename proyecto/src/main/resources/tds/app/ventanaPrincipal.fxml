@@ -43,7 +43,6 @@
                                       <TableColumn prefWidth="90.0" text="Fecha" />
                                       <TableColumn prefWidth="120.0" text="Descripción" />
                                       <TableColumn prefWidth="90.0" text="Categoría" />
-                                      <TableColumn prefWidth="90.0" text="Pagador" />
                                     </columns>
                                     <columnResizePolicy>
                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
