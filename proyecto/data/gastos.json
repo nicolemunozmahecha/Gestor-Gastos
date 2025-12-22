@@ -1,28 +1,87 @@
 {
-  "cuentas" : [ ],
+  "cuentas" : [ {
+    "estrategiaDistribucion" : {
+      "personas" : [ {
+        "nombre" : "ana",
+        "saldo" : 0.0
+      }, {
+        "nombre" : "pepe",
+        "saldo" : 0.0
+      }, {
+        "nombre" : "paco",
+        "saldo" : 0.0
+      } ],
+      "numeroPersonas" : 3
+    },
+    "numeroPersonas" : 3,
+    "numeroGastos" : 0,
+    "nombre" : "nueva",
+    "gastos" : [ ],
+    "personas" : [ {
+      "nombre" : "ana",
+      "saldo" : 0.0
+    }, {
+      "nombre" : "pepe",
+      "saldo" : 0.0
+    }, {
+      "nombre" : "paco",
+      "saldo" : 0.0
+    } ]
+  } ],
   "gastos" : [ {
-    "nombre" : "hola",
-    "cantidad" : 30.0,
-    "fecha" : [ 2025, 12, 7 ],
-    "descripcion" : "...",
+    "nombre" : "compra",
+    "cantidad" : 300.0,
+    "fecha" : [ 2025, 12, 6 ],
+    "descripcion" : "comida semana",
     "categoria" : {
       "nombre" : "Alimentacion",
       "predefinida" : false
     },
-    "pagador" : null
+    "pagador" : {
+      "nombre" : "ana",
+      "saldo" : 0.0
+    }
   }, {
-    "nombre" : "comida",
-    "cantidad" : 200.0,
-    "fecha" : [ 2025, 12, 22 ],
-    "descripcion" : "",
+    "nombre" : "cine",
+    "cantidad" : 15.0,
+    "fecha" : [ 2025, 12, 9 ],
+    "descripcion" : "avatar 3",
     "categoria" : {
-      "nombre" : "Alimentacion",
+      "nombre" : "Entretenimiento",
       "predefinida" : false
     },
     "pagador" : null
   } ],
   "cuentasPersonales" : [ ],
-  "cuentasCompartidas" : [ ],
+  "cuentasCompartidas" : [ {
+    "estrategiaDistribucion" : {
+      "personas" : [ {
+        "nombre" : "ana",
+        "saldo" : 0.0
+      }, {
+        "nombre" : "pepe",
+        "saldo" : 0.0
+      }, {
+        "nombre" : "paco",
+        "saldo" : 0.0
+      } ],
+      "numeroPersonas" : 3
+    },
+    "numeroPersonas" : 3,
+    "numeroGastos" : 0,
+    "nombre" : "nueva",
+    "gastos" : [ ],
+    "personas" : [ {
+      "nombre" : "ana",
+      "saldo" : 0.0
+    }, {
+      "nombre" : "pepe",
+      "saldo" : 0.0
+    }, {
+      "nombre" : "paco",
+      "saldo" : 0.0
+    } ]
+  } ],
   "categorias" : [ ],
   "alertas" : [ ],
   "personas" : [ ]

@@ -16,6 +16,7 @@ import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
 import tds.modelo.Persona;
 import tds.modelo.impl.CategoriaImpl;
+import tds.modelo.impl.GastoImpl;
 
 public class CrearGastoCompartidaController {
 	
@@ -30,7 +31,8 @@ public class CrearGastoCompartidaController {
 	private List<Categoria> categoriasDisp;
 	private double cantidadFinal;
 	private Persona p;
-
+	private CuentaCompartidaController cuentaCompartidaController;
+	
 	@FXML
     public void initialize() {
         gestor = Configuracion.getInstancia().getGestorGastos();
@@ -70,26 +72,38 @@ public class CrearGastoCompartidaController {
                 .noneMatch(CheckMenuItem::isSelected);          // Ninguno está seleccionado
     }
 	
-    /* VER PORQUE FALTAN FUNCIONES 
     private void cargarPersonas() {
-        categoriasDisp = gestor.getP();
-        for (Categoria c : categoriasDisp) {
-            final CheckMenuItem item = new CheckMenuItem(c.getNombre());
-            item.setUserData(c);
-            categorias.getItems().add(item);
-        }
-        for (MenuItem m : categorias.getItems()) {
-            m.setOnAction(e -> {
-			                if (((CheckMenuItem) m).isSelected()) {
-			                    for (MenuItem mi : categorias.getItems()) {
-			                        if (mi != m && mi instanceof CheckMenuItem) {
-			                            ((CheckMenuItem) mi).setSelected(false);
-			                        }
-			                    }
-			                }
-			});
-        }
-    }*/
+    	// necesitamos acceder a la cuenta y de ahi a las personas de dicha cuenta:
+	    personas.getItems().clear();
+
+	    List<Persona> lista = cuentaCompartidaController.getPersonasCuenta();
+
+	    for (Persona persona : lista) {
+	        CheckMenuItem item = new CheckMenuItem(persona.getNombre());
+	        item.setUserData(persona);
+
+	        item.setOnAction(e -> {
+	            if (item.isSelected()) {
+	                // deseleccionar las demás
+	                for (MenuItem mi : personas.getItems()) {
+	                    if (mi != item && mi instanceof CheckMenuItem) {
+	                        ((CheckMenuItem) mi).setSelected(false);
+	                    }
+	                }
+	                p = persona; // pagador seleccionado
+	            } else {
+	                p = null;
+	            }
+	        });
+
+	        personas.getItems().add(item);
+	    }
+    }
+    
+    public void setCuentaCompartidaController(CuentaCompartidaController controller) {
+        this.cuentaCompartidaController = controller;
+        cargarPersonas();
+    }
     
     @FXML
     private void crearGasto() {
@@ -139,10 +153,21 @@ public class CrearGastoCompartidaController {
         	CheckMenuItem item = c.get();
             Categoria cat = new CategoriaImpl(item.getText()); 
             String descripcion = campoDescripcion.getText().trim();
+            
         	if (descripcion.isEmpty()) {
-        		gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat, p);
-        	}else {
-        		gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
+        		GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat, p);
+                if (cuentaCompartidaController != null) {
+                	cuentaCompartidaController.añadirGastoTabla(g);
+                } else {
+                    System.err.println("ERROR: Controller es null");
+                }        	
+            }else {
+        		GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
+                if (cuentaCompartidaController != null) {
+                	cuentaCompartidaController.añadirGastoTabla(g);
+                } else {
+                    System.err.println("ERROR: Controller es null");
+                }
         	}
         }
         

@@ -16,6 +16,7 @@ import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
 import tds.modelo.CuentaCompartida;
+import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
 import tds.modelo.impl.GastoImpl;
 
@@ -58,6 +59,7 @@ public class VentanaPrincipalController {
     @FXML private TableColumn<Gasto, String> colCategoria;
     
     private GestorGastos gestor;
+    //private CuentaPersonal principal;
 
     @FXML
     public void initialize() {
@@ -65,6 +67,7 @@ public class VentanaPrincipalController {
     	        configurarTabla();
     	        cargarGastos();
     	 }
+    	 //this.principal = new CuentaPersonal("Principal", "Yo");
     }
 
     private void configurarTabla() {
@@ -88,6 +91,7 @@ public class VentanaPrincipalController {
     
     private void cargarGastos() {
         gestor = Configuracion.getInstancia().getGestorGastos();
+        // AQUI ES GASTOS POR CUENTA, LA CUENTA PRINCIPAL ES POR DEFECTO
         List<Gasto> gastos = gestor.getGastos();
         tablaGastos.getItems().clear();
         tablaGastos.getItems().addAll(gastos);
@@ -201,7 +205,6 @@ public class VentanaPrincipalController {
     @FXML private void crearGasto() {
     	try {
             Configuracion.getInstancia().getSceneManager().showCrearGasto();
-            // CUANDO CREAMOS EL GASTO, SE ACTUALIZA LA TABLA 
             
         } catch (Exception e) {
             e.printStackTrace();
