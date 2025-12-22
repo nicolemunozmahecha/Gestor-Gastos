@@ -70,7 +70,6 @@ public class CrearCuentaController {
         // Llamar al gestor para crear la cuenta compartida
         // Crear la cuenta
         CuentaCompartida nuevaCuenta = gestor.crearCuentaCompartidaConNombres(nombreCuenta, nombresPropietarios);
-        //System.out.println("Cuenta creada: " + nuevaCuenta.getNombre());
         
         // IMPORTANTE: Primero añadir la pestaña, luego cambiar de ventana
         VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();

@@ -97,10 +97,8 @@ public class GestorGastos {
     
     // ========== GESTIÓN DE CUENTAS ==========
 
-    // NO SE PUEDEN CREAR CUENTAS PERSONALES, SOLO HAY UNA.
-    /*
-    public CuentaPersonal crearCuentaPersonal(String nombre, String propietario) {
-        CuentaPersonalImpl cuenta = new CuentaPersonalImpl(nombre, propietario);
+    
+    public CuentaPersonal crearCuentaPersonal(CuentaPersonalImpl cuenta) {
         try {
             repositorioCuentas.addCuenta(cuenta);
             cuentas.add(cuenta);
@@ -108,7 +106,7 @@ public class GestorGastos {
             System.err.println("Error al crear cuenta personal: " + e.getMessage());
         }
         return cuenta;
-    }*/
+    }
     
     
     public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas) {

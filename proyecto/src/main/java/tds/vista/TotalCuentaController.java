@@ -38,11 +38,6 @@ public class TotalCuentaController {
         }
     }
     
-    // Cogemos la cuenta que se haya seleccionado en ventana principal.
-    public void setCuentaSeleccionada(Cuenta cuenta) {
-        this.cuentaSeleccionada = cuenta;
-        mostrarTotal();
-    }
     
     // Mostramos en la label el total.
     private void mostrarTotal() {

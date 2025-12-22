@@ -116,6 +116,7 @@ public class CrearGastoController {
                 if (controller != null) {
                     //System.out.println("Controller obtenido, añadiendo pestaña...");
                     controller.añadirGastoTabla(g);
+                    controller.getCuenta().agregarGasto(g);
                 } else {
                     System.err.println("ERROR: Controller es null");
                 }
@@ -124,6 +125,8 @@ public class CrearGastoController {
                 if (controller != null) {
                     //System.out.println("Controller obtenido, añadiendo pestaña...");
                     controller.añadirGastoTabla(g);
+                    controller.getCuenta().agregarGasto(g);
+
                 } else {
                     System.err.println("ERROR: Controller es null");
                 }

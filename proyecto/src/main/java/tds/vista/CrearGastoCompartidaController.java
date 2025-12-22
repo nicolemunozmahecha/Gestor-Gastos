@@ -158,6 +158,8 @@ public class CrearGastoCompartidaController {
         		GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat, p);
                 if (cuentaCompartidaController != null) {
                 	cuentaCompartidaController.añadirGastoTabla(g);
+                	cuentaCompartidaController.getCuenta().agregarGasto(g);
+
                 } else {
                     System.err.println("ERROR: Controller es null");
                 }        	
@@ -165,6 +167,8 @@ public class CrearGastoCompartidaController {
         		GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
                 if (cuentaCompartidaController != null) {
                 	cuentaCompartidaController.añadirGastoTabla(g);
+                	cuentaCompartidaController.getCuenta().agregarGasto(g);
+
                 } else {
                     System.err.println("ERROR: Controller es null");
                 }

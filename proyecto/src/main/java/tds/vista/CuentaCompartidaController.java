@@ -19,6 +19,7 @@ import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
+import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
 import tds.modelo.Persona;
 import tds.modelo.impl.GastoImpl;
@@ -85,15 +86,15 @@ public class CuentaCompartidaController {
     	}
     }
 
+    public void setCuenta(CuentaCompartida p) {
+    	this.cuenta = p;
+        cargarGastos();
 
-    /*
-    @FXML
-    public void initialize() {
-    	 if (tablaGastos != null) {
-    	        configurarTabla();
-    	        cargarGastos();
-    	 }
-    }*/
+    }
+    public CuentaCompartida getCuenta() {
+    	return cuenta;
+    	
+    }
 
     private void configurarTabla() {
     	// Configurar qué propiedad mostrar en cada columna
@@ -118,7 +119,7 @@ public class CuentaCompartidaController {
     
     private void cargarGastos() {
         gestor = Configuracion.getInstancia().getGestorGastos();
-        List<Gasto> gastos = gestor.getGastosPorCuenta(this.cuenta);
+        List<Gasto> gastos = gestor.getGastosPorCuenta(cuenta);
         tablaGastos.getItems().clear();
         tablaGastos.getItems().addAll(gastos);
     }

@@ -1,87 +1,28 @@
 {
   "cuentas" : [ {
-    "estrategiaDistribucion" : {
-      "personas" : [ {
-        "nombre" : "ana",
-        "saldo" : 0.0
-      }, {
-        "nombre" : "pepe",
-        "saldo" : 0.0
-      }, {
-        "nombre" : "paco",
-        "saldo" : 0.0
-      } ],
-      "numeroPersonas" : 3
-    },
-    "numeroPersonas" : 3,
     "numeroGastos" : 0,
-    "nombre" : "nueva",
+    "nombre" : "Cuenta de Principal",
     "gastos" : [ ],
-    "personas" : [ {
-      "nombre" : "ana",
-      "saldo" : 0.0
-    }, {
-      "nombre" : "pepe",
-      "saldo" : 0.0
-    }, {
-      "nombre" : "paco",
-      "saldo" : 0.0
-    } ]
+    "propietario" : "Principal"
   } ],
   "gastos" : [ {
-    "nombre" : "compra",
-    "cantidad" : 300.0,
-    "fecha" : [ 2025, 12, 6 ],
-    "descripcion" : "comida semana",
-    "categoria" : {
-      "nombre" : "Alimentacion",
-      "predefinida" : false
-    },
-    "pagador" : {
-      "nombre" : "ana",
-      "saldo" : 0.0
-    }
-  }, {
     "nombre" : "cine",
-    "cantidad" : 15.0,
-    "fecha" : [ 2025, 12, 9 ],
-    "descripcion" : "avatar 3",
+    "cantidad" : 20.0,
+    "fecha" : [ 2025, 12, 13 ],
+    "descripcion" : "",
     "categoria" : {
       "nombre" : "Entretenimiento",
       "predefinida" : false
     },
     "pagador" : null
   } ],
-  "cuentasPersonales" : [ ],
-  "cuentasCompartidas" : [ {
-    "estrategiaDistribucion" : {
-      "personas" : [ {
-        "nombre" : "ana",
-        "saldo" : 0.0
-      }, {
-        "nombre" : "pepe",
-        "saldo" : 0.0
-      }, {
-        "nombre" : "paco",
-        "saldo" : 0.0
-      } ],
-      "numeroPersonas" : 3
-    },
-    "numeroPersonas" : 3,
+  "cuentasPersonales" : [ {
     "numeroGastos" : 0,
-    "nombre" : "nueva",
+    "nombre" : "Cuenta de Principal",
     "gastos" : [ ],
-    "personas" : [ {
-      "nombre" : "ana",
-      "saldo" : 0.0
-    }, {
-      "nombre" : "pepe",
-      "saldo" : 0.0
-    }, {
-      "nombre" : "paco",
-      "saldo" : 0.0
-    } ]
+    "propietario" : "Principal"
   } ],
+  "cuentasCompartidas" : [ ],
   "categorias" : [ ],
   "alertas" : [ ],
   "personas" : [ ]

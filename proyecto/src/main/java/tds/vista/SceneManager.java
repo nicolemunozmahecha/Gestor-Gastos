@@ -9,7 +9,9 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tds.Configuracion;
 import tds.app.App;
+import tds.modelo.impl.CuentaPersonalImpl;
 
 /**
  * Se encarga de coordinar la navegación entre ventanas.
@@ -21,12 +23,20 @@ public class SceneManager {
     private VentanaPrincipalController ventanaPrincipalController; // NUEVO
     private Parent ventanaPrincipalRoot; 
     private CrearGastoCompartidaController crearGastoCompartidaController; 
+    private CuentaPersonalImpl personal;
 
     /**
      * Inicializa el gestor de escenas con el stage principal.
      */
     public void inicializar(Stage stage) {
         this.stage = stage;
+    }
+    
+    public void setPrincipal(CuentaPersonalImpl c) {
+    	this.personal = c;
+    }
+    public CuentaPersonalImpl getPrincipal() {
+    	return personal;
     }
 
     /**
@@ -39,6 +49,7 @@ public class SceneManager {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("ventanaPrincipal.fxml"));
                 ventanaPrincipalRoot = loader.load();
                 ventanaPrincipalController = loader.getController();
+                ventanaPrincipalController.setCuenta(Configuracion.getInstancia().getSceneManager().getPrincipal());
             }
             
             // Usar la misma instancia siempre

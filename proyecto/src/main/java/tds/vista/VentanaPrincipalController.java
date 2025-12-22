@@ -59,15 +59,23 @@ public class VentanaPrincipalController {
     @FXML private TableColumn<Gasto, String> colCategoria;
     
     private GestorGastos gestor;
-    //private CuentaPersonal principal;
+    private CuentaPersonal principal;
 
     @FXML
     public void initialize() {
     	 if (tablaGastos != null) {
     	        configurarTabla();
-    	        cargarGastos();
     	 }
-    	 //this.principal = new CuentaPersonal("Principal", "Yo");
+    }
+    
+    public void setCuenta(CuentaPersonal p) {
+    	this.principal = p;
+        cargarGastos();
+
+    }
+    public CuentaPersonal getCuenta() {
+    	return principal;
+    	
     }
 
     private void configurarTabla() {
@@ -92,7 +100,7 @@ public class VentanaPrincipalController {
     private void cargarGastos() {
         gestor = Configuracion.getInstancia().getGestorGastos();
         // AQUI ES GASTOS POR CUENTA, LA CUENTA PRINCIPAL ES POR DEFECTO
-        List<Gasto> gastos = gestor.getGastos();
+        List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
         tablaGastos.getItems().clear();
         tablaGastos.getItems().addAll(gastos);
     }
