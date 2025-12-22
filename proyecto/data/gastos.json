@@ -1,0 +1,29 @@
+{
+  "cuentas" : [ ],
+  "gastos" : [ {
+    "nombre" : "hola",
+    "cantidad" : 30.0,
+    "fecha" : [ 2025, 12, 7 ],
+    "descripcion" : "...",
+    "categoria" : {
+      "nombre" : "Alimentacion",
+      "predefinida" : false
+    },
+    "pagador" : null
+  }, {
+    "nombre" : "comida",
+    "cantidad" : 200.0,
+    "fecha" : [ 2025, 12, 22 ],
+    "descripcion" : "",
+    "categoria" : {
+      "nombre" : "Alimentacion",
+      "predefinida" : false
+    },
+    "pagador" : null
+  } ],
+  "cuentasPersonales" : [ ],
+  "cuentasCompartidas" : [ ],
+  "categorias" : [ ],
+  "alertas" : [ ],
+  "personas" : [ ]
+}

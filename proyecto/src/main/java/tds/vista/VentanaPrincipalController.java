@@ -1,7 +1,12 @@
 package tds.vista;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
 import tds.app.App;
+import tds.controlador.GestorGastos;
 import tds.modelo.CuentaCompartida;
+import tds.modelo.Gasto;
+import tds.modelo.impl.GastoImpl;
 
 public class VentanaPrincipalController {
 
@@ -40,15 +48,52 @@ public class VentanaPrincipalController {
     @FXML private MenuButton btnCrearGasto;
     @FXML private MenuItem menuGastoNuevo;
     @FXML private MenuItem menuImportarGasto;
+    @FXML private TableView<Gasto> tablaGastos;
     
-
-  //  @FXML private MenuButton btnVisualizacion;
-  //  @FXML private MenuItem menuVerTabla;
-  //  @FXML private MenuItem menuVerGrafica;
+   
+    @FXML private TableColumn<Gasto, String> colDescripcion;
+    @FXML private TableColumn<Gasto, String> colNombre;
+    @FXML private TableColumn<Gasto, Double> colCantidad;
+    @FXML private TableColumn<Gasto, LocalDate> colFecha;
+    @FXML private TableColumn<Gasto, String> colCategoria;
+    
+    private GestorGastos gestor;
 
     @FXML
     public void initialize() {
+    	 if (tablaGastos != null) {
+    	        configurarTabla();
+    	        cargarGastos();
+    	 }
     }
+
+    private void configurarTabla() {
+    	// Configurar qué propiedad mostrar en cada columna
+    	colNombre.setCellValueFactory(cellData -> 
+        	new SimpleStringProperty(cellData.getValue().getNombre())); // o el método que corresponda
+    
+	    colCantidad.setCellValueFactory(cellData -> 
+	        new SimpleDoubleProperty(cellData.getValue().getCantidad()).asObject());
+	    
+	    colFecha.setCellValueFactory(cellData -> 
+	        new SimpleObjectProperty<>(cellData.getValue().getFecha()));
+	    
+	    colDescripcion.setCellValueFactory(cellData -> 
+	        new SimpleStringProperty(cellData.getValue().getDescripcion()));
+	    
+	    colCategoria.setCellValueFactory(cellData -> 
+	        new SimpleStringProperty(cellData.getValue().getCategoria().getNombre()));
+        
+    }
+    
+    private void cargarGastos() {
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        List<Gasto> gastos = gestor.getGastos();
+        tablaGastos.getItems().clear();
+        tablaGastos.getItems().addAll(gastos);
+    }
+
+   
 
     // ========== HANDLERS ==========
     @FXML
@@ -95,7 +140,9 @@ public class VentanaPrincipalController {
         }
     }
     
-    @FXML private void eliminarCuenta() { System.out.println("Eliminar Cuenta"); }
+    @FXML private void eliminarCuenta() { 
+    	System.out.println("Eliminar Cuenta"); 
+    }
     @FXML 
     private void totalCuenta() {
     	try {
@@ -146,9 +193,16 @@ public class VentanaPrincipalController {
         }
     }
 
+    
+    public void añadirGastoTabla(GastoImpl g) {
+    	tablaGastos.getItems().add(g);            
+    }
+    
     @FXML private void crearGasto() {
     	try {
             Configuracion.getInstancia().getSceneManager().showCrearGasto();
+            // CUANDO CREAMOS EL GASTO, SE ACTUALIZA LA TABLA 
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

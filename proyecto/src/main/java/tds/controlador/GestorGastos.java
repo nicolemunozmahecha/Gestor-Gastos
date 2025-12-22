@@ -254,6 +254,7 @@ public class GestorGastos {
             //gastos.add(gasto);
         } catch (Exception e) {
             System.err.println("Error al crear gasto: " + e.getMessage());
+            e.printStackTrace(); 
         }
         return gasto;
     }
@@ -264,8 +265,12 @@ public class GestorGastos {
         try {
             repositorioGastos.addGasto(gasto);
             //gastos.add(gasto);
+            // PROBAMOS IMPRIMIR GASTOS PARA VER SI SE CREAN CORRECTAMENTE
+            repositorioGastos.getGastos().stream()
+            		.forEach(g -> System.out.println(g));
         } catch (Exception e) {
             System.err.println("Error al crear gasto: " + e.getMessage());
+            e.printStackTrace(); 
         }
         return gasto;
     }

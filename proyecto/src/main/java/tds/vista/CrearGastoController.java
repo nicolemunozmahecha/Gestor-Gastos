@@ -15,6 +15,7 @@ import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
 import tds.modelo.impl.CategoriaImpl;
+import tds.modelo.impl.GastoImpl;
 
 public class CrearGastoController {
 	
@@ -33,6 +34,7 @@ public class CrearGastoController {
         gestor = Configuracion.getInstancia().getGestorGastos();
         cargarCategorias();
     }
+	
     
 	private boolean ningunoSeleccionado() {
         return categorias.getItems().stream()
@@ -105,11 +107,28 @@ public class CrearGastoController {
         	CheckMenuItem item = c.get();
             Categoria cat = new CategoriaImpl(item.getText()); 
             String descripcion = campoDescripcion.getText().trim();
+            
+            // IMPORTANTE: Primero añadir gasto, luego cambiar de ventana
+            VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
+            
         	if (descripcion.isEmpty()) {
-        		gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat);
+        		GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat);
+                if (controller != null) {
+                    //System.out.println("Controller obtenido, añadiendo pestaña...");
+                    controller.añadirGastoTabla(g);
+                } else {
+                    System.err.println("ERROR: Controller es null");
+                }
         	}else {
-        		gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
+        		GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
+                if (controller != null) {
+                    //System.out.println("Controller obtenido, añadiendo pestaña...");
+                    controller.añadirGastoTabla(g);
+                } else {
+                    System.err.println("ERROR: Controller es null");
+                }
         	}
+        	
         }
         
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();

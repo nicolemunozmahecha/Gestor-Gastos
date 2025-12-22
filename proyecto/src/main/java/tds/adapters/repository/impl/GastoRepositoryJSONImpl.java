@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -112,14 +114,22 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
     }
 
     private List<GastoImpl> cargarGastos(String rutaFichero) throws Exception {
-        InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
+        /*InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
         
         if (ficheroStream == null) {
+            // Si no existe el fichero, devolver lista vacía
+            return new ArrayList<>();
+        }*/
+    	
+    	File ficheroStream = new File(rutaFichero);
+    	if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
             return new ArrayList<>();
         }
         
         ObjectMapper mapper = new ObjectMapper();
+        // NUEVO PARA EL ERROR DE FECHA:
+        mapper.registerModule(new JavaTimeModule());
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         DatosGastos datosCargados = mapper.readValue(ficheroStream, new TypeReference<DatosGastos>() {});
@@ -135,16 +145,21 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
 
     private void guardarGastos(List<GastoImpl> gastos, String rutaFichero) throws Exception {
         // Se carga mediante URL para prevenir problemas con rutas con espacios en blanco o caracteres no estandar
-        URL url = getClass().getResource(rutaFichero);
+        /*URL url = getClass().getResource(rutaFichero);
         
         // Cargo el fichero a partir de la URL local
-        File ficheroJson = Paths.get(url.toURI()).toFile();
+        File ficheroJson = Paths.get(url.toURI()).toFile();*/
+    	File ficheroJson = new File(rutaFichero);
+    	if(ficheroJson.getParentFile() != null) {
+    		ficheroJson.getParentFile().mkdirs();
+    	}
 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         datos.setGastos(gastos);
         this.gastos = gastos;
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
     }
 }
