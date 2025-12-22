@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
+import tds.modelo.Persona;
 import tds.modelo.impl.CategoriaImpl;
 import tds.modelo.impl.GastoImpl;
 
@@ -43,10 +44,10 @@ public class CrearGastoController {
     }
 	
     // PARA CARGAR LAS CATEGORIAS NUEVAS, Y QUE SOLO DEJE SELECCIONAR UNA
-    private void cargarCategorias() {
+    public void cargarCategorias() {
         categoriasDisp = gestor.getCategoriasPersonalizadas();
         for (Categoria c : categoriasDisp) {
-            final CheckMenuItem item = new CheckMenuItem(c.getNombre());
+            CheckMenuItem item = new CheckMenuItem(c.getNombre());
             item.setUserData(c);
             categorias.getItems().add(item);
         }

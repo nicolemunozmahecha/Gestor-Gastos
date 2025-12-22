@@ -1,11 +1,23 @@
 package tds.modelo.impl;
 
 import tds.modelo.Categoria;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CategoriaImpl implements Categoria {
-    private String nombre;
-    private boolean predefinida;
+	 @JsonProperty("nombre")
+	private String nombre;
+	 @JsonProperty("predefinida")
+	 private boolean predefinida;
+    
+    // constructor sin argumentos para json
+	 public CategoriaImpl() {
+	        this.nombre = "";
+	        this.predefinida = false;
+	}
     
     public CategoriaImpl(String nombre, boolean predefinida) {
         this.nombre = nombre;

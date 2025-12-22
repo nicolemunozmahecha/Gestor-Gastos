@@ -1,14 +1,10 @@
 package tds.adapters.repository.impl;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +24,7 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
     
     private void cargaGastos() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos();
+            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "gastos.json";
             this.gastos = cargarGastos(rutaFichero);
             if (gastos == null) gastos = new ArrayList<>();
         } catch (Exception e) {

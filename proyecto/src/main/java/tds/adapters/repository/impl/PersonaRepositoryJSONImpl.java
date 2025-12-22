@@ -26,7 +26,7 @@ public class PersonaRepositoryJSONImpl implements PersonaRepository {
     
     private void cargaPersonas() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos();
+            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "personas.json";
             this.personas = cargarPersonas(rutaFichero);
             if (personas == null) personas = new ArrayList<>();
         } catch (Exception e) {

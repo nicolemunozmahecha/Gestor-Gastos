@@ -24,7 +24,7 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
     
     private void cargaAlertas() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos();
+            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "alertas.json";
             this.alertas = cargarAlertas(rutaFichero);
             if (alertas == null) alertas = new ArrayList<>();
         } catch (Exception e) {
@@ -111,9 +111,14 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
     }
 
     private List<AlertaImpl> cargarAlertas(String rutaFichero) throws Exception {
-        InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
+        /*InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
         
         if (ficheroStream == null) {
+            // Si no existe el fichero, devolver lista vacía
+            return new ArrayList<>();
+        }*/
+        File ficheroStream = new File(rutaFichero);
+    	if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
             return new ArrayList<>();
         }

@@ -46,7 +46,7 @@ public class CrearGastoCompartidaController {
     }
 	
     // PARA CARGAR LAS CATEGORIAS NUEVAS, Y QUE SOLO DEJE SELECCIONAR UNA
-    private void cargarCategorias() {
+    public void cargarCategorias() {
         categoriasDisp = gestor.getCategoriasPersonalizadas();
         for (Categoria c : categoriasDisp) {
             final CheckMenuItem item = new CheckMenuItem(c.getNombre());

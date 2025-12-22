@@ -164,9 +164,18 @@ public class GestorGastos {
     
     public Categoria crearCategoria(String nombre) {
         CategoriaImpl categoria = new CategoriaImpl(nombre, false);
+        System.out.println("repositorioCategorias = " + repositorioCategorias);
+        System.out.println("categorias = " + categorias);
+
         try {
-            repositorioCategorias.addCategoria(categoria);
-            categorias.add(categoria);
+        	// VERIFICAR SI YA EXISTE LA CATEGORIA
+        	boolean existe = false;
+        	existe = repositorioCategorias.getCategorias().stream()
+        					.anyMatch(c -> c.getNombre().equals(nombre));
+        	if (!existe) {
+        		repositorioCategorias.addCategoria(categoria);
+        		categorias.add(categoria);
+        	}
         } catch (Exception e) {
             System.err.println("Error al crear categoría: " + e.getMessage());
         }

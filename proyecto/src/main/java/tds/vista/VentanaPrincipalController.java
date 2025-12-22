@@ -71,7 +71,6 @@ public class VentanaPrincipalController {
     public void setCuenta(CuentaPersonal p) {
     	this.principal = p;
         cargarGastos();
-
     }
     public CuentaPersonal getCuenta() {
     	return principal;
@@ -212,7 +211,9 @@ public class VentanaPrincipalController {
     
     @FXML private void crearGasto() {
     	try {
+    		
             Configuracion.getInstancia().getSceneManager().showCrearGasto();
+            
             
         } catch (Exception e) {
             e.printStackTrace();

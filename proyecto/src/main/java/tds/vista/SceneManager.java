@@ -118,9 +118,14 @@ public class SceneManager {
     }
     
     public void showCrearGasto() throws IOException {
-        cambiarEscena("crearGasto");
-        stage.setTitle("Creando gasto");
-        stage.show();
+    	try { 
+    		FXMLLoader loader = new FXMLLoader(App.class.getResource("crearGasto.fxml")); 
+	    	Parent root = loader.load(); 
+	    	CrearGastoController controller = loader.getController(); 
+	    	controller.cargarCategorias(); 
+	    	cambiarEscenaConRoot("crearGasto", root); 
+    	} catch (IOException e) { 
+    		e.printStackTrace(); }
     }
     
     public void showCrearGastoCompartida(CuentaCompartidaController parentController) {
@@ -130,6 +135,7 @@ public class SceneManager {
             
             crearGastoCompartidaController = loader.getController();
             crearGastoCompartidaController.setCuentaCompartidaController(parentController);
+            crearGastoCompartidaController.cargarCategorias();
             
             // Usa tu método cambiarEscena existente pero con el root ya cargado
             cambiarEscenaConRoot("crearGastoCompartida", root);

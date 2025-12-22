@@ -1,5 +1,6 @@
 package tds.vista;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuButton;
@@ -16,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
+import tds.app.App;
 import tds.controlador.GestorGastos;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
@@ -135,18 +139,29 @@ public class CuentaCompartidaController {
     public List<Persona> getPersonasCuenta(){
     	return cuenta.getPersonas();
     }
-    @FXML private void crearGastoCompartida() {
-    	Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida(this);
+    @FXML 
+    private void crearGastoCompartida() throws IOException {
+    	try {
+    		
+            Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida(controller);
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
        
     }
-    @FXML private void importarGasto() { System.out.println("Importar Gasto"); }
+    @FXML 
+    private void importarGasto() { System.out.println("Importar Gasto"); }
 
 
-    @FXML private void saldoPorPersona() {
+    @FXML 
+    private void saldoPorPersona() {
     	System.out.println("Saldo por persona");
     }
     
-    @FXML private void personalizarDistribucion() {
+    @FXML 
+    private void personalizarDistribucion() {
     	try {
             Configuracion.getInstancia().getSceneManager().showDistribucionCuentaCompartida();
         } catch (Exception e) {

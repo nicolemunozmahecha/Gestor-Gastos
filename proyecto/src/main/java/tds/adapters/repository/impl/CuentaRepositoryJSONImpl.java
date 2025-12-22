@@ -1,9 +1,6 @@
 package tds.adapters.repository.impl;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +23,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
     
     private void cargaCuentas() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos();
+            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "cuentas.json";
             this.cuentas = cargarCuentas(rutaFichero);
             if (cuentas == null) cuentas = new ArrayList<>();
         } catch (Exception e) {
@@ -117,9 +114,14 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
     }
 
     private List<CuentaImpl> cargarCuentas(String rutaFichero) throws Exception {
-        InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
+       /* InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
         
         if (ficheroStream == null) {
+            // Si no existe el fichero, devolver lista vacía
+            return new ArrayList<>();
+        }*/
+    	File ficheroStream = new File(rutaFichero);
+    	if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
             return new ArrayList<>();
         }
@@ -140,7 +142,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
 
     private void guardarCuentas(List<CuentaImpl> cuentas, String rutaFichero) throws Exception {
         // Se carga mediante URL para prevenir problemas con rutas con espacios en blanco o caracteres no estandar
-    	
+    	/*
     	if (rutaFichero == null) {
             rutaFichero = Configuracion.getInstancia().getRutaDatos();
         }
@@ -148,8 +150,11 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         URL url = getClass().getResource(rutaFichero);
         
         // Cargo el fichero a partir de la URL local
-        File ficheroJson = Paths.get(url.toURI()).toFile();
-
+        File ficheroJson = Paths.get(url.toURI()).toFile();*/
+        File ficheroJson = new File(rutaFichero);
+    	if(ficheroJson.getParentFile() != null) {
+    		ficheroJson.getParentFile().mkdirs();
+    	}
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         datos.setCuentas(cuentas);
         this.cuentas = cuentas;
