@@ -13,13 +13,8 @@
             <Menu mnemonicParsing="false" text="Cuentas">
                <items>
                   <MenuItem fx:id="menuCrearCuenta" mnemonicParsing="false" onAction="#crearCuenta" text="Crear Cuenta" />
-                  <Menu mnemonicParsing="false" text="Eliminar Cuenta">
-                    <items>
-                      <MenuItem fx:id="menuEliminarCuenta1" mnemonicParsing="false" onAction="#eliminarCuenta" text="cuenta 1" />
-                        <MenuItem fx:id="menuEliminarCuenta2" mnemonicParsing="false" onAction="#eliminarCuenta" text="cuenta 2" />
-                    </items>
-                  </Menu>
-                  <MenuItem fx:id="menuTotalCuenta" mnemonicParsing="false" text="Total Cuenta" onAction="#totalCuenta"/>
+                  <Menu fx:id="menuEliminarCuenta" mnemonicParsing="false" onAction="#eliminarCuenta" text="Eliminar Cuenta" />
+                  <MenuItem fx:id="menuTotalCuenta" mnemonicParsing="false" onAction="#totalCuenta" text="Total Cuenta" />
                </items>
             </Menu>
             
@@ -47,12 +42,7 @@
             <Menu mnemonicParsing="false" text="Alertas">
                <items>
                   <MenuItem fx:id="menuCrearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" />
-                  <Menu mnemonicParsing="false" text="Eliminar Alerta">
-                     <items>
-                        <MenuItem fx:id="menuEliminarAlerta1" mnemonicParsing="false" onAction="#eliminarAlerta" text="alerta 1" />
-                        <MenuItem fx:id="menuEliminarAlerta2" mnemonicParsing="false" onAction="#eliminarAlerta" text="alerta 2" />
-                     </items>
-                  </Menu>
+                  <Menu fx:id="menuEliminarAlerta" mnemonicParsing="false" text="Eliminar Alerta" />
                </items>
             </Menu>
             

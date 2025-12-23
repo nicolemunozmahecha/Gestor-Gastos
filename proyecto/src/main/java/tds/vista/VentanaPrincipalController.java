@@ -15,6 +15,8 @@ import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
+import tds.modelo.Categoria;
+import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
@@ -26,8 +28,8 @@ public class VentanaPrincipalController {
 
     // CUENTAS
     @FXML private MenuItem menuCrearCuenta;
-    @FXML private MenuItem menuEliminarCuenta1;
-    @FXML private MenuItem menuEliminarCuenta2;
+    @FXML private Menu menuEliminarCuenta;
+
 
     // CATEGORÍAS
     @FXML private MenuItem menuCrearCategoria;
@@ -36,8 +38,7 @@ public class VentanaPrincipalController {
 
     // ALERTAS
     @FXML private MenuItem menuCrearAlerta;
-    @FXML private MenuItem menuEliminarAlerta1;
-    @FXML private MenuItem menuEliminarAlerta2;
+    @FXML private Menu menuEliminarAlerta;
 
     // NOTIFICACIONES
     @FXML private MenuItem menuHistorialNotificaciones;
@@ -60,6 +61,7 @@ public class VentanaPrincipalController {
     
     private GestorGastos gestor;
     private CuentaPersonal principal;
+    private List<Cuenta> cuentas;
 
     @FXML
     public void initialize() {
@@ -151,9 +153,26 @@ public class VentanaPrincipalController {
         }
     }
     
-    @FXML private void eliminarCuenta() { 
-    	System.out.println("Eliminar Cuenta"); 
+    @FXML 
+    private void eliminarCuenta() {
+        menuEliminarCuenta.getItems().clear();
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        cuentas = gestor.getCuentas();
+               
+        for (Cuenta c : cuentas) {
+            MenuItem item = new MenuItem(c.getNombre());
+            item.setUserData(c);
+            
+            item.setOnAction(e -> {
+                Cuenta cuentaAEliminar = (Cuenta) item.getUserData();
+                gestor.eliminarCuenta(cuentaAEliminar);
+                System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
+            });
+            
+            menuEliminarCuenta.getItems().add(item);
+        }
     }
+    
     @FXML 
     private void totalCuenta() {
     	try {
