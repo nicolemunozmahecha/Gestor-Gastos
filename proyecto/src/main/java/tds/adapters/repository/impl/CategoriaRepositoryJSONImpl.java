@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tds.Configuracion;
 import tds.adapters.repository.CategoriaRepository;
@@ -19,11 +20,11 @@ import tds.modelo.impl.DatosGastos;
 public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
     
     private List<CategoriaImpl> categorias = null;
-    private String rutaFichero;
+    private String rutaFichero = "data/datos.json";
     
     private void cargaCategorias() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "categorias.json";
+            //rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.categorias = cargarCategorias(rutaFichero);
             if (categorias == null) categorias = new ArrayList<>();
         } catch (Exception e) {
@@ -32,7 +33,8 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
     }
 
     @Override
-    public List<? extends CategoriaImpl> getCategorias() {
+   // public List<? extends CategoriaImpl> getCategorias() {
+    public List<CategoriaImpl> getCategorias() {
         if (categorias == null) {
             try {
                 cargaCategorias();
@@ -124,6 +126,7 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
         }
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         
@@ -154,6 +157,7 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
             this.categorias = categorias;
             
             ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule()); 
             mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
 
         } catch (Exception e) {

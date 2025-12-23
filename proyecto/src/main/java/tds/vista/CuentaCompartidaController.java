@@ -8,8 +8,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuButton;
@@ -19,11 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
-import tds.app.App;
 import tds.controlador.GestorGastos;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
-import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
 import tds.modelo.Persona;
 import tds.modelo.impl.GastoImpl;
@@ -143,7 +139,7 @@ public class CuentaCompartidaController {
     private void crearGastoCompartida() throws IOException {
     	try {
     		
-            Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida(controller);
+            Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida(this);
             
             
         } catch (Exception e) {

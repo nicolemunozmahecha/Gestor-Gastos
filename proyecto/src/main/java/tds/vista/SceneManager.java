@@ -135,7 +135,7 @@ public class SceneManager {
             
             crearGastoCompartidaController = loader.getController();
             crearGastoCompartidaController.setCuentaCompartidaController(parentController);
-            crearGastoCompartidaController.cargarCategorias();
+            //crearGastoCompartidaController.cargarCategorias();
             
             // Usa tu método cambiarEscena existente pero con el root ya cargado
             cambiarEscenaConRoot("crearGastoCompartida", root);

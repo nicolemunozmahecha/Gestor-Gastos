@@ -1,0 +1,115 @@
+{
+  "cuentas" : [ {
+    "numeroGastos" : 0,
+    "nombre" : "Principal",
+    "gastos" : [ ],
+    "propietario" : "User1"
+  }, {
+    "numeroPersonas" : 2,
+    "estrategiaDistribucion" : {
+      "personas" : [ {
+        "nombre" : "pepe",
+        "saldo" : 10.0
+      }, {
+        "nombre" : "ana",
+        "saldo" : -10.0
+      } ],
+      "numeroPersonas" : 2
+    },
+    "numeroGastos" : 1,
+    "nombre" : "secundaria",
+    "gastos" : [ {
+      "nombre" : "ropa",
+      "cantidad" : 20.0,
+      "fecha" : [ 2025, 12, 5 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Entretenimiento",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "pepe",
+        "saldo" : 10.0
+      }
+    } ],
+    "personas" : [ {
+      "nombre" : "pepe",
+      "saldo" : 10.0
+    }, {
+      "nombre" : "ana",
+      "saldo" : -10.0
+    } ]
+  } ],
+  "gastos" : [ {
+    "nombre" : "ropa",
+    "cantidad" : 20.0,
+    "fecha" : [ 2025, 12, 5 ],
+    "descripcion" : "",
+    "categoria" : {
+      "nombre" : "Entretenimiento",
+      "predefinida" : false
+    },
+    "pagador" : {
+      "nombre" : "pepe",
+      "saldo" : 10.0
+    }
+  }, {
+    "nombre" : "hym",
+    "cantidad" : 300.0,
+    "fecha" : [ 2025, 12, 3 ],
+    "descripcion" : "",
+    "categoria" : {
+      "nombre" : "ropa",
+      "predefinida" : false
+    },
+    "pagador" : null
+  } ],
+  "cuentasPersonales" : [ {
+    "numeroGastos" : 0,
+    "nombre" : "Principal",
+    "gastos" : [ ],
+    "propietario" : "User1"
+  } ],
+  "cuentasCompartidas" : [ {
+    "numeroPersonas" : 2,
+    "estrategiaDistribucion" : {
+      "personas" : [ {
+        "nombre" : "pepe",
+        "saldo" : 10.0
+      }, {
+        "nombre" : "ana",
+        "saldo" : -10.0
+      } ],
+      "numeroPersonas" : 2
+    },
+    "numeroGastos" : 1,
+    "nombre" : "secundaria",
+    "gastos" : [ {
+      "nombre" : "ropa",
+      "cantidad" : 20.0,
+      "fecha" : [ 2025, 12, 5 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Entretenimiento",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "pepe",
+        "saldo" : 10.0
+      }
+    } ],
+    "personas" : [ {
+      "nombre" : "pepe",
+      "saldo" : 10.0
+    }, {
+      "nombre" : "ana",
+      "saldo" : -10.0
+    } ]
+  } ],
+  "categorias" : [ {
+    "nombre" : "ropa",
+    "predefinida" : false
+  } ],
+  "alertas" : [ ],
+  "personas" : [ ]
+}

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.time.DayOfWeek;
 
@@ -46,7 +45,9 @@ public class GestorGastos {
         
         // Cargar datos desde los repositorios
         cargarDatos();
+        inicializarCategoriasPredefinidas();
     }
+
     
     private void cargarDatos() {
         // Cargar las cuentas desde el repositorio
@@ -82,18 +83,19 @@ public class GestorGastos {
         instancia = null;
     }
     
-    /*
+    
     private void inicializarCategoriasPredefinidas() {
-        categorias.add(new Categoria("Alimentación", true));
-        categorias.add(new Categoria("Transporte", true));
-        categorias.add(new Categoria("Entretenimiento", true));
-        categorias.add(new Categoria("Salud", true));
-        categorias.add(new Categoria("Educación", true));
-        categorias.add(new Categoria("Vivienda", true));
-        categorias.add(new Categoria("Ropa", true));
-        categorias.add(new Categoria("Otros", true));
+        categorias.add(new CategoriaImpl("Alimentación", true));
+        categorias.add(new CategoriaImpl("Transporte", true));
+        categorias.add(new CategoriaImpl("Entretenimiento", true));
+        /*
+        categorias.add(new CategoriaImpl("Salud", true));
+        categorias.add(new CategoriaImpl("Educación", true));
+        categorias.add(new CategoriaImpl("Vivienda", true));
+        categorias.add(new CategoriaImpl("Ropa", true));
+        categorias.add(new CategoriaImpl("Otros", true));*/
     }
-    */
+    
     
     // ========== GESTIÓN DE CUENTAS ==========
 
@@ -155,10 +157,6 @@ public class GestorGastos {
         return cuentas.stream().filter(c -> c.getNombre().equals(nombre)).findFirst().orElse(null);
     }
     
-    /*
-    public double totalCuenta(Cuenta cuenta) {
-    	
-    }*/
     
     // ========== GESTIÓN DE CATEGORÍAS ==========
     
@@ -168,16 +166,11 @@ public class GestorGastos {
         System.out.println("categorias = " + categorias);
 
         try {
-        	// VERIFICAR SI YA EXISTE LA CATEGORIA
-        	boolean existe = false;
-        	existe = repositorioCategorias.getCategorias().stream()
-        					.anyMatch(c -> c.getNombre().equals(nombre));
-        	if (!existe) {
-        		repositorioCategorias.addCategoria(categoria);
-        		categorias.add(categoria);
-        	}
+        	repositorioCategorias.addCategoria(categoria);
+        	categorias.add(categoria);
         } catch (Exception e) {
             System.err.println("Error al crear categoría: " + e.getMessage());
+            e.printStackTrace();
         }
         return categoria;
     }

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tds.Configuracion;
 import tds.adapters.repository.PersonaRepository;
@@ -22,11 +23,11 @@ import tds.modelo.impl.DatosGastos;
 public class PersonaRepositoryJSONImpl implements PersonaRepository {
     
     private List<PersonaImpl> personas = null;
-    private String rutaFichero;
+    private String rutaFichero = "data/datos.json";
     
     private void cargaPersonas() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "personas.json";
+           // rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.personas = cargarPersonas(rutaFichero);
             if (personas == null) personas = new ArrayList<>();
         } catch (Exception e) {
@@ -121,6 +122,7 @@ public class PersonaRepositoryJSONImpl implements PersonaRepository {
         }
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         DatosGastos datosCargados = mapper.readValue(ficheroStream, new TypeReference<DatosGastos>() {});
@@ -146,6 +148,7 @@ public class PersonaRepositoryJSONImpl implements PersonaRepository {
         this.personas = personas;
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
     }
 }

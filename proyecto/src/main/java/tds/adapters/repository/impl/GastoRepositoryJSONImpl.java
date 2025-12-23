@@ -20,11 +20,11 @@ import tds.modelo.impl.DatosGastos;
 public class GastoRepositoryJSONImpl implements GastoRepository {
     
     private List<GastoImpl> gastos = null;
-    private String rutaFichero;
+    private String rutaFichero = "data/datos.json";
     
     private void cargaGastos() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "gastos.json";
+            //rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.gastos = cargarGastos(rutaFichero);
             if (gastos == null) gastos = new ArrayList<>();
         } catch (Exception e) {

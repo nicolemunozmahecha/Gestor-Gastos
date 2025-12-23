@@ -13,8 +13,8 @@ public interface CategoriaRepository {
      * 
      * @return Lista de categorias
      */
-    List<? extends CategoriaImpl> getCategorias();
-    
+   // List<? extends CategoriaImpl> getCategorias();
+	 List<CategoriaImpl> getCategorias();
     /**
      * Busca una categoria por su nombre y la devuelve
      * 

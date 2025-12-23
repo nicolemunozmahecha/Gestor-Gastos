@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tds.Configuracion;
 import tds.adapters.repository.CuentaRepository;
@@ -19,11 +20,11 @@ import tds.modelo.impl.DatosGastos;
 public class CuentaRepositoryJSONImpl implements CuentaRepository {
     
     private List<CuentaImpl> cuentas = null;
-    private String rutaFichero = "/data/gastos.json";
+    private String rutaFichero = "data/datos.json";
     
     private void cargaCuentas() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "cuentas.json";
+            //rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.cuentas = cargarCuentas(rutaFichero);
             if (cuentas == null) cuentas = new ArrayList<>();
         } catch (Exception e) {
@@ -127,6 +128,8 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         }
         
         ObjectMapper mapper = new ObjectMapper();
+        // LINEA NUEVA PARA ERROR DE LA FECHA
+        mapper.registerModule(new JavaTimeModule());
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         DatosGastos datosCargados = mapper.readValue(ficheroStream, new TypeReference<DatosGastos>() {});
@@ -160,6 +163,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         this.cuentas = cuentas;
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
     }
 }

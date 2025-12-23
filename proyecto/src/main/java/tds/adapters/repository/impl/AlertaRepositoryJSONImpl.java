@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tds.Configuracion;
 import tds.adapters.repository.AlertaRepository;
@@ -20,11 +21,11 @@ import tds.modelo.impl.DatosGastos;
 public class AlertaRepositoryJSONImpl implements AlertaRepository {
     
     private List<AlertaImpl> alertas = null;
-    private String rutaFichero;
+    private String rutaFichero = "data/datos.json";
     
     private void cargaAlertas() throws ErrorPersistenciaException {
         try {
-            rutaFichero = Configuracion.getInstancia().getRutaDatos() + "alertas.json";
+            //rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.alertas = cargarAlertas(rutaFichero);
             if (alertas == null) alertas = new ArrayList<>();
         } catch (Exception e) {
@@ -124,6 +125,7 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
         }
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         DatosGastos datosCargados = mapper.readValue(ficheroStream, new TypeReference<DatosGastos>() {});
@@ -145,6 +147,7 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
         this.alertas = alertas;
         
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); 
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File(rutaAbsoluta), datos);
     }
 }

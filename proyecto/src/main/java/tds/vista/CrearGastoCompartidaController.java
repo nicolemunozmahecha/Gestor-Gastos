@@ -45,9 +45,10 @@ public class CrearGastoCompartidaController {
                 .noneMatch(CheckMenuItem::isSelected);          // Ninguno está seleccionado
     }
 	
-    // PARA CARGAR LAS CATEGORIAS NUEVAS, Y QUE SOLO DEJE SELECCIONAR UNA
+    // PARA CARGAR TODAS LAS CATEGORIAS
     public void cargarCategorias() {
-        categoriasDisp = gestor.getCategoriasPersonalizadas();
+    	categorias.getItems().clear();
+        categoriasDisp = gestor.getCategorias();
         for (Categoria c : categoriasDisp) {
             final CheckMenuItem item = new CheckMenuItem(c.getNombre());
             item.setUserData(c);
