@@ -1,19 +1,59 @@
 {
-  "cuentas" : [ {
-    "numeroGastos" : 0,
-    "nombre" : "Principal",
-    "gastos" : [ ],
-    "propietario" : "User1"
-  } ],
-  "gastos" : [ ],
   "cuentasPersonales" : [ {
-    "numeroGastos" : 0,
     "nombre" : "Principal",
-    "gastos" : [ ],
+    "gastos" : [ {
+      "nombre" : "qw",
+      "cantidad" : 1.0,
+      "fecha" : [ 2025, 12, 1 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Alimentación",
+        "predefinida" : false
+      },
+      "pagador" : null
+    } ],
     "propietario" : "User1"
   } ],
-  "cuentasCompartidas" : [ ],
-  "categorias" : [ ],
+  "cuentasCompartidas" : [ {
+    "nombre" : "hola",
+    "gastos" : [ {
+      "nombre" : "prueba",
+      "cantidad" : 40.0,
+      "fecha" : [ 2025, 12, 9 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Transporte",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "paco",
+        "saldo" : 20.0
+      }
+    } ],
+    "personas" : [ {
+      "nombre" : "paco",
+      "saldo" : 20.0
+    }, {
+      "nombre" : "pepe",
+      "saldo" : -20.0
+    } ]
+  } ],
+  "categorias" : [ {
+    "nombre" : "Alimentación",
+    "predefinida" : true
+  }, {
+    "nombre" : "Transporte",
+    "predefinida" : true
+  }, {
+    "nombre" : "Entretenimiento",
+    "predefinida" : true
+  } ],
   "alertas" : [ ],
-  "personas" : [ ]
+  "personas" : [ {
+    "nombre" : "paco",
+    "saldo" : 20.0
+  }, {
+    "nombre" : "pepe",
+    "saldo" : -20.0
+  } ]
 }

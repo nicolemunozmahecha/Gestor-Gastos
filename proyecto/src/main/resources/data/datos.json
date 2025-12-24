@@ -1,6 +1,6 @@
 {
-  "gastos": [],
-  "cuentas": [],
+  "cuentasPersonales": [],
+  "cuentasCompartidas": [],
   "categorias": [],
   "alertas": [],
   "personas": []
