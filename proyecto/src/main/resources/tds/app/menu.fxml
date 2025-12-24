@@ -5,35 +5,36 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
+<VBox xmlns="http://javafx.com/javafx/21" 
+		xmlns:fx="http://javafx.com/fxml/1" 
+		fx:controller="tds.vista.MenuController">
    <children>
       <MenuBar useSystemMenuBar="false" VBox.vgrow="NEVER">
          <menus>
          <!--============= CUENTAS ==================-->
             <Menu mnemonicParsing="false" text="Cuentas">
                <items>
-                  <MenuItem fx:id="menuCrearCuenta" mnemonicParsing="false" onAction="#crearCuenta" text="Crear Cuenta" />
-                  <Menu fx:id="menuEliminarCuenta" mnemonicParsing="false" onAction="#eliminarCuenta" text="Eliminar Cuenta" />
-                  <MenuItem fx:id="menuTotalCuenta" mnemonicParsing="false" onAction="#totalCuenta" text="Total Cuenta" />
+                  <MenuItem fx:id="menuCrearCuenta" mnemonicParsing="false"  text="Crear Cuenta" />
+                  <Menu fx:id="menuEliminarCuenta" mnemonicParsing="false" text="Eliminar Cuenta">
+				  	<items>
+				    	<MenuItem text="Cargando..." />
+				  	</items>
+				  </Menu> <MenuItem fx:id="menuTotalCuenta" mnemonicParsing="false" text="Total Cuenta" />
                </items>
             </Menu>
             
 			<!--============= GASTOS ==================-->
             <Menu mnemonicParsing="false" text="Gastos">
                <items>
-                  <MenuItem fx:id="menuFiltrarGastos" mnemonicParsing="false" onAction="#filtrarGastos" text="Filtrar Gastos" />
+                  <MenuItem fx:id="menuFiltrarGastos" mnemonicParsing="false" text="Filtrar Gastos" />
                </items>
             </Menu>
             
 			<!--============= CATEGORIAS ==================-->
             <Menu mnemonicParsing="false" text="Categorias">
                <items>
-                  <MenuItem fx:id="menuCrearCategoria" mnemonicParsing="false" onAction="#crearCategoria" text="Crear Categoria" />
-                  <Menu mnemonicParsing="false" text="Eliminar Categoria">
-                     <items>
-                        <MenuItem fx:id="menuEliminarCategoria1" mnemonicParsing="false" onAction="#eliminarCategoria" text="categoria 1" />
-                        <MenuItem fx:id="menuEliminarCategoria2" mnemonicParsing="false" onAction="#eliminarCategoria" text="categoria 2" />
-                     </items>
+                  <MenuItem fx:id="menuCrearCategoria" mnemonicParsing="false"  text="Crear Categoria" />
+                  <Menu fx:id="menuEliminarCategoria" mnemonicParsing="false" text="Eliminar Categoria">
                   </Menu>
                </items>
             </Menu>
@@ -41,7 +42,7 @@
 			<!--============= ALERTAS ==================-->
             <Menu mnemonicParsing="false" text="Alertas">
                <items>
-                  <MenuItem fx:id="menuCrearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" />
+                  <MenuItem fx:id="menuCrearAlerta" mnemonicParsing="false"  text="Crear Alerta" />
                   <Menu fx:id="menuEliminarAlerta" mnemonicParsing="false" text="Eliminar Alerta" />
                </items>
             </Menu>
@@ -49,14 +50,14 @@
 			<!--============= NOTIFICACIONES ==================-->
             <Menu mnemonicParsing="false" text="Notificaciones">
                <items>
-                  <MenuItem fx:id="menuHistorialNotificaciones" mnemonicParsing="false" onAction="#mostrarHistorial" text="Historial" />
+                  <MenuItem fx:id="menuHistorialNotificaciones" mnemonicParsing="false"  text="Historial" />
                </items>
             </Menu>
 
 			<!--============= SALIR ==================-->
             <Menu mnemonicParsing="false" text="Salir">
                <items>
-                  <MenuItem fx:id="menuSalir" mnemonicParsing="false" onAction="#salirAplicacion" text="Salir" />
+                  <MenuItem fx:id="menuSalir" mnemonicParsing="false"  text="Salir" />
                </items>
             </Menu>
          </menus>

@@ -15,7 +15,6 @@ import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
-import tds.modelo.Categoria;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.CuentaPersonal;
@@ -25,26 +24,7 @@ import tds.modelo.impl.GastoImpl;
 public class VentanaPrincipalController {
 
     @FXML private TabPane tabPane;
-
-    // CUENTAS
-    @FXML private MenuItem menuCrearCuenta;
-    @FXML private Menu menuEliminarCuenta;
-
-
-    // CATEGORÍAS
-    @FXML private MenuItem menuCrearCategoria;
-    @FXML private MenuItem menuEliminarCategoria1;
-    @FXML private MenuItem menuEliminarCategoria2;
-
-    // ALERTAS
-    @FXML private MenuItem menuCrearAlerta;
-    @FXML private Menu menuEliminarAlerta;
-
-    // NOTIFICACIONES
-    @FXML private MenuItem menuHistorialNotificaciones;
-
-    // SALIR
-    @FXML private MenuItem menuSalir;
+    @FXML private MenuController menuController;
 
     // GASTOS
     @FXML private MenuButton btnCrearGasto;
@@ -69,6 +49,12 @@ public class VentanaPrincipalController {
     	 if (tablaGastos != null) {
     	        configurarTabla();
     	 }
+    	 if (menuController != null) {
+    	        System.out.println("Conectando MenuController con VentanaPrincipalController");
+    	        menuController.setControladorPrincipal(this);
+	    } else {
+	        System.err.println("ERROR: menuBarController es NULL - no se pueden configurar eventos");
+	    }
     }
 
     /**
@@ -125,7 +111,7 @@ public class VentanaPrincipalController {
 
     // ========== HANDLERS ==========
     @FXML
-    private void crearCuenta() {
+    public void crearCuenta() {
         try {
             Configuracion.getInstancia().getSceneManager().showCrearCuenta();
             
@@ -228,10 +214,11 @@ public class VentanaPrincipalController {
     }
     
     @FXML 
-    private void eliminarCuenta() {
-        menuEliminarCuenta.getItems().clear();
+    public void eliminarCuenta() {
         gestor = Configuracion.getInstancia().getGestorGastos();
         cuentas = gestor.getCuentas();
+        Menu menu = menuController.getMenuEliminarCuenta();
+        menu.getItems().clear();
                
         for (Cuenta c : cuentas) {
             MenuItem item = new MenuItem(c.getNombre());
@@ -239,16 +226,26 @@ public class VentanaPrincipalController {
             
             item.setOnAction(e -> {
                 Cuenta cuentaAEliminar = (Cuenta) item.getUserData();
+                // NUEVO: ELIMINAR PESTAÑA DE LA CUENTA
+                if (tabPane != null) {
+                    tabPane.getTabs().removeIf(t -> 
+                        t.getText().equals(cuentaAEliminar.getNombre())
+                    );
+                } else {
+                    System.err.println("ERROR: tabPane es null");
+                }
+                
                 gestor.eliminarCuenta(cuentaAEliminar);
                 System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
             });
             
-            menuEliminarCuenta.getItems().add(item);
+            menu.getItems().add(item);
+            System.out.println("Item añadido al menú: " + c.getNombre());
         }
     }
     
     @FXML 
-    private void totalCuenta() {
+    public void totalCuenta() {
     	try {
             Configuracion.getInstancia().getSceneManager().showTotalCuenta();
         } catch (Exception e) {
@@ -257,7 +254,7 @@ public class VentanaPrincipalController {
     }
 
     @FXML 
-    private void filtrarGastos() { 
+    public void filtrarGastos() { 
     	try {
             Configuracion.getInstancia().getSceneManager().showFiltrarGastos();
         } catch (Exception e) {
@@ -266,19 +263,18 @@ public class VentanaPrincipalController {
    }
     
     @FXML 
-    private void crearCategoria() { 
+    public void crearCategoria() { 
     	try {
             Configuracion.getInstancia().getSceneManager().showCrearCategoria();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    @FXML private void eliminarCategoria() { System.out.println("Eliminar Categoria"); }
+    @FXML public void eliminarCategoria() { System.out.println("Eliminar Categoria"); }
 
     
-    // VER POR QUE NO VA ESTA
     @FXML 
-    private void crearAlerta() { 
+    public void crearAlerta() { 
     	try {
             Configuracion.getInstancia().getSceneManager().showCrearAlerta();
         } catch (Exception e) {
@@ -286,10 +282,10 @@ public class VentanaPrincipalController {
         }
     	//System.out.println("creando Alerta");
     }
-    @FXML private void eliminarAlerta() { System.out.println("Eliminar Alerta"); }
+    @FXML public void eliminarAlerta() { System.out.println("Eliminar Alerta"); }
 
     @FXML 
-    private void mostrarHistorial() {
+    public void mostrarHistorial() {
     	try {
             Configuracion.getInstancia().getSceneManager().showMostrarHistorial();
         } catch (Exception e) {
@@ -344,19 +340,9 @@ public class VentanaPrincipalController {
     //@FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }
     //@FXML private void mostrarGrafica() { System.out.println("Mostrar Gráfica"); }
 
-    @FXML private void saldoPorPersona() {
-    	System.out.println("Saldo por persona");
-    }
-    
-    @FXML private void personalizarDistribución() {
-    	System.out.println("Personalizar Distribución");
-    }
-    
-    // HASTA AQUI
-    
     
     @FXML
-    private void salirAplicacion() {
+    public void salirAplicacion() {
         Alert a = new Alert(AlertType.CONFIRMATION, "¿Salir?");
         a.showAndWait().ifPresent(r -> {
             if (r == ButtonType.OK) System.exit(0);
