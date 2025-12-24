@@ -1,10 +1,12 @@
 package tds.modelo.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CuentaPersonalImpl extends CuentaImpl implements CuentaPersonal {
 	
 	@JsonProperty("propietario")

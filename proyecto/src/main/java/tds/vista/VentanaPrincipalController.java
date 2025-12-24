@@ -69,6 +69,20 @@ public class VentanaPrincipalController {
     	        configurarTabla();
     	 }
     }
+
+    /**
+     * Inicialización "limpia" de la vista: recibe el modelo ya cargado
+     * (principal + cuentas compartidas) y crea las pestañas correspondientes.
+     *
+     * Esto evita que el controller tenga que consultar al gestor para averiguar
+     * qué cuentas hay al arrancar (mejor separación de responsabilidades).
+     */
+    public void init(CuentaPersonal principal, List<CuentaCompartida> compartidas) {
+        if (principal != null) {
+            setCuenta(principal);
+        }
+        crearPestanasCompartidas(compartidas);
+    }
     
     public void setCuenta(CuentaPersonal p) {
     	this.principal = p;
@@ -120,10 +134,30 @@ public class VentanaPrincipalController {
     }
     // NUEVO: Método público para añadir pestañas desde fuera
     public void añadirPestañaCuentaCompartida(CuentaCompartida cuenta) {
+        añadirPestañaCuentaCompartida(cuenta, true);
+    }
+
+    /**
+     * Añade una pestaña para una cuenta compartida.
+     *
+     * @param cuenta Cuenta compartida a mostrar
+     * @param seleccionar Si true, selecciona la pestaña recién creada
+     */
+    public void añadirPestañaCuentaCompartida(CuentaCompartida cuenta, boolean seleccionar) {
     	// si la pestaña a crear es vacia
         if (tabPane == null) {
             System.err.println("ERROR: tabPane es null!");
             return;
+        }
+
+        // Evitar duplicados (por ejemplo, si se recarga la vista)
+        for (Tab t : tabPane.getTabs()) {
+            if (cuenta.getNombre().equals(t.getText())) {
+                if (seleccionar) {
+                    tabPane.getSelectionModel().select(t);
+                }
+                return;
+            }
         }
         
         try {
@@ -145,12 +179,51 @@ public class VentanaPrincipalController {
             
             // Añadir al TabPane
             tabPane.getTabs().add(nuevaTab);
-            tabPane.getSelectionModel().select(nuevaTab);
+            if (seleccionar) {
+                tabPane.getSelectionModel().select(nuevaTab);
+            }
             
         } catch (IOException e) {
             //System.err.println("ERROR al cargar la vista de cuenta compartida:");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Crea (o recrea) las pestañas de todas las cuentas compartidas que haya
+     * actualmente en el gestor (lo que viene de la persistencia al arrancar).
+     *
+     * Lógica:
+     * - Deja la pestaña "Principal" tal cual.
+     * - Elimina cualquier otra pestaña existente (para evitar duplicados).
+     * - Añade una pestaña por cada CuentaCompartida cargada.
+     */
+    public void cargarPestañasCuentasCompartidasDesdePersistencia() {
+        // Mantengo este método por compatibilidad, pero la lógica real está en
+        // crearPestanasCompartidas(...) y se alimenta desde el gestor.
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        crearPestanasCompartidas(gestor.getCuentasCompartidas());
+    }
+
+    private void crearPestanasCompartidas(List<CuentaCompartida> compartidas) {
+        if (tabPane == null) return;
+
+        // 1) Limpiar pestañas (dejando "Principal")
+        tabPane.getTabs().removeIf(t -> t.getText() != null && !t.getText().equals("Principal"));
+
+        if (compartidas == null) {
+            System.out.println("DEBUG UI: No hay cuentas compartidas para crear pestañas");
+            return;
+        }
+
+        int num = 0;
+        for (CuentaCompartida cc : compartidas) {
+            añadirPestañaCuentaCompartida(cc, false);
+            System.out.println("DEBUG UI: Pestaña creada para cuenta compartida '" + cc.getNombre() + "' con " + cc.getNumeroGastos() + " gastos");
+            num++;
+        }
+        System.out.println("DEBUG UI: Total pestañas cuentas compartidas creadas: " + num);
+        tabPane.getSelectionModel().select(0);
     }
     
     @FXML 

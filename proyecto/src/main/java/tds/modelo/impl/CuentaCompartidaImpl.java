@@ -10,8 +10,10 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(value = {"estrategiaDistribucion"}, ignoreUnknown = true)
 public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida {
     @JsonProperty("personas")
     private List<PersonaImpl> personas;
@@ -148,6 +150,20 @@ public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida
         this.personas = new ArrayList<>(personas);
     }
     
+    /**
+     * IMPORTANTE PARA PERSISTENCIA JSON:
+     *
+     * EstrategiaDistribucion es una interfaz. Cuando el JSON contiene el campo
+     * "estrategiaDistribucion", Jackson intenta deserializarlo hacia la interfaz
+     * y falla (no puede instanciar una interfaz sin info de tipo).
+     *
+     * Consecuencia directa: al arrancar, la lectura del JSON lanza excepción y
+     * el repositorio devuelve listas vacías, por eso siempre "no existe Principal".
+     *
+     * Solución: NO persistir la estrategia. Al cargar, si es null, se recrea una
+     * estrategia por defecto (DistribucionEquitativaImpl).
+     */
+    @JsonIgnore
     @Override
     public EstrategiaDistribucion getEstrategiaDistribucion() {
         // Si la estrategia es null (por deserialización), crear una por defecto
@@ -157,6 +173,7 @@ public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida
         return estrategia;
     }
     
+    @JsonIgnore
     @Override
     public void setEstrategiaDistribucion(EstrategiaDistribucion estrategia) {
         this.estrategia = estrategia;

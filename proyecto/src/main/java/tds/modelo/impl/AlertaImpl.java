@@ -5,6 +5,7 @@ import tds.modelo.Categoria;
 import tds.modelo.PeriodoAlerta;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class AlertaImpl implements Alerta {
 	
@@ -82,12 +83,14 @@ public class AlertaImpl implements Alerta {
         this.periodo = periodo;
     }
     
+    @JsonIgnore
     @Override
     public Categoria getCategoria() {
         return categoria;
     }
     
     //TODO casting
+    @JsonIgnore
     @Override
     public void setCategoria(Categoria categoria) {
         this.categoria = (CategoriaImpl) categoria;

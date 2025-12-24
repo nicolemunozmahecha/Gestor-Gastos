@@ -49,7 +49,14 @@ public class SceneManager {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("ventanaPrincipal.fxml"));
                 ventanaPrincipalRoot = loader.load();
                 ventanaPrincipalController = loader.getController();
-                ventanaPrincipalController.setCuenta(Configuracion.getInstancia().getSceneManager().getPrincipal());
+
+                // Inicializar la vista con los datos ya cargados (inyección).
+                // Así el controller no tiene que "ir a buscar" cuentas al gestor,
+                // y evitamos problemas de orden de inicialización.
+                ventanaPrincipalController.init(
+                        this.personal,
+                        Configuracion.getInstancia().getGestorGastos().getCuentasCompartidas()
+                );
             }
             
             // Usar la misma instancia siempre

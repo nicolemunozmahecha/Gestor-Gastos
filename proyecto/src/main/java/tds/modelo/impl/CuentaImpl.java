@@ -6,8 +6,10 @@ import tds.modelo.Gasto;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class CuentaImpl implements Cuenta {
     @JsonProperty("nombre")
     protected String nombre;

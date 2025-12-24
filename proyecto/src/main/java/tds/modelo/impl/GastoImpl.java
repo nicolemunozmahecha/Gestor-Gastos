@@ -6,6 +6,7 @@ import tds.modelo.Persona;
 import java.time.LocalDate;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class GastoImpl implements Gasto {
 	
@@ -101,11 +102,13 @@ public class GastoImpl implements Gasto {
         this.descripcion = descripcion != null ? descripcion : "";
     }
     
+    @JsonIgnore
     @Override
     public Categoria getCategoria() {
         return categoria;
     }
     
+    @JsonIgnore
     @Override
     public void setCategoria(Categoria categoria) {
         if (categoria == null) {
@@ -114,12 +117,14 @@ public class GastoImpl implements Gasto {
         this.categoria = (CategoriaImpl) categoria;
     }
     
+    @JsonIgnore
     @Override
     public Persona getPagador() {
         return pagador;
     }
     
     //TODO chequear si en lugar del casting es mejor cambiar el tipo del parametro
+    @JsonIgnore
     @Override
     public void setPagador(Persona pagador) {
         this.pagador = (PersonaImpl) pagador;

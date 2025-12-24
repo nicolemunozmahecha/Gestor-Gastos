@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tds.Configuracion;
@@ -20,11 +23,11 @@ import tds.modelo.impl.DatosGastos;
 public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
     
     private List<CategoriaImpl> categorias = null;
-    private String rutaFichero = "data/datos.json";
+    private String rutaFichero = null;
     
     private void cargaCategorias() throws ErrorPersistenciaException {
         try {
-            //rutaFichero = Configuracion.getInstancia().getRutaDatos();
+            rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.categorias = cargarCategorias(rutaFichero);
             if (categorias == null) categorias = new ArrayList<>();
         } catch (Exception e) {
@@ -39,9 +42,10 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
             try {
                 cargaCategorias();
             } catch (ErrorPersistenciaException e) {
-                // Manejo la excepcion pero no la propago
-                categorias = new ArrayList<>();
-            }
+                    System.err.println("ERROR: No se han podido cargar datos desde JSON (se devuelve lista vacía).");
+                    e.printStackTrace();
+                    categorias = new ArrayList<>();
+                }
         }
         return categorias;
     }
@@ -65,6 +69,10 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
     public void addCategoria(CategoriaImpl categoria) throws ElementoExistenteException, ErrorPersistenciaException {
         if (categorias == null) {
             getCategorias();
+        }
+        
+        if (rutaFichero == null) {
+            rutaFichero = Configuracion.getInstancia().getRutaDatos();
         }
         
         // Si la categoria ya existe no puedo insertarla
@@ -126,12 +134,14 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
         }
         
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule()); 
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         
         DatosGastos datosCargados = mapper.readValue(ficheroStream, new TypeReference<DatosGastos>() {});
-        datos.setGastos(datosCargados.getGastos());
         datos.setCuentas(datosCargados.getCuentas());
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
@@ -157,7 +167,10 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
             this.categorias = categorias;
             
             ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule()); 
+            mapper.registerModule(new JavaTimeModule());
+            mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
             mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
 
         } catch (Exception e) {

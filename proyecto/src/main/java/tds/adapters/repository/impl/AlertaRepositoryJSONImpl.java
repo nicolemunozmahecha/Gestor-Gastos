@@ -1,13 +1,15 @@
 package tds.adapters.repository.impl;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import tds.Configuracion;
@@ -21,11 +23,11 @@ import tds.modelo.impl.DatosGastos;
 public class AlertaRepositoryJSONImpl implements AlertaRepository {
     
     private List<AlertaImpl> alertas = null;
-    private String rutaFichero = "data/datos.json";
+    private String rutaFichero = null;
     
     private void cargaAlertas() throws ErrorPersistenciaException {
         try {
-            //rutaFichero = Configuracion.getInstancia().getRutaDatos();
+            rutaFichero = Configuracion.getInstancia().getRutaDatos();
             this.alertas = cargarAlertas(rutaFichero);
             if (alertas == null) alertas = new ArrayList<>();
         } catch (Exception e) {
@@ -39,9 +41,10 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
             try {
                 cargaAlertas();
             } catch (ErrorPersistenciaException e) {
-                // Manejo la excepcion pero no la propago
-                alertas = new ArrayList<>();
-            }
+                    System.err.println("ERROR: No se han podido cargar datos desde JSON (se devuelve lista vacía).");
+                    e.printStackTrace();
+                    alertas = new ArrayList<>();
+                }
         }
         return alertas;
     }
@@ -65,6 +68,10 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
     public void addAlerta(AlertaImpl alerta) throws ElementoExistenteException, ErrorPersistenciaException {
         if (alertas == null) {
             getAlertas();
+        }
+        
+        if (rutaFichero == null) {
+            rutaFichero = Configuracion.getInstancia().getRutaDatos();
         }
         
         // Si la alerta ya existe no puedo insertarla
@@ -125,11 +132,13 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
         }
         
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule()); 
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         
         DatosGastos datosCargados = mapper.readValue(ficheroStream, new TypeReference<DatosGastos>() {});
-        datos.setGastos(datosCargados.getGastos());
         datos.setCuentas(datosCargados.getCuentas());
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
@@ -140,14 +149,20 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
     }
 
     private void guardarAlertas(List<AlertaImpl> alertas, String rutaFichero) throws Exception {
-        String rutaAbsoluta = getClass().getResource(rutaFichero).getPath();
+        File ficheroJson = new File(rutaFichero);
+        if(ficheroJson.getParentFile() != null) {
+            ficheroJson.getParentFile().mkdirs();
+        }
 
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         datos.setAlertas(alertas);
         this.alertas = alertas;
         
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule()); 
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(rutaAbsoluta), datos);
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+        mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
     }
 }

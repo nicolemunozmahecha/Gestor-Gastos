@@ -85,19 +85,36 @@ public class GestorGastos {
     
     
     private void inicializarCategoriasPredefinidas() {
-        categorias.add(new CategoriaImpl("Alimentación", true));
-        categorias.add(new CategoriaImpl("Transporte", true));
-        categorias.add(new CategoriaImpl("Entretenimiento", true));
-        /*
-        categorias.add(new CategoriaImpl("Salud", true));
-        categorias.add(new CategoriaImpl("Educación", true));
-        categorias.add(new CategoriaImpl("Vivienda", true));
-        categorias.add(new CategoriaImpl("Ropa", true));
-        categorias.add(new CategoriaImpl("Otros", true));*/
+        // Solo añadir categorías predefinidas si no existen
+        String[] nombresCategorias = {"Alimentación", "Transporte", "Entretenimiento"};
+        
+        for (String nombre : nombresCategorias) {
+            // Verificar si la categoría ya existe
+            boolean existe = categorias.stream()
+                .anyMatch(c -> c.getNombre().equalsIgnoreCase(nombre));
+            
+            if (!existe) {
+                CategoriaImpl categoria = new CategoriaImpl(nombre, true);
+                categorias.add(categoria);
+                // Persistir la categoría
+                try {
+                    repositorioCategorias.addCategoria(categoria);
+                } catch (Exception e) {
+                    // La categoría ya existe en el repositorio, no hacer nada
+                }
+            }
+        }
     }
     
     
     // ========== GESTIÓN DE CUENTAS ==========
+
+    public List<CuentaCompartida> getCuentasCompartidas() {
+        return cuentas.stream()
+                .filter(c -> c instanceof CuentaCompartida)
+                .map(c -> (CuentaCompartida) c)
+                .collect(Collectors.toList());
+    }
 
     
     public CuentaPersonal crearCuentaPersonal(CuentaPersonalImpl cuenta) {
@@ -247,32 +264,63 @@ public class GestorGastos {
     
  // ========== GESTIÓN DE GASTOS ==========
     
+    /**
+     * Crea un gasto sin añadirlo a ninguna cuenta.
+     * IMPORTANTE: Después de crear el gasto, debe añadirse a una cuenta usando agregarGastoACuenta()
+     */
     public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador) {
-        GastoImpl gasto = new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador);
-        try {
-            repositorioGastos.addGasto(gasto);
-            //gastos.add(gasto);
-        } catch (Exception e) {
-            System.err.println("Error al crear gasto: " + e.getMessage());
-            e.printStackTrace(); 
-        }
-        return gasto;
+        return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador);
     }
     
-    
+    /**
+     * Crea un gasto sin añadirlo a ninguna cuenta.
+     * IMPORTANTE: Después de crear el gasto, debe añadirse a una cuenta usando agregarGastoACuenta()
+     */
     public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
-        GastoImpl gasto = new GastoImpl(nombre, cantidad, fecha, descripcion, categoria);
-        try {
-            repositorioGastos.addGasto(gasto);
-            //gastos.add(gasto);
-            // PROBAMOS IMPRIMIR GASTOS PARA VER SI SE CREAN CORRECTAMENTE
-            repositorioGastos.getGastos().stream()
-            		.forEach(g -> System.out.println(g));
-        } catch (Exception e) {
-            System.err.println("Error al crear gasto: " + e.getMessage());
-            e.printStackTrace(); 
+        return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria);
+    }
+    
+    /**
+     * Añade un gasto a una cuenta y persiste el cambio.
+     * @param cuenta Cuenta a la que añadir el gasto
+     * @param gasto Gasto a añadir
+     * @return true si se añadió correctamente, false en caso contrario
+     */
+    public boolean agregarGastoACuenta(Cuenta cuenta, Gasto gasto) {
+        if (cuenta == null || gasto == null) {
+            return false;
         }
-        return gasto;
+        
+        try {
+            // Añadir el gasto a la cuenta
+            cuenta.agregarGasto(gasto);
+            
+            // Actualizar la cuenta en el repositorio para persistir el cambio
+            CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
+            
+            // CRÍTICO: Actualizar la cuenta en la lista local de cuentas del gestor
+            for (int i = 0; i < cuentas.size(); i++) {
+                if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
+                    cuentas.set(i, cuentaActualizada);
+                    break;
+                }
+            }
+            
+            System.out.println("DEBUG: Gasto añadido. Cuenta tiene " + cuenta.getNumeroGastos() + " gastos");
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al agregar gasto a cuenta: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public Cuenta getCuentaPorNombre(String nombre) throws ElementoNoEncontradoException {
+        try {
+            return repositorioCuentas.findByNombre(nombre);
+        } catch (Exception e) {
+            throw new ElementoNoEncontradoException("No se encontró la cuenta: " + nombre);
+        }
     }
     
     /**
@@ -488,4 +536,4 @@ public class GestorGastos {
         return crearCuentaCompartida(nombreCuenta, personas);
     }
 
-}	
+}
