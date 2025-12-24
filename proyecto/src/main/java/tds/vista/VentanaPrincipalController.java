@@ -48,6 +48,7 @@ public class VentanaPrincipalController {
 
     // GASTOS
     @FXML private MenuButton btnCrearGasto;
+    @FXML private MenuButton btnEliminarGasto;
     @FXML private MenuItem menuGastoNuevo;
     @FXML private MenuItem menuImportarGasto;
     @FXML private TableView<Gasto> tablaGastos;
@@ -301,7 +302,8 @@ public class VentanaPrincipalController {
     	tablaGastos.getItems().add(g);            
     }
     
-    @FXML private void crearGasto() {
+    @FXML 
+    private void crearGasto() {
     	try {
     		
             Configuracion.getInstancia().getSceneManager().showCrearGasto();
@@ -309,6 +311,31 @@ public class VentanaPrincipalController {
             
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    private void cargarMenuEliminarGasto() {
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        btnEliminarGasto.getItems().clear();
+
+        List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
+
+        for (Gasto g : gastos) {
+            String texto = String.format("%s - %.2f€ - %s - %s",
+                    g.getNombre(), g.getCantidad(), g.getCategoria().getNombre(), g.getFecha());
+            MenuItem item = new MenuItem(texto);
+            item.setUserData(g);
+            item.setOnAction(ev -> {
+                Gasto gastoAEliminar = (Gasto) item.getUserData();
+                boolean ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
+                if (ok) {
+                    cargarGastos();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
+                }
+            });
+            btnEliminarGasto.getItems().add(item);
         }
     }
     

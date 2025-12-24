@@ -298,7 +298,7 @@ public class GestorGastos {
             // Actualizar la cuenta en el repositorio para persistir el cambio
             CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
             
-            // CRÍTICO: Actualizar la cuenta en la lista local de cuentas del gestor
+            // Actualizar la cuenta en la lista local de cuentas del gestor
             for (int i = 0; i < cuentas.size(); i++) {
                 if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
                     cuentas.set(i, cuentaActualizada);
@@ -314,6 +314,7 @@ public class GestorGastos {
             return false;
         }
     }
+    
     
     public Cuenta getCuentaPorNombre(String nombre) throws ElementoNoEncontradoException {
         try {
@@ -346,6 +347,24 @@ public class GestorGastos {
                .sum();
     }
     
+    public boolean eliminarGastoDeCuenta(Cuenta cuenta, Gasto gasto) {
+        if (cuenta == null || gasto == null) return false;
+
+        try {
+            boolean eliminado = cuenta.eliminarGasto(gasto);
+            if (!eliminado) return false;
+
+            // Persistir cambios
+            repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
+
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al eliminar gasto de cuenta: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     
     // ========== GESTIÓN DE GASTOS ==========
     

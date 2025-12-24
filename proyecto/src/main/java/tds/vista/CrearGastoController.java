@@ -111,7 +111,7 @@ public class CrearGastoController {
             Categoria cat = new CategoriaImpl(item.getText()); 
             String descripcion = campoDescripcion.getText().trim();
             
-            // IMPORTANTE: Primero añadir gasto, luego cambiar de ventana
+            // Añadir gasto, luego cambiar de ventana
             VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
             
             if (descripcion.isEmpty()) {
@@ -124,7 +124,7 @@ public class CrearGastoController {
                         // Actualizar la tabla visual
                         controller.añadirGastoTabla(g);
                         
-                        // CRÍTICO: Recargar la cuenta desde el repositorio
+                        // Recargar la cuenta desde el repositorio
                         try {
                             CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
                             controller.setCuenta(cuentaActualizada);
@@ -150,7 +150,7 @@ public class CrearGastoController {
                         // Actualizar la tabla visual
                         controller.añadirGastoTabla(g);
                         
-                        // CRÍTICO: Recargar la cuenta desde el repositorio
+                        // Recargar la cuenta desde el repositorio
                         try {
                             CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
                             controller.setCuenta(cuentaActualizada);

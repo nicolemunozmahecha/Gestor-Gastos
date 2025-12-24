@@ -2,12 +2,12 @@
   "cuentasPersonales" : [ {
     "nombre" : "Principal",
     "gastos" : [ {
-      "nombre" : "qw",
-      "cantidad" : 1.0,
-      "fecha" : [ 2025, 12, 1 ],
+      "nombre" : "PruebaGasto en Principal",
+      "cantidad" : 100.0,
+      "fecha" : [ 2025, 12, 18 ],
       "descripcion" : "",
       "categoria" : {
-        "nombre" : "Alimentación",
+        "nombre" : "Entretenimiento",
         "predefinida" : false
       },
       "pagador" : null
@@ -17,25 +17,25 @@
   "cuentasCompartidas" : [ {
     "nombre" : "hola",
     "gastos" : [ {
-      "nombre" : "prueba",
-      "cantidad" : 40.0,
-      "fecha" : [ 2025, 12, 9 ],
+      "nombre" : "PruebaGasto en Compartida",
+      "cantidad" : 200.0,
+      "fecha" : [ 2025, 12, 26 ],
       "descripcion" : "",
       "categoria" : {
-        "nombre" : "Transporte",
+        "nombre" : "Entretenimiento",
         "predefinida" : false
       },
       "pagador" : {
-        "nombre" : "paco",
-        "saldo" : 20.0
+        "nombre" : "pepe",
+        "saldo" : 100.0
       }
     } ],
     "personas" : [ {
       "nombre" : "paco",
-      "saldo" : 20.0
+      "saldo" : -100.0
     }, {
       "nombre" : "pepe",
-      "saldo" : -20.0
+      "saldo" : 100.0
     } ]
   } ],
   "categorias" : [ {

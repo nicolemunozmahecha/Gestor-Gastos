@@ -89,11 +89,11 @@
                               <MenuItem mnemonicParsing="false" text="Importar gasto" />
                             </items>
                           </MenuButton>
-                          <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Eliminar Gasto">
-                             <items>
-                                <MenuItem mnemonicParsing="false" text="Gasto 1" />
-                             </items>
-                          </MenuButton>
+                          <MenuButton fx:id="btnEliminarGasto"
+						            text="Eliminar Gasto"
+						            onShowing="#cargarMenuEliminarGasto">
+						    <items/>
+						</MenuButton>
                        </children>
                     </VBox>
                  </children>

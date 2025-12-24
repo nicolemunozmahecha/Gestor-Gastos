@@ -51,6 +51,7 @@ public class CuentaCompartidaController {
 
     // GASTOS
     @FXML private MenuButton btnCrearGasto;
+    @FXML private MenuButton btnEliminarGasto;
     @FXML private MenuItem menuGastoNuevo;
     @FXML private MenuItem menuImportarGasto;
 
@@ -147,7 +148,33 @@ public class CuentaCompartidaController {
         }
        
     }
-    @FXML 
+    @FXML
+    private void cargarMenuEliminarGasto() {
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        btnEliminarGasto.getItems().clear();
+
+        List<Gasto> gastos = gestor.getGastosPorCuenta(cuenta);
+
+        for (Gasto g : gastos) {
+            String texto = String.format("%s - %.2f€ - %s - %s (%s)",
+                    g.getNombre(), g.getCantidad(), g.getCategoria().getNombre(),
+                    g.getFecha(), g.getPagador() != null ? g.getPagador().getNombre() : "-");
+            MenuItem item = new MenuItem(texto);
+            item.setUserData(g);
+            item.setOnAction(ev -> {
+                Gasto gastoAEliminar = (Gasto) item.getUserData();
+                boolean ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
+                if (ok) {
+                    cargarGastos();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
+                }
+            });
+            btnEliminarGasto.getItems().add(item);
+        }
+    }
+    
+    @FXML
     private void importarGasto() { System.out.println("Importar Gasto"); }
 
 

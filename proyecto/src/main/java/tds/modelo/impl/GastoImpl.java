@@ -5,6 +5,8 @@ import tds.modelo.Categoria;
 import tds.modelo.Persona;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,11 +25,14 @@ public class GastoImpl implements Gasto {
     private String descripcion;
     
     @JsonProperty("categoria")
-    private CategoriaImpl categoria;  // Usar implementación concreta
+    private CategoriaImpl categoria;  
     
     @JsonProperty("pagador")
-    private PersonaImpl pagador;  // Usar implementación concreta
+    private PersonaImpl pagador;  
 
+    // Hace que json lo ignore. Solo tienen id en tiempo de ejecucion.
+    private transient final UUID id = UUID.randomUUID();
+    
     // Constructor sin argumentos para Jackson
     public GastoImpl() {
         this.nombre = "";
@@ -130,20 +135,21 @@ public class GastoImpl implements Gasto {
         this.pagador = (PersonaImpl) pagador;
     }
     
+    public UUID getID() {
+    	return id;
+    }
+    
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        GastoImpl gasto = (GastoImpl) obj;
-        return Double.compare(gasto.cantidad, cantidad) == 0 &&
-               Objects.equals(nombre, gasto.nombre) &&
-               Objects.equals(fecha, gasto.fecha) &&
-               Objects.equals(categoria, gasto.categoria);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GastoImpl)) return false;
+        GastoImpl g = (GastoImpl) o;
+        return id.equals(g.id);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, cantidad, fecha, categoria);
+        return id.hashCode();
     }
     
     @Override
