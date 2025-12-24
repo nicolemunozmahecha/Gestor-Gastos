@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.7" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.FiltrarGastosController">
+<SplitPane dividerPositions="0.7" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.FiltrarGastosController">
   <items>
     <!-- Panel izquierdo con la tabla -->
     <VBox>
