@@ -16,29 +16,16 @@
   } ],
   "cuentasCompartidas" : [ {
     "nombre" : "Secundaria",
-    "gastos" : [ {
-      "nombre" : "GUCCI",
-      "cantidad" : 21158.0,
-      "fecha" : [ 2025, 12, 19 ],
-      "descripcion" : "",
-      "categoria" : {
-        "nombre" : "Ropa",
-        "predefinida" : false
-      },
-      "pagador" : {
-        "nombre" : "bea",
-        "saldo" : 14105.333333333334
-      }
-    } ],
+    "gastos" : [ ],
     "personas" : [ {
       "nombre" : "ana",
-      "saldo" : -7052.666666666666
+      "saldo" : 0.0
     }, {
       "nombre" : "bea",
-      "saldo" : 14105.333333333334
+      "saldo" : 0.0
     }, {
       "nombre" : "paco",
-      "saldo" : -7052.666666666666
+      "saldo" : 0.0
     } ]
   } ],
   "categorias" : [ {

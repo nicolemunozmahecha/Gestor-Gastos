@@ -22,7 +22,8 @@ public class SceneManager {
     private Scene escenaActual;
     private VentanaPrincipalController ventanaPrincipalController; // NUEVO
     private Parent ventanaPrincipalRoot; 
-    private CrearGastoCompartidaController crearGastoCompartidaController; 
+    private CrearGastoCompartidaController crearGastoCompartidaController;
+    private DistribucionCuentaCompartidaController distribucionCuentaCompartidaController;
     private CuentaPersonalImpl personal;
 
     /**
@@ -150,10 +151,24 @@ public class SceneManager {
             throw new RuntimeException("No se pudo cargar crear gasto compartida", e);
         }
     }
-    public void showDistribucionCuentaCompartida() throws IOException {
-        cambiarEscena("distribucionCuentaCompartida");
+    public void showDistribucionCuentaCompartida(CuentaCompartidaController parentController) throws IOException {
+        /*cambiarEscena("distribucionCuentaCompartida");
         stage.setTitle("Personalizar Distribución");
-        stage.show();
+        stage.show();*/
+
+    	 try {
+             FXMLLoader loader = new FXMLLoader(App.class.getResource("distribucionCuentaCompartida.fxml"));
+             Parent root = loader.load();
+             
+             distribucionCuentaCompartidaController = loader.getController();
+             distribucionCuentaCompartidaController.setCuentaCompartidaController(parentController);
+             //crearGastoCompartidaController.cargarCategorias();
+             
+             cambiarEscenaConRoot("distribucionCuentaCompartida", root);
+             
+         } catch (IOException e) {
+             throw new RuntimeException("No se pudo cargar crear gasto compartida", e);
+         }
     }
     
     /**

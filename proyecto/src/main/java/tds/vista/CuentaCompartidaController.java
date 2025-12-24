@@ -186,7 +186,7 @@ public class CuentaCompartidaController {
     @FXML 
     private void personalizarDistribucion() {
     	try {
-            Configuracion.getInstancia().getSceneManager().showDistribucionCuentaCompartida();
+            Configuracion.getInstancia().getSceneManager().showDistribucionCuentaCompartida(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
