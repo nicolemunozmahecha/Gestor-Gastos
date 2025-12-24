@@ -35,6 +35,9 @@
                <items>
                   <MenuItem fx:id="menuCrearCategoria" mnemonicParsing="false"  text="Crear Categoria" />
                   <Menu fx:id="menuEliminarCategoria" mnemonicParsing="false" text="Eliminar Categoria">
+                  <items>
+				    	<MenuItem text="Cargando..." />
+				  	</items>
                   </Menu>
                </items>
             </Menu>

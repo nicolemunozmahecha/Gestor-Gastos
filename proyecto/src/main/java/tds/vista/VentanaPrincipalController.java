@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
+import tds.modelo.Categoria;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.CuentaPersonal;
@@ -43,6 +44,8 @@ public class VentanaPrincipalController {
     private GestorGastos gestor;
     private CuentaPersonal principal;
     private List<Cuenta> cuentas;
+    private List<Categoria> categorias;
+
 
     @FXML
     public void initialize() {
@@ -50,10 +53,7 @@ public class VentanaPrincipalController {
     	        configurarTabla();
     	 }
     	 if (menuController != null) {
-    	        System.out.println("Conectando MenuController con VentanaPrincipalController");
     	        menuController.setControladorPrincipal(this);
-	    } else {
-	        System.err.println("ERROR: menuBarController es NULL - no se pueden configurar eventos");
 	    }
     }
 
@@ -236,11 +236,9 @@ public class VentanaPrincipalController {
                 }
                 
                 gestor.eliminarCuenta(cuentaAEliminar);
-                System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
             });
             
             menu.getItems().add(item);
-            System.out.println("Item añadido al menú: " + c.getNombre());
         }
     }
     
@@ -270,7 +268,25 @@ public class VentanaPrincipalController {
             e.printStackTrace();
         }
     }
-    @FXML public void eliminarCategoria() { System.out.println("Eliminar Categoria"); }
+    @FXML 
+    public void eliminarCategoria() { 
+    	gestor = Configuracion.getInstancia().getGestorGastos();
+	    categorias = gestor.getCategoriasPersonalizadas();
+	    Menu menu = menuController.getMenuEliminarCategoria();
+	    menu.getItems().clear();
+	           
+	    for (Categoria c : categorias) {
+	        MenuItem item = new MenuItem(c.getNombre());
+	        item.setUserData(c);
+	        
+	        item.setOnAction(e -> {
+	        	Categoria categoriaAEliminar = (Categoria) item.getUserData();    
+	            gestor.eliminarCategoria(categoriaAEliminar);
+	        });
+	        
+	        menu.getItems().add(item);
+	    }
+    }
 
     
     @FXML 

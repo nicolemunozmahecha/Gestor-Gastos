@@ -14,7 +14,33 @@
     } ],
     "propietario" : "User1"
   } ],
-  "cuentasCompartidas" : [ ],
+  "cuentasCompartidas" : [ {
+    "nombre" : "Secundaria",
+    "gastos" : [ {
+      "nombre" : "GUCCI",
+      "cantidad" : 21158.0,
+      "fecha" : [ 2025, 12, 19 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Ropa",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "bea",
+        "saldo" : 14105.333333333334
+      }
+    } ],
+    "personas" : [ {
+      "nombre" : "ana",
+      "saldo" : -7052.666666666666
+    }, {
+      "nombre" : "bea",
+      "saldo" : 14105.333333333334
+    }, {
+      "nombre" : "paco",
+      "saldo" : -7052.666666666666
+    } ]
+  } ],
   "categorias" : [ {
     "nombre" : "Alimentación",
     "predefinida" : true
@@ -28,15 +54,18 @@
   "alertas" : [ ],
   "personas" : [ {
     "nombre" : "paco",
-    "saldo" : 0.0
+    "saldo" : -7052.666666666666
   }, {
     "nombre" : "pepe",
     "saldo" : 0.0
   }, {
     "nombre" : "ana",
-    "saldo" : -100.0
+    "saldo" : -7052.666666666666
   }, {
     "nombre" : "maria",
     "saldo" : 0.0
+  }, {
+    "nombre" : "bea",
+    "saldo" : 14105.333333333334
   } ]
 }

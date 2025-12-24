@@ -53,10 +53,7 @@ public class MenuController {
         }
         
         if (menuEliminarCuenta != null) {
-        	menuEliminarCuenta.setOnShowing(e -> {
-                System.out.println("¡¡¡ EVENTO setOnShowing EJECUTADO !!!");
-                controladorPrincipal.eliminarCuenta();
-            });
+        	menuEliminarCuenta.setOnShowing(e -> controladorPrincipal.eliminarCuenta());
         }
         
         if (menuTotalCuenta != null) {
@@ -80,7 +77,7 @@ public class MenuController {
         }
         
         if (menuEliminarCategoria != null) {
-            menuEliminarCategoria.setOnAction(e -> controladorPrincipal.eliminarCategoria());
+            menuEliminarCategoria.setOnShowing(e -> controladorPrincipal.eliminarCategoria());
         }
         
         if (menuHistorialNotificaciones != null) {
