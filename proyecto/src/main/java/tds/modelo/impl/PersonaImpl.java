@@ -12,19 +12,19 @@ public class PersonaImpl implements Persona {
     private double saldo;
     
     @JsonProperty("porcentaje")
-    private double porcentaje;
+    private int porcentaje;
     
     // Constructor sin argumentos para Jackson
     public PersonaImpl() {
         this.nombre = "";
         this.saldo = 0.0;
-        this.porcentaje = 0.0;
+        this.porcentaje = 0;
     }
     
     public PersonaImpl(String nombre) {
         this.nombre = nombre;
         this.saldo = 0.0;
-        this.porcentaje = 0.0;
+        this.porcentaje = 0;
     }
 
     public PersonaImpl(String nombre, double saldoInicial) {
@@ -58,7 +58,7 @@ public class PersonaImpl implements Persona {
         return saldo;
     }
     @Override
-    public double getPorcentaje() {
+    public int getPorcentaje() {
         return porcentaje;
     }
     @Override
@@ -66,7 +66,7 @@ public class PersonaImpl implements Persona {
         this.saldo = saldo;
     }
     @Override
-    public void setPorcentaje(double p) {
+    public void setPorcentaje(int p) {
         this.porcentaje = p;
     }
     
