@@ -236,9 +236,59 @@ public class VentanaPrincipalController {
                 }
                 
                 gestor.eliminarCuenta(cuentaAEliminar);
+
+                
+                // Eliminar del gestor
+                boolean eliminada = gestor.eliminarCuenta(cuentaAEliminar);
+                
+                if (eliminada) {
+                    System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
+                    
+                    // NUEVO: Actualizar la interfaz inmediatamente
+                    if (cuentaAEliminar instanceof CuentaCompartida) {
+                        eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
+                    }
+                } else {
+                    // Mostrar error si no se pudo eliminar
+                    Alert alert = new Alert(Alert.AlertType.ERROR, 
+                        "No se pudo eliminar la cuenta: " + cuentaAEliminar.getNombre());
+                    alert.showAndWait();
+                }
+
             });
             
             menu.getItems().add(item);
+        }
+    }
+
+    /**
+     * Elimina la pestaña correspondiente a una cuenta compartida.
+     * Se invoca cuando se elimina una cuenta para actualizar la interfaz inmediatamente.
+     * 
+     * @param cuenta Cuenta compartida cuya pestaña se debe eliminar
+     */
+    private void eliminarPestañaCuentaCompartida(CuentaCompartida cuenta) {
+        if (tabPane == null) {
+            System.err.println("ERROR: tabPane es null! No se puede eliminar la pestaña.");
+            return;
+        }
+        
+        // Buscar y eliminar la pestaña que corresponde a esta cuenta
+        boolean eliminado = tabPane.getTabs().removeIf(tab -> {
+            // Comparar por nombre de cuenta (o por userData si lo configuraste)
+            return cuenta.getNombre().equals(tab.getText()) ||
+                   (tab.getUserData() != null && tab.getUserData().equals(cuenta));
+        });
+        
+        if (eliminado) {
+            System.out.println("DEBUG UI: Pestaña eliminada para cuenta '" + cuenta.getNombre() + "'");
+            
+            // Seleccionar la pestaña "Principal" después de eliminar
+            if (!tabPane.getTabs().isEmpty()) {
+                tabPane.getSelectionModel().select(0);
+            }
+        } else {
+            System.err.println("DEBUG UI: No se encontró pestaña para cuenta '" + cuenta.getNombre() + "'");
         }
     }
     

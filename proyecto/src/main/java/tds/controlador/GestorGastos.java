@@ -403,6 +403,38 @@ public class GestorGastos {
     }
     
     /**
+     * Crea un filtro compuesto basado en los criterios proporcionados usando el patrón decorador.
+     * 
+     * @param meses Lista de meses a filtrar (null o vacío si no aplica)
+     * @param fechaInicio Fecha inicio del rango (null si no aplica)
+     * @param fechaFin Fecha fin del rango (null si no aplica)
+     * @param categorias Lista de categorías a filtrar (null o vacío si no aplica)
+     * @return Filtro compuesto listo para usar
+     */
+    public Filtro crearFiltroCompuesto(List<String> meses, LocalDate fechaInicio, 
+                                        LocalDate fechaFin, List<Categoria> categorias) {
+        // Comienza con filtro vacío
+        Filtro filtro = new FiltroVacio();
+        
+        // Decorar con filtro de meses si hay meses seleccionados
+        if (meses != null && !meses.isEmpty()) {
+            filtro = new FiltroMeses(filtro, meses);
+        }
+        
+        // Decorar con filtro de fechas si hay rango especificado
+        if (fechaInicio != null || fechaFin != null) {
+            filtro = new FiltroFechas(filtro, fechaInicio, fechaFin);
+        }
+        
+        // Decorar con filtro de categorías si hay categorías seleccionadas
+        if (categorias != null && !categorias.isEmpty()) {
+            filtro = new FiltroCategorias(filtro, categorias);
+        }
+        
+        return filtro;
+    }
+    
+    /**
      * Obtiene el total de gastos de una cuenta
      * @param cuenta Cuenta de la cual calcular el total
      * @return Total de gastos
