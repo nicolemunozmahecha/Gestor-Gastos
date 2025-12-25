@@ -2,14 +2,21 @@ package tds.vista;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
@@ -40,6 +47,10 @@ public class VentanaPrincipalController {
     @FXML private TableColumn<Gasto, Double> colCantidad;
     @FXML private TableColumn<Gasto, LocalDate> colFecha;
     @FXML private TableColumn<Gasto, String> colCategoria;
+
+    // GRÁFICAS (Principal)
+    @FXML private BarChart<String, Number> barChart;
+    @FXML private PieChart pieChart;
     
     private GestorGastos gestor;
     private CuentaPersonal principal;
@@ -55,15 +66,11 @@ public class VentanaPrincipalController {
     	 if (menuController != null) {
     	        menuController.setControladorPrincipal(this);
 	    }
+    	barChart.setLegendVisible(false);
+    	pieChart.setLegendVisible(false);
     }
 
-    /**
-     * Inicialización "limpia" de la vista: recibe el modelo ya cargado
-     * (principal + cuentas compartidas) y crea las pestañas correspondientes.
-     *
-     * Esto evita que el controller tenga que consultar al gestor para averiguar
-     * qué cuentas hay al arrancar (mejor separación de responsabilidades).
-     */
+
     public void init(CuentaPersonal principal, List<CuentaCompartida> compartidas) {
         if (principal != null) {
             setCuenta(principal);
@@ -105,6 +112,37 @@ public class VentanaPrincipalController {
         List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
         tablaGastos.getItems().clear();
         tablaGastos.getItems().addAll(gastos);
+
+        actualizarGraficas();
+    }
+
+    // Actualiza las gráficas
+    private void actualizarGraficas() {
+        if (principal == null || barChart == null || pieChart == null) return;
+
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
+
+        Map<String, Double> totalPorCategoria = new LinkedHashMap<>();
+        for (Gasto g : gastos) {
+            String categoria = (g.getCategoria() != null) ? g.getCategoria().getNombre() : "(Sin categoría)";
+            totalPorCategoria.merge(categoria, g.getCantidad(), Double::sum);
+        }
+
+        // Barras
+        barChart.getData().clear();
+        XYChart.Series<String, Number> serie = new XYChart.Series<>();
+        for (Map.Entry<String, Double> e : totalPorCategoria.entrySet()) {
+            serie.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
+        }
+        barChart.getData().add(serie);
+
+        // Circular
+        ObservableList<PieChart.Data> datosPie = FXCollections.observableArrayList();
+        for (Map.Entry<String, Double> e : totalPorCategoria.entrySet()) {
+            datosPie.add(new PieChart.Data(e.getKey(), e.getValue()));
+        }
+        pieChart.setData(datosPie);
     }
 
    
@@ -119,7 +157,7 @@ public class VentanaPrincipalController {
             e.printStackTrace();
         }
     }
-    // NUEVO: Método público para añadir pestañas desde fuera
+
     public void añadirPestañaCuentaCompartida(CuentaCompartida cuenta) {
         añadirPestañaCuentaCompartida(cuenta, true);
     }
@@ -362,6 +400,7 @@ public class VentanaPrincipalController {
     
     public void añadirGastoTabla(GastoImpl g) {
     	tablaGastos.getItems().add(g);            
+		actualizarGraficas();
     }
     
     @FXML 
@@ -403,10 +442,7 @@ public class VentanaPrincipalController {
     
     @FXML private void importarGasto() { System.out.println("Importar Gasto"); }
 
-    //@FXML private void mostrarTabla() { System.out.println("Mostrar Tabla"); }
-    //@FXML private void mostrarGrafica() { System.out.println("Mostrar Gráfica"); }
-
-    
+  
     @FXML
     public void salirAplicacion() {
         Alert a = new Alert(AlertType.CONFIRMATION, "¿Salir?");

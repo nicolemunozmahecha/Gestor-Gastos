@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.time.DayOfWeek;
+import tds.modelo.estrategias.EstrategiaDistribucionFactory;
 
 public class GestorGastos {
     
@@ -108,6 +109,34 @@ public class GestorGastos {
     
     
     // ========== GESTIÓN DE CUENTAS ==========
+
+
+    public EstrategiaDistribucion crearEstrategiaDistribucion(String estrategiaId, List<Persona> participantes) {
+        return EstrategiaDistribucionFactory.crearOporDefecto(estrategiaId, participantes);
+    }
+
+
+    public boolean actualizarEstrategiaDistribucion(CuentaCompartida cuenta, EstrategiaDistribucion estrategia) {
+        if (cuenta == null || estrategia == null) return false;
+
+        try {
+            cuenta.setEstrategiaDistribucion(estrategia);
+            CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
+
+            // Actualizar la cuenta en la lista local
+            for (int i = 0; i < cuentas.size(); i++) {
+                if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
+                    cuentas.set(i, cuentaActualizada);
+                    break;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al actualizar estrategia de distribución: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public List<CuentaCompartida> getCuentasCompartidas() {
         return cuentas.stream()
@@ -264,28 +293,17 @@ public class GestorGastos {
     
  // ========== GESTIÓN DE GASTOS ==========
     
-    /**
-     * Crea un gasto sin añadirlo a ninguna cuenta.
-     * IMPORTANTE: Después de crear el gasto, debe añadirse a una cuenta usando agregarGastoACuenta()
-     */
+
     public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador) {
         return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador);
     }
     
-    /**
-     * Crea un gasto sin añadirlo a ninguna cuenta.
-     * IMPORTANTE: Después de crear el gasto, debe añadirse a una cuenta usando agregarGastoACuenta()
-     */
+
     public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
         return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria);
     }
     
-    /**
-     * Añade un gasto a una cuenta y persiste el cambio.
-     * @param cuenta Cuenta a la que añadir el gasto
-     * @param gasto Gasto a añadir
-     * @return true si se añadió correctamente, false en caso contrario
-     */
+
     public boolean agregarGastoACuenta(Cuenta cuenta, Gasto gasto) {
         if (cuenta == null || gasto == null) {
             return false;
@@ -324,12 +342,7 @@ public class GestorGastos {
         }
     }
     
-    /**
-     * Calcula el gasto para el período de una alerta
-     * @param alerta Alerta a verificar
-     * @param fecha Fecha de referencia
-     * @return Total de gasto en el período
-     */
+
     private double calcularGastoPeriodo(Alerta alerta, LocalDate fecha) {
         LocalDate inicio;
         LocalDate fin = fecha;
@@ -368,21 +381,14 @@ public class GestorGastos {
     
     // ========== GESTIÓN DE GASTOS ==========
     
-    /**
-     * Obtiene todos los gastos del sistema
-     * @return Lista de todos los gastos
-     */
+
     public List<Gasto> getGastos() {
         return cuentas.stream()
                      .flatMap(c -> c.getGastos().stream())
                      .collect(Collectors.toList());
     }
     
-    /**
-     * Obtiene los gastos de una cuenta específica
-     * @param cuenta Cuenta de la cual obtener gastos
-     * @return Lista de gastos de la cuenta
-     */
+
     public List<Gasto> getGastosPorCuenta(Cuenta cuenta) {
         if (cuenta == null) {
             throw new IllegalArgumentException("La cuenta no puede ser nula");
@@ -390,11 +396,7 @@ public class GestorGastos {
         return cuenta.getGastos();
     }
     
-    /**
-     * Obtiene gastos filtrados según criterios
-     * @param filtro Filtro a aplicar
-     * @return Lista de gastos filtrados
-     */
+
     public List<Gasto> getGastosFiltrados(Filtro filtro) {
         if (filtro == null) {
             return getGastos();
@@ -402,15 +404,7 @@ public class GestorGastos {
         return filtro.aplicar(getGastos());
     }
     
-    /**
-     * Crea un filtro compuesto basado en los criterios proporcionados usando el patrón decorador.
-     * 
-     * @param meses Lista de meses a filtrar (null o vacío si no aplica)
-     * @param fechaInicio Fecha inicio del rango (null si no aplica)
-     * @param fechaFin Fecha fin del rango (null si no aplica)
-     * @param categorias Lista de categorías a filtrar (null o vacío si no aplica)
-     * @return Filtro compuesto listo para usar
-     */
+
     public Filtro crearFiltroCompuesto(List<String> meses, LocalDate fechaInicio, 
                                         LocalDate fechaFin, List<Categoria> categorias) {
         // Comienza con filtro vacío
@@ -434,11 +428,7 @@ public class GestorGastos {
         return filtro;
     }
     
-    /**
-     * Obtiene el total de gastos de una cuenta
-     * @param cuenta Cuenta de la cual calcular el total
-     * @return Total de gastos
-     */
+
     public double getTotalCuenta(Cuenta cuenta) {
         if (cuenta == null) {
             throw new IllegalArgumentException("La cuenta no puede ser nula");
@@ -446,10 +436,7 @@ public class GestorGastos {
         return cuenta.calcularTotal();
     }
     
-    /**
-     * Obtiene el total de gastos por categoría
-     * @return Mapa con totales por categoría
-     */
+
     public Map<Categoria, Double> getTotalesPorCategoria() {
         Map<Categoria, Double> totales = new HashMap<>();
         
@@ -468,36 +455,26 @@ public class GestorGastos {
     
     // ========== GESTIÓN DE NOTIFICACIONES ==========
     
-    /**
-     * Obtiene las notificaciones no leídas
-     * @return Lista de notificaciones no leídas
-     */
+
     public List<Notificacion> getNotificacionesNoLeidas() {
         return notificaciones.stream()
                            .filter(n -> !n.isLeida())
                            .collect(Collectors.toList());
     }
     
-    /**
-     * Marca una notificación como leída
-     * @param notificacion Notificación a marcar
-     */
+
     public void marcarNotificacionComoLeida(Notificacion notificacion) {
         if (notificacion != null) {
             notificacion.marcarComoLeida();
         }
     }
     
-    /**
-     * Marca todas las notificaciones como leídas
-     */
+
     public void marcarTodasNotificacionesComoLeidas() {
         notificaciones.forEach(Notificacion::marcarComoLeida);
     }
     
-    /**
-     * Elimina las notificaciones antiguas (más de 30 días)
-     */
+
     public void limpiarNotificacionesAntiguas() {
         LocalDate hace30Dias = LocalDate.now().minusDays(30);
         notificaciones.removeIf(n -> n.getFechaHora().toLocalDate().isBefore(hace30Dias));
@@ -535,12 +512,7 @@ public class GestorGastos {
     
     // ========== GESTIÓN DE PERSONAS ==========
     
-    /**
-     * Busca o crea una persona por nombre.
-     * Si la persona no existe, la crea y la guarda en el repositorio.
-     * @param nombre Nombre de la persona
-     * @return Persona encontrada o creada
-     */
+
     private Persona buscarOCrearPersona(String nombre) {
         try {
             // Primero intentar buscar la persona
@@ -558,12 +530,7 @@ public class GestorGastos {
         }
     }
     
-    /**
-     * Crea una cuenta compartida a partir de nombres de propietarios.
-     * @param nombreCuenta Nombre de la cuenta compartida
-     * @param nombresPropietarios Lista de nombres de propietarios (mínimo 2)
-     * @return CuentaCompartida creada o null si hay error
-     */
+
     public CuentaCompartida crearCuentaCompartidaConNombres(String nombreCuenta, List<String> nombresPropietarios) {
         if (nombresPropietarios == null || nombresPropietarios.size() < 2) {
             return null;

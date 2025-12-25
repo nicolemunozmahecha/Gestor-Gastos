@@ -12,15 +12,18 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CuentaCompartidaController">
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tds.vista.CuentaCompartidaController">
+
    <children>
-      <HBox layoutX="1.0" layoutY="-2.0" prefHeight="454.0" prefWidth="657.0" spacing="10">
+      <HBox spacing="10" VBox.vgrow="ALWAYS">
          <padding>
             <Insets bottom="10" left="10" right="10" top="10" />
          </padding>
+
          <children>
             <TabPane tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
                <tabs>
@@ -45,11 +48,12 @@
                         </VBox>
                      </content>
                   </Tab>
+
                   <Tab text="Gráfica de barras">
                      <content>
                         <VBox>
                            <children>
-                              <BarChart VBox.vgrow="ALWAYS">
+                              <BarChart fx:id="barChart" VBox.vgrow="ALWAYS">
                                  <xAxis>
                                     <CategoryAxis side="BOTTOM" />
                                  </xAxis>
@@ -61,18 +65,19 @@
                         </VBox>
                      </content>
                   </Tab>
+
                   <Tab text="Gráfica circular">
                      <content>
                         <VBox>
                            <children>
-                              <PieChart VBox.vgrow="ALWAYS" />
+                              <PieChart fx:id="pieChart" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
                      </content>
                   </Tab>
                </tabs>
             </TabPane>
-            <VBox maxWidth="200" minWidth="150" prefHeight="400.0" prefWidth="188.0" spacing="10" HBox.hgrow="NEVER">
+            <VBox maxWidth="200" minWidth="150" spacing="10" HBox.hgrow="NEVER">
                <children>
                   <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Crear Gasto">
                      <items>
@@ -80,16 +85,26 @@
                         <MenuItem fx:id="importar" mnemonicParsing="false" onAction="#importarGasto" text="Importar gasto" />
                      </items>
                   </MenuButton>
+
                   <MenuButton fx:id="btnEliminarGasto"
-					            text="Eliminar Gasto"
-					            onShowing="#cargarMenuEliminarGasto">
-					    <items/>
-				</MenuButton>
+                              text="Eliminar Gasto"
+                              onShowing="#cargarMenuEliminarGasto">
+                     <items/>
+                  </MenuButton>
+
+                  <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Agrupar gráficas">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#agruparGraficasPorCategorias" text="Por categorías" />
+                        <MenuItem mnemonicParsing="false" onAction="#agruparGraficasPorPersonas" text="Por personas" />
+                     </items>
+                  </MenuButton>
+
                   <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Saldo">
                      <items>
                         <MenuItem fx:id="saldoPorPersona" mnemonicParsing="false" onAction="#saldoPorPersona" text="Por persona" />
                      </items>
                   </MenuButton>
+
                   <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Distribución">
                      <items>
                         <MenuItem fx:id="personalizacion" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Personalizar" />
@@ -100,4 +115,4 @@
          </children>
       </HBox>
    </children>
-</Pane>
+</VBox>

@@ -33,16 +33,7 @@
 		    <groupId>org.glassfish.jaxb</groupId>
 		    <artifactId>jaxb-runtime</artifactId>
 		    <version>3.0.1</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>33.5.0-jre</version>
-		</dependency>
-		
-	   <!-- Jackson core -->
+		</dependency><!-- Jackson core -->
 	    <dependency>
 	        <groupId>com.fasterxml.jackson.core</groupId>
 	        <artifactId>jackson-core</artifactId>

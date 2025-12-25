@@ -2,20 +2,28 @@ package tds.vista;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Cuenta;
@@ -72,6 +80,13 @@ public class CuentaCompartidaController {
     @FXML private TableColumn<Gasto, LocalDate> colFecha;
     @FXML private TableColumn<Gasto, String> colCategoria;
     @FXML private TableColumn<Gasto, String> colPagador;
+
+    // GRÁFICAS (cuenta compartida: por categorías o por persona)
+    @FXML private BarChart<String, Number> barChart;
+    @FXML private PieChart pieChart;
+
+    private enum AgrupacionGraficas { CATEGORIAS, PERSONAS }
+    private AgrupacionGraficas agrupacionActual = AgrupacionGraficas.CATEGORIAS;
     
     private CuentaCompartidaController controller;
     private GestorGastos gestor;
@@ -85,6 +100,8 @@ public class CuentaCompartidaController {
 	        configurarTabla();
 	        cargarGastos();
     	}
+    	barChart.setLegendVisible(false);
+        pieChart.setLegendVisible(false);
     }
 
     public void setCuenta(CuentaCompartida p) {
@@ -123,11 +140,14 @@ public class CuentaCompartidaController {
         List<Gasto> gastos = gestor.getGastosPorCuenta(cuenta);
         tablaGastos.getItems().clear();
         tablaGastos.getItems().addAll(gastos);
+
+        actualizarGraficas();
     }
 
     
     public void añadirGastoTabla(GastoImpl g) {
     	tablaGastos.getItems().add(g);            
+		actualizarGraficas();
     }
 
     public void setCuentaCompartidaController(CuentaCompartidaController controller) {
@@ -180,7 +200,70 @@ public class CuentaCompartidaController {
 
     @FXML 
     private void saldoPorPersona() {
-    	System.out.println("Saldo por persona");
+		if (cuenta == null) return;
+		StringBuilder sb = new StringBuilder();
+		for (Persona p : cuenta.getPersonas()) {
+			sb.append(p.getNombre())
+			  .append(": ")
+			  .append(String.format("%.2f€", cuenta.getSaldo(p)))
+			  .append("\n");
+		}
+
+		Alert a = new Alert(AlertType.INFORMATION);
+		a.setTitle("Saldo por persona");
+		a.setHeaderText("Cuenta: " + cuenta.getNombre());
+		TextArea area = new TextArea(sb.toString());
+		area.setEditable(false);
+		area.setWrapText(true);
+		a.getDialogPane().setContent(area);
+		a.showAndWait();
+    }
+
+    // Agrupa las gráficas por categorías (por defecto).
+    @FXML
+    private void agruparGraficasPorCategorias() {
+        agrupacionActual = AgrupacionGraficas.CATEGORIAS;
+        actualizarGraficas();
+    }
+
+    // Agrupa las gráficas por personas (por el pagador del gasto).
+    @FXML
+    private void agruparGraficasPorPersonas() {
+        agrupacionActual = AgrupacionGraficas.PERSONAS;
+        actualizarGraficas();
+    }
+
+    private void actualizarGraficas() {
+        if (cuenta == null || barChart == null || pieChart == null) return;
+
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        List<Gasto> gastos = gestor.getGastosPorCuenta(cuenta);
+
+        Map<String, Double> totales = new LinkedHashMap<>();
+        for (Gasto g : gastos) {
+            String clave;
+            if (agrupacionActual == AgrupacionGraficas.PERSONAS) {
+                clave = (g.getPagador() != null) ? g.getPagador().getNombre() : "(Sin pagador)";
+            } else {
+                clave = (g.getCategoria() != null) ? g.getCategoria().getNombre() : "(Sin categoría)";
+            }
+            totales.merge(clave, g.getCantidad(), Double::sum);
+        }
+
+        // Barras
+        barChart.getData().clear();
+        XYChart.Series<String, Number> serie = new XYChart.Series<>();
+        for (Map.Entry<String, Double> e : totales.entrySet()) {
+            serie.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
+        }
+        barChart.getData().add(serie);
+
+        // Circular
+        ObservableList<PieChart.Data> datosPie = FXCollections.observableArrayList();
+        for (Map.Entry<String, Double> e : totales.entrySet()) {
+            datosPie.add(new PieChart.Data(e.getKey(), e.getValue()));
+        }
+        pieChart.setData(datosPie);
     }
     
     @FXML 
