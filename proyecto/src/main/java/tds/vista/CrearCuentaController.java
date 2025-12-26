@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
@@ -28,12 +29,7 @@ public class CrearCuentaController {
 
     @FXML
     private void crearCuenta() {
-
         String nombreCuenta = campoNombreCuenta.getText().trim();
-        if (nombreCuenta.isEmpty()) {
-            return;
-        }
-
         // Recoger todos los nombres de propietarios introducidos
         List<String> nombresPropietarios = new ArrayList<>();
         
@@ -56,12 +52,18 @@ public class CrearCuentaController {
             nombresPropietarios.add(propietario6.getText().trim());
         }
 
-        // Verificar que tengamos al menos 2 propietarios para una cuenta compartida
-        if (nombresPropietarios.size() < 2 || nombresPropietarios.size() > 6) {
-        	System.out.println("Una cuenta compartida ha de tener un mínimo de 2 propietarios y un máximo de 6 (hacer diálogo)");
+        try {
+        	if (nombreCuenta.isEmpty()) {
+        		throw new IllegalArgumentException ("La cuenta debe tener un nombre");
+            }
+	        // Verificar que tengamos al menos 2 propietarios para una cuenta compartida
+	        if (nombresPropietarios.size() < 2 || nombresPropietarios.size() > 6) {
+	        	throw new IllegalArgumentException ("Una cuenta compartida ha de tener un mínimo de 2 propietarios y un máximo de 6 (hacer diálogo)");
+	        }
+        }catch(IllegalArgumentException e){
+       	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
-
 
         // Llamar al gestor para crear la cuenta compartida
         // Crear la cuenta

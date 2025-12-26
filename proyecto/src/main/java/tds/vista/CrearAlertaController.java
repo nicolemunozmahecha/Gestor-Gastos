@@ -1,9 +1,9 @@
 package tds.vista;
 
 import java.util.List;
-import java.util.Optional;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -13,7 +13,6 @@ import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
 import tds.modelo.PeriodoAlerta;
-import tds.modelo.impl.CategoriaImpl;
 
 
 public class CrearAlertaController {
@@ -81,38 +80,40 @@ public class CrearAlertaController {
     private void crearAlerta() {
     	// tienen que estar todos los campos llenos
     	String nombreAlerta = campoNombreAlerta.getText().trim();
-        if (nombreAlerta.isEmpty()) {
-        	System.out.println("La alerta debe tener un nombre");
-            return;
-        }
         String limiteGasto = campoLimiteGasto.getText().trim();
-        if (limiteGasto.isEmpty()) {
-        	System.out.println("La alerta debe tener un limite de gasto");
+        PeriodoAlerta p;
+
+    	try{
+        	if (nombreAlerta.isEmpty()) {
+	        	throw new IllegalArgumentException("La alerta debe tener nombre");
+        	}
+        	if (limiteGasto.isEmpty()) {
+        		throw new IllegalArgumentException("La alerta debe tener un limite de gasto");
+        	}
+        	// Verificar si es un número
+	        try {
+	            valor = Double.parseDouble(limiteGasto);
+	        } catch (NumberFormatException e) {
+	        	new Alert(Alert.AlertType.ERROR, "Por favor, introduzca un número entero válido").showAndWait();
+	            return;
+	        }
+	        // seleccionamos periodo de alerta:
+	        if(mensual.isSelected()) {
+	        	p = PeriodoAlerta.MENSUAL;
+	        }else if(semanal.isSelected()){
+	        	p = PeriodoAlerta.SEMANAL;
+	        }else {
+	        	throw new IllegalArgumentException("La alerta debe tener un tipo de periodo");
+	        }
+	        if(!activar.isSelected() && !noActivar.isSelected()) {
+	        	throw new IllegalArgumentException("Debes elegir si activar o no la alerta");
+	        }
+	        
+        }catch(IllegalArgumentException e){
+       	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
         
-        // Verificar si es un número
-        try {
-            valor = Double.parseDouble(limiteGasto);
-        } catch (NumberFormatException e) {
-            System.out.println("Por favor ingrese un número válido");
-            return;
-        }
-       
-        // seleccionamos periodo de alerta:
-        PeriodoAlerta p;
-        if(mensual.isSelected()) {
-        	p = PeriodoAlerta.MENSUAL;
-        }else if(semanal.isSelected()){
-        	p = PeriodoAlerta.SEMANAL;
-        }else {
-        	System.out.println("La alerta debe tener un tipo de periodo");
-        	return;
-        }
-        if(!activar.isSelected() && !noActivar.isSelected()) {
-        	System.out.println("Debes elegir si activar o no la alerta");
-        	return;
-        }
         if(ningunoSeleccionado()) {
         	gestor.crearAlerta(nombreAlerta, valor, p);
         }else {

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
@@ -76,100 +77,99 @@ public class CrearGastoController {
     
     @FXML
     private void crearGasto() {
-        String nombre = campoNombreGasto.getText().trim();
-        if(nombre.isEmpty()) {
-            System.out.println("El gasto debe tener un nombre");
-            return;
-        }
+    	 String nombre = campoNombreGasto.getText().trim();
+         String descripcion = campoDescripcion.getText().trim();
+         LocalDate fecha = campoFechaGasto.getValue();
+         String cantidad = campoCantidad.getText().trim();
+
+         try {
+         	if(nombre.isEmpty()) {
+         		throw new IllegalArgumentException ("El gasto debe tener un nombre");
+ 	    	}   
+ 	    	if (cantidad.isEmpty())  {
+ 		        throw new IllegalArgumentException ("El gasto debe tener un importe");
+ 	    	}  
+ 	        // Verificar si es un número
+ 	        try {
+ 	            cantidadFinal = Double.parseDouble(cantidad);
+ 	        } catch (NumberFormatException e) {
+ 	        	new Alert(Alert.AlertType.ERROR, "Por favor, introduzca un número entero válido").showAndWait();
+	            return;
+ 	        }
+    	 	if (fecha == null)  {
+	        throw new IllegalArgumentException ("El gasto debe tener  una fecha");
+    	 	} 
+     
+    	 	if (ningunoSeleccionado())  {
+	        throw new IllegalArgumentException ("El gasto debe tener una categoria");
+    	 	}   
+         
+        	 	   
+         }catch(IllegalArgumentException e){
+        	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+             return;
+         }
         
-        String cantidad = campoCantidad.getText().trim();
-        if (cantidad.isEmpty()) {
-            System.out.println("El gasto debe tener un importe");
-            return;
-        }
         
-        // Verificar si es un número
-        try {
-            cantidadFinal = Double.parseDouble(cantidad);
-        } catch (NumberFormatException e) {
-            System.out.println("Por favor ingrese un número válido");
-            return;
-        }
+        // Añadir gasto, luego cambiar de ventana
+        VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
         
-        LocalDate fecha = campoFechaGasto.getValue();
-        if (fecha == null) {
-            System.out.println("El gasto debe tener una fecha");
-            return;
-        }
-        
-        
-        if(ningunoSeleccionado()) {
-            System.out.println("El gasto debe tener una categoria");
-            return;
-        }else {
-            String descripcion = campoDescripcion.getText().trim();
-            
-            // Añadir gasto, luego cambiar de ventana
-            VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
-            
-            if (descripcion.isEmpty()) {
-                GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat);
-                if (controller != null) {
-                    // Añadir a la cuenta Y persistir el cambio
-                    boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
-                    if (exito) {
-                        System.out.println("DEBUG: Gasto añadido exitosamente");
-                        // Actualizar la tabla visual
-                        controller.añadirGastoTabla(g);
-                        
-                        // Recargar la cuenta desde el repositorio
-                        try {
-                            CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
-                            controller.setCuenta(cuentaActualizada);
-                            Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
-                            System.out.println("DEBUG: Cuenta recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
-                        } catch (Exception e) {
-                            System.err.println("Error al recargar cuenta: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.err.println("ERROR: No se pudo añadir el gasto");
+        if (descripcion.isEmpty()) {
+            GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat);
+            if (controller != null) {
+                // Añadir a la cuenta Y persistir el cambio
+                boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
+                if (exito) {
+                    System.out.println("DEBUG: Gasto añadido exitosamente");
+                    // Actualizar la tabla visual
+                    controller.añadirGastoTabla(g);
+                    
+                    // Recargar la cuenta desde el repositorio
+                    try {
+                        CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
+                        controller.setCuenta(cuentaActualizada);
+                        Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
+                        System.out.println("DEBUG: Cuenta recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
+                    } catch (Exception e) {
+                        System.err.println("Error al recargar cuenta: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
-                    System.err.println("ERROR: Controller es null");
+                    System.err.println("ERROR: No se pudo añadir el gasto");
                 }
-            }else {
-                GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
-                if (controller != null) {
-                    // Añadir a la cuenta Y persistir el cambio
-                    boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
-                    if (exito) {
-                        System.out.println("DEBUG: Gasto añadido exitosamente");
-                        // Actualizar la tabla visual
-                        controller.añadirGastoTabla(g);
-                        
-                        // Recargar la cuenta desde el repositorio
-                        try {
-                            CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
-                            controller.setCuenta(cuentaActualizada);
-                            Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
-                            System.out.println("DEBUG: Cuenta recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
-                        } catch (Exception e) {
-                            System.err.println("Error al recargar cuenta: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.err.println("ERROR: No se pudo añadir el gasto");
-                    }
-                } else {
-                    System.err.println("ERROR: Controller es null");
-                }
+            } else {
+                System.err.println("ERROR: Controller es null");
             }
-            
+        }else {
+            GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
+            if (controller != null) {
+                // Añadir a la cuenta Y persistir el cambio
+                boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
+                if (exito) {
+                    System.out.println("DEBUG: Gasto añadido exitosamente");
+                    // Actualizar la tabla visual
+                    controller.añadirGastoTabla(g);
+                    
+                    // Recargar la cuenta desde el repositorio
+                    try {
+                        CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
+                        controller.setCuenta(cuentaActualizada);
+                        Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
+                        System.out.println("DEBUG: Cuenta recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
+                    } catch (Exception e) {
+                        System.err.println("Error al recargar cuenta: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("ERROR: No se pudo añadir el gasto");
+                }
+            } else {
+                System.err.println("ERROR: Controller es null");
+            }
         }
-        
         Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
+    
     @FXML
     private void atras() {
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();

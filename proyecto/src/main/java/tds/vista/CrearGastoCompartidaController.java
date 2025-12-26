@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
@@ -122,89 +123,87 @@ public class CrearGastoCompartidaController {
     @FXML
     private void crearGasto() {
         String nombre = campoNombreGasto.getText().trim();
-        if(nombre.isEmpty()) {
-            System.out.println("El gasto debe tener un nombre");
-            return;
-        }
-        
-        String cantidad = campoCantidad.getText().trim();
-        if (cantidad.isEmpty()) {
-            System.out.println("El gasto debe tener un importe");
-            return;
-        }
-        
-        // Verificar si es un número
-        try {
-            cantidadFinal = Double.parseDouble(cantidad);
-        } catch (NumberFormatException e) {
-            System.out.println("Por favor ingrese un número válido");
-            return;
-        }
-        
+        String descripcion = campoDescripcion.getText().trim();
         LocalDate fecha = campoFechaGasto.getValue();
-        if (fecha == null) {
-            System.out.println("El gasto debe tener una fecha");
+        String cantidad = campoCantidad.getText().trim();
+
+        try {
+        	if(nombre.isEmpty()) {
+        		throw new IllegalArgumentException ("El gasto debe tener un nombre");
+	    	}   
+	    	if (cantidad.isEmpty())  {
+		        throw new IllegalArgumentException ("El gasto debe tener un importe");
+	    	}  
+	        // Verificar si es un número
+	        try {
+	            cantidadFinal = Double.parseDouble(cantidad);
+	        } catch (NumberFormatException e) {
+	        	new Alert(Alert.AlertType.ERROR, "Por favor, introduzca un número entero válido").showAndWait();
+	            return;
+	        }
+       	 	if (fecha == null)  {
+		        throw new IllegalArgumentException ("El gasto debe tener  una fecha");
+       	 	} 
+        
+       	 	if (ningunoSeleccionado())  {
+		        throw new IllegalArgumentException ("El gasto debe tener una categoria");
+       	 	}   
+        
+       	 	if (ningunaSeleccionada())  {
+		        throw new IllegalArgumentException ("El gasto debe tener un pagador");
+       	 	}   
+        }catch(IllegalArgumentException e){
+       	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
-        
-        // FALTA VER COMO HACER LO DE LAS PERSONAS
-        if(ningunaSeleccionada()) {
-            System.out.println("El gasto debe tener un pagador");
-            return;
-        }
-        
-        if(ningunoSeleccionado()) {
-            System.out.println("El gasto debe tener una categoria");
-            return;
-        }else {
-            String descripcion = campoDescripcion.getText().trim();
             
-            if (descripcion.isEmpty()) {
-                GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat, p);
-                if (cuentaCompartidaController != null) {
-                    boolean exito = gestor.agregarGastoACuenta(cuentaCompartidaController.getCuenta(), g);
-                    if (exito) {
-                        System.out.println("DEBUG: Gasto añadido exitosamente a cuenta compartida");
-                        cuentaCompartidaController.añadirGastoTabla(g);
-                        
-                        // CRÍTICO: Recargar la cuenta desde el repositorio
-                        try {
-                            CuentaCompartida cuentaActualizada = (CuentaCompartida) gestor.getCuentaPorNombre(cuentaCompartidaController.getCuenta().getNombre());
-                            cuentaCompartidaController.setCuenta(cuentaActualizada);
-                            System.out.println("DEBUG: Cuenta compartida recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
-                        } catch (Exception e) {
-                            System.err.println("Error al recargar cuenta compartida: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.err.println("ERROR: No se pudo añadir el gasto a cuenta compartida");
+        
+    
+        if (descripcion.isEmpty()) {
+            GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat, p);
+            if (cuentaCompartidaController != null) {
+                boolean exito = gestor.agregarGastoACuenta(cuentaCompartidaController.getCuenta(), g);
+                if (exito) {
+                    System.out.println("DEBUG: Gasto añadido exitosamente a cuenta compartida");
+                    cuentaCompartidaController.añadirGastoTabla(g);
+                    
+                    // CRÍTICO: Recargar la cuenta desde el repositorio
+                    try {
+                        CuentaCompartida cuentaActualizada = (CuentaCompartida) gestor.getCuentaPorNombre(cuentaCompartidaController.getCuenta().getNombre());
+                        cuentaCompartidaController.setCuenta(cuentaActualizada);
+                        System.out.println("DEBUG: Cuenta compartida recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
+                    } catch (Exception e) {
+                        System.err.println("Error al recargar cuenta compartida: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
-                    System.err.println("ERROR: Controller es null");
-                }        	
-            }else {
-                GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
-                if (cuentaCompartidaController != null) {
-                    boolean exito = gestor.agregarGastoACuenta(cuentaCompartidaController.getCuenta(), g);
-                    if (exito) {
-                        System.out.println("DEBUG: Gasto añadido exitosamente a cuenta compartida");
-                        cuentaCompartidaController.añadirGastoTabla(g);
-                        
-                        // CRÍTICO: Recargar la cuenta desde el repositorio
-                        try {
-                            CuentaCompartida cuentaActualizada = (CuentaCompartida) gestor.getCuentaPorNombre(cuentaCompartidaController.getCuenta().getNombre());
-                            cuentaCompartidaController.setCuenta(cuentaActualizada);
-                            System.out.println("DEBUG: Cuenta compartida recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
-                        } catch (Exception e) {
-                            System.err.println("Error al recargar cuenta compartida: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.err.println("ERROR: No se pudo añadir el gasto a cuenta compartida");
-                    }
-                } else {
-                    System.err.println("ERROR: Controller es null");
+                    System.err.println("ERROR: No se pudo añadir el gasto a cuenta compartida");
                 }
+            } else {
+                System.err.println("ERROR: Controller es null");
+            }        	
+        }else {
+            GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
+            if (cuentaCompartidaController != null) {
+                boolean exito = gestor.agregarGastoACuenta(cuentaCompartidaController.getCuenta(), g);
+                if (exito) {
+                    System.out.println("DEBUG: Gasto añadido exitosamente a cuenta compartida");
+                    cuentaCompartidaController.añadirGastoTabla(g);
+                    
+                    // CRÍTICO: Recargar la cuenta desde el repositorio
+                    try {
+                        CuentaCompartida cuentaActualizada = (CuentaCompartida) gestor.getCuentaPorNombre(cuentaCompartidaController.getCuenta().getNombre());
+                        cuentaCompartidaController.setCuenta(cuentaActualizada);
+                        System.out.println("DEBUG: Cuenta compartida recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
+                    } catch (Exception e) {
+                        System.err.println("Error al recargar cuenta compartida: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println("ERROR: No se pudo añadir el gasto a cuenta compartida");
+                }
+            } else {
+                System.err.println("ERROR: Controller es null");
             }
         }
         

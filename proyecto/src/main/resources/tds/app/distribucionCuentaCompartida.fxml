@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.DistribucionCuentaCompartidaController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.DistribucionCuentaCompartidaController">
    <children>
-      <Label prefHeight="18.0" prefWidth="322.0" text="Distribución actual de gastos de la cuenta compartida:" />
+      <Label prefHeight="18.0" prefWidth="322.0" text="Distribución actual de gastos de la cuenta compartida:" translateY="-20.0" />
       <TableView fx:id="tablaDistribucion" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="142.4000244140625" text="Persona" />
           <TableColumn fx:id="colDistribucion" prefWidth="94.39996337890625" text="Porcentaje" />
         </columns>
       </TableView>
-      <Label prefHeight="18.0" prefWidth="322.0" text="Personalizar Distribución:" />
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="300.0" translateX="100.0">
+      <Label prefHeight="18.0" prefWidth="322.0" translateY="20.0" text="Personalizar Distribución:" />
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="154.0" translateY="25.0">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -42,10 +42,10 @@
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="88.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="88.0" prefWidth="600.0">
          <children>
-            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="150.0" translateY="10.0" />
-            <Button fx:id="aplicar" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Aplicar" styleClass="boton-exito" translateX="320.0" translateY="10.0" />
+            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="-150.0" />
+            <Button fx:id="aplicar" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Aplicar" styleClass="boton-exito" translateX="150.0" />
          </children>
       </HBox>
    </children>

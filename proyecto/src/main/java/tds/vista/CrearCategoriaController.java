@@ -1,6 +1,7 @@
 package tds.vista;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
@@ -34,8 +35,12 @@ public class CrearCategoriaController {
     @FXML
     private void crearCategoria() {
     	String nombre = campoNombreCategoria.getText().trim().replaceAll("\\s+", " ");
-        if (nombre.isEmpty()) {
-        	System.out.println("La categoria debe tener nombre");
+        try{
+        	if (nombre.isEmpty()) {
+	        	throw new IllegalArgumentException("La categoria debe tener nombre");
+        	}
+        }catch(IllegalArgumentException e){
+       	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
         // Para que las categorias empiecen en Mayuscula

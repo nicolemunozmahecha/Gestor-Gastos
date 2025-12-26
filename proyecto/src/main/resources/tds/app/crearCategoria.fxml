@@ -21,8 +21,8 @@
       
       <HBox alignment="CENTER">
          <children>
-            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atras" translateX="-20.0" />
-            <Button fx:id="crearCategoria" mnemonicParsing="false" onAction="#crearCategoria" text="Crear categoria" styleClass="boton-exito" translateX="20.0" />
+            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="-20.0" />
+            <Button fx:id="crearCategoria" mnemonicParsing="false" onAction="#crearCategoria" text="Crear categoría" styleClass="boton-exito" translateX="20.0" />
          </children>
       </HBox>
    </children>

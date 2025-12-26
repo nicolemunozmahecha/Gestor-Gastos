@@ -105,7 +105,6 @@ public class DistribucionCuentaCompartidaController {
                 label.setText(personas.get(i).getNombre());
                 label.setVisible(true);
                 campo.setVisible(true);
-                campo.setText(String.valueOf(personas.get(i).getPorcentaje()));
             } else {
                 label.setText("");
                 label.setVisible(false);
