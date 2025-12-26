@@ -2,7 +2,6 @@ package tds.vista;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
@@ -16,7 +15,6 @@ import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.Persona;
-import tds.modelo.impl.CategoriaImpl;
 import tds.modelo.impl.GastoImpl;
 
 public class CrearGastoCompartidaController {
