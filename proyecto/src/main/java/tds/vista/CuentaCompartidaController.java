@@ -2,6 +2,7 @@ package tds.vista;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Font;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
@@ -78,6 +81,7 @@ public class CuentaCompartidaController {
     // GRÁFICAS (cuenta compartida: por categorías o por persona)
     @FXML private BarChart<String, Number> barChart;
     @FXML private PieChart pieChart;
+    @FXML private MenuButton agrupacion;
 
     private enum AgrupacionGraficas { CATEGORIAS, PERSONAS }
     private AgrupacionGraficas agrupacionActual = AgrupacionGraficas.CATEGORIAS;
@@ -85,6 +89,11 @@ public class CuentaCompartidaController {
     private CuentaCompartidaController controller;
     private GestorGastos gestor;
     private CuentaCompartida cuenta;
+    private final String[] PALETA_COLORES = {
+            "#ffca28", "#ffa420", "#ca65e2", "e990c2", "#5c6bc0", "#ef5350", 
+            "#66bb6a" };
+
+    private Map<String, String> mapaColoresCategorias = new HashMap<>();
 
     // hemos añadido atributo cuenta al inicializar, para el nombre de la cuenta
     @FXML
@@ -96,6 +105,8 @@ public class CuentaCompartidaController {
     	}
     	barChart.setLegendVisible(false);
         pieChart.setLegendVisible(false);
+        barChart.getXAxis().setTickLabelFont(Font.font("Times New Roman", 12));
+        barChart.getYAxis().setTickLabelFont(Font.font("Times New Roman", 12));
     }
 
     public void setCuenta(CuentaCompartida p) {
@@ -177,6 +188,8 @@ public class CuentaCompartidaController {
                     g.getFecha(), g.getPagador() != null ? g.getPagador().getNombre() : "-");
             MenuItem item = new MenuItem(texto);
             item.setUserData(g);
+            item.getStyleClass().add("boton-peligro");
+
             item.setOnAction(ev -> {
                 Gasto gastoAEliminar = (Gasto) item.getUserData();
                 Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
@@ -224,6 +237,8 @@ public class CuentaCompartidaController {
     @FXML
     private void agruparGraficasPorCategorias() {
         agrupacionActual = AgrupacionGraficas.CATEGORIAS;
+        String porCat = new String("Por categorias");
+        agrupacion.setText(porCat);
         actualizarGraficas();
     }
 
@@ -231,9 +246,24 @@ public class CuentaCompartidaController {
     @FXML
     private void agruparGraficasPorPersonas() {
         agrupacionActual = AgrupacionGraficas.PERSONAS;
+        String porPersonas = new String("Por personas");
+        agrupacion.setText(porPersonas);
         actualizarGraficas();
     }
 
+    private String obtenerColor(String nombreCategoria) {
+        // Si ya tiene color asignado, devuélvelo
+        if (mapaColoresCategorias.containsKey(nombreCategoria)) {
+            return mapaColoresCategorias.get(nombreCategoria);
+        }
+        
+        // Si es nuevo, asigna el siguiente color disponible (usando módulo para rotar si se acaban)
+        int indice = mapaColoresCategorias.size() % PALETA_COLORES.length;
+        String nuevoColor = PALETA_COLORES[indice];
+        
+        mapaColoresCategorias.put(nombreCategoria, nuevoColor);
+        return nuevoColor;
+    }
     private void actualizarGraficas() {
         if (cuenta == null || barChart == null || pieChart == null) return;
 
@@ -253,11 +283,22 @@ public class CuentaCompartidaController {
 
         // Barras
         barChart.getData().clear();
+        barChart.layout();
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         for (Map.Entry<String, Double> e : totales.entrySet()) {
             serie.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
         }
         barChart.getData().add(serie);
+        // APLICAR COLOR A LAS BARRAS
+        for (XYChart.Data<String, Number> data : serie.getData()) {
+            Node nodo = data.getNode();
+            if (nodo != null) {
+                String categoria = data.getXValue();
+                String colorHex = obtenerColor(categoria);
+                // Propiedad CSS para barras
+                nodo.setStyle("-fx-bar-fill: " + colorHex + ";");
+            }
+        }
 
         // Circular
         ObservableList<PieChart.Data> datosPie = FXCollections.observableArrayList();
@@ -265,6 +306,15 @@ public class CuentaCompartidaController {
             datosPie.add(new PieChart.Data(e.getKey(), e.getValue()));
         }
         pieChart.setData(datosPie);
+        for (PieChart.Data data : datosPie) {
+            Node nodo = data.getNode();
+            if (nodo != null) {
+                String categoria = data.getName();
+                String colorHex = obtenerColor(categoria);
+                // Propiedad CSS para PieChart
+                nodo.setStyle("-fx-pie-color: " + colorHex + ";");
+            }
+        }
     }
     
     @FXML 

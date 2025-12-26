@@ -15,7 +15,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.VentanaPrincipalController">
+<VBox xmlns="http://javafx.com/javafx/21" 
+	xmlns:fx="http://javafx.com/fxml/1" 
+	fx:controller="tds.vista.VentanaPrincipalController"
+	stylesheets="/tds/app/estilos.css">
    <children>
       <!-- INCLUIMOS EL MENÚ NUEVO -->
       <fx:include fx:id="menu" source="menu.fxml" />

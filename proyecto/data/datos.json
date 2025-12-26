@@ -11,6 +11,36 @@
         "predefinida" : false
       },
       "pagador" : null
+    }, {
+      "nombre" : "xx",
+      "cantidad" : 250.0,
+      "fecha" : [ 2025, 12, 11 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Electrónica",
+        "predefinida" : false
+      },
+      "pagador" : null
+    }, {
+      "nombre" : "pc",
+      "cantidad" : 2000.0,
+      "fecha" : [ 2025, 12, 18 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Electrónica",
+        "predefinida" : false
+      },
+      "pagador" : null
+    }, {
+      "nombre" : "ropa nueva",
+      "cantidad" : 1500.0,
+      "fecha" : [ 2025, 12, 23 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Ropa",
+        "predefinida" : false
+      },
+      "pagador" : null
     } ],
     "propietario" : "User1"
   } ],
@@ -30,18 +60,74 @@
         "saldo" : 17.5,
         "porcentaje" : 30
       }
+    }, {
+      "nombre" : "otro",
+      "cantidad" : 2410.0,
+      "fecha" : [ 2025, 12, 13 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Transporte",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Lucia",
+        "saldo" : -12028.0,
+        "porcentaje" : 50
+      }
+    }, {
+      "nombre" : "ropa",
+      "cantidad" : 2560.0,
+      "fecha" : [ 2025, 12, 19 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Ropa",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Guille",
+        "saldo" : 921.0,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "pc",
+      "cantidad" : 3200.0,
+      "fecha" : [ 2025, 12, 24 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Electrónica",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Nicole",
+        "saldo" : 766.5,
+        "porcentaje" : 30
+      }
+    }, {
+      "nombre" : "parque atracciones",
+      "cantidad" : 1400.0,
+      "fecha" : [ 2025, 12, 27 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Entretenimiento",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Lucia",
+        "saldo" : -987.5,
+        "porcentaje" : 50
+      }
     } ],
     "personas" : [ {
       "nombre" : "Lucia",
-      "saldo" : -12.5,
+      "saldo" : -987.5,
       "porcentaje" : 50
     }, {
       "nombre" : "Guille",
-      "saldo" : -5.0,
+      "saldo" : 641.0,
       "porcentaje" : 20
     }, {
       "nombre" : "Nicole",
-      "saldo" : 17.5,
+      "saldo" : 346.5,
       "porcentaje" : 30
     } ],
     "estrategiaId" : "PERSONALIZADA"
@@ -60,9 +146,6 @@
     "predefinida" : false
   }, {
     "nombre" : "Ropa",
-    "predefinida" : false
-  }, {
-    "nombre" : "Otra",
     "predefinida" : false
   } ],
   "alertas" : [ ],

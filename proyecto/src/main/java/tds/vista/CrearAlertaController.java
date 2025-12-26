@@ -56,6 +56,7 @@ public class CrearAlertaController {
 			                        }
 			                    }
 			                }
+			                categorias.setText(m.getText());
 			});
         }
     }

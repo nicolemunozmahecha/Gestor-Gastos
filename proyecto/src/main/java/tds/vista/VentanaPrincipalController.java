@@ -2,6 +2,7 @@ package tds.vista;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Font;
 import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
@@ -56,8 +59,12 @@ public class VentanaPrincipalController {
     private CuentaPersonal principal;
     private List<Cuenta> cuentas;
     private List<Categoria> categorias;
+    private final String[] PALETA_COLORES = {
+        "#ffca28", "#ffa420", "#ca65e2", "#5c6bc0", "#ef5350", 
+        "#66bb6a" };
 
-
+    private Map<String, String> mapaColoresCategorias = new HashMap<>();
+    
     @FXML
     public void initialize() {
     	 if (tablaGastos != null) {
@@ -68,6 +75,8 @@ public class VentanaPrincipalController {
 	    }
     	barChart.setLegendVisible(false);
     	pieChart.setLegendVisible(false);
+    	barChart.getXAxis().setTickLabelFont(Font.font("Times New Roman", 12));
+        barChart.getYAxis().setTickLabelFont(Font.font("Times New Roman", 12));
     }
 
 
@@ -115,6 +124,20 @@ public class VentanaPrincipalController {
 
         actualizarGraficas();
     }
+    
+    private String obtenerColor(String nombreCategoria) {
+        // Si ya tiene color asignado, devuélvelo
+        if (mapaColoresCategorias.containsKey(nombreCategoria)) {
+            return mapaColoresCategorias.get(nombreCategoria);
+        }
+        
+        // Si es nuevo, asigna el siguiente color disponible (usando módulo para rotar si se acaban)
+        int indice = mapaColoresCategorias.size() % PALETA_COLORES.length;
+        String nuevoColor = PALETA_COLORES[indice];
+        
+        mapaColoresCategorias.put(nombreCategoria, nuevoColor);
+        return nuevoColor;
+    }
 
     // Actualiza las gráficas
     private void actualizarGraficas() {
@@ -131,11 +154,22 @@ public class VentanaPrincipalController {
 
         // Barras
         barChart.getData().clear();
+        barChart.layout();
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         for (Map.Entry<String, Double> e : totalPorCategoria.entrySet()) {
             serie.getData().add(new XYChart.Data<>(e.getKey(), e.getValue()));
         }
         barChart.getData().add(serie);
+        // APLICAR COLOR A LAS BARRAS
+        for (XYChart.Data<String, Number> data : serie.getData()) {
+            Node nodo = data.getNode();
+            if (nodo != null) {
+                String categoria = data.getXValue();
+                String colorHex = obtenerColor(categoria);
+                // Propiedad CSS para barras
+                nodo.setStyle("-fx-bar-fill: " + colorHex + ";");
+            }
+        }
 
         // Circular
         ObservableList<PieChart.Data> datosPie = FXCollections.observableArrayList();
@@ -143,6 +177,15 @@ public class VentanaPrincipalController {
             datosPie.add(new PieChart.Data(e.getKey(), e.getValue()));
         }
         pieChart.setData(datosPie);
+        for (PieChart.Data data : datosPie) {
+            Node nodo = data.getNode();
+            if (nodo != null) {
+                String categoria = data.getName();
+                String colorHex = obtenerColor(categoria);
+                // Propiedad CSS para PieChart
+                nodo.setStyle("-fx-pie-color: " + colorHex + ";");
+            }
+        }
     }
 
    
@@ -261,6 +304,7 @@ public class VentanaPrincipalController {
         for (Cuenta c : cuentas) {
             MenuItem item = new MenuItem(c.getNombre());
             item.setUserData(c);
+            item.getStyleClass().add("boton-peligro");
             
             item.setOnAction(e -> {
                 Cuenta cuentaAEliminar = (Cuenta) item.getUserData();
@@ -356,7 +400,8 @@ public class VentanaPrincipalController {
 	    for (Categoria c : categorias) {
 	        MenuItem item = new MenuItem(c.getNombre());
 	        item.setUserData(c);
-	        
+            item.getStyleClass().add("boton-peligro");
+
 	        item.setOnAction(e -> {
 	        	Categoria categoriaAEliminar = (Categoria) item.getUserData();
                 Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la categoria " + categoriaAEliminar.getNombre() + " ?");
@@ -379,7 +424,6 @@ public class VentanaPrincipalController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    	//System.out.println("creando Alerta");
     }
     @FXML public void eliminarAlerta() { System.out.println("Eliminar Alerta"); }
 
@@ -419,6 +463,8 @@ public class VentanaPrincipalController {
                     g.getNombre(), g.getCantidad(), g.getCategoria().getNombre(), g.getFecha());
             MenuItem item = new MenuItem(texto);
             item.setUserData(g);
+            item.getStyleClass().add("boton-peligro");
+
             item.setOnAction(ev -> {
                 Gasto gastoAEliminar = (Gasto) item.getUserData();
                 boolean ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);

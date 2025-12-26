@@ -1,6 +1,7 @@
 package tds.vista;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;

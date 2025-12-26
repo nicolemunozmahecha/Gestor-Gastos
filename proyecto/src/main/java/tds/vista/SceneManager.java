@@ -61,7 +61,8 @@ public class SceneManager {
             
             // Usar la misma instancia siempre
             if (escenaActual == null) {
-                escenaActual = new Scene(ventanaPrincipalRoot, 667, 474);
+                escenaActual = new Scene(ventanaPrincipalRoot, 1050, 650);
+                escenaActual.getStylesheets().add(getClass().getResource("/tds/app/estilos.css").toExternalForm());
                 stage.setScene(escenaActual);
             } else {
                 escenaActual.setRoot(ventanaPrincipalRoot);
@@ -190,8 +191,7 @@ public class SceneManager {
             Parent root = loadFXML(fxml);
 
             if (escenaActual == null) {
-                // tamaño por defecto similar al que ya usabas en App
-                escenaActual = new Scene(root, 667, 474);
+                escenaActual = new Scene(root, 1050, 650);
                 stage.setScene(escenaActual);
             } else {
                 escenaActual.setRoot(root);

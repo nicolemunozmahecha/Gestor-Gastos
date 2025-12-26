@@ -92,7 +92,7 @@
                      <items/>
                   </MenuButton>
 
-                  <MenuButton maxWidth="Infinity" mnemonicParsing="false" text="Agrupar gráficas">
+                  <MenuButton fx:id="agrupacion" maxWidth="Infinity" mnemonicParsing="false" text="Agrupar gráficas">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#agruparGraficasPorCategorias" text="Por categorías" />
                         <MenuItem mnemonicParsing="false" onAction="#agruparGraficasPorPersonas" text="Por personas" />

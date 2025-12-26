@@ -30,6 +30,6 @@
          </children>
       </HBox>
       
-      <Button fx:id="botonOK" mnemonicParsing="false" onAction="#btOK" prefWidth="60.0" text="OK" />
+      <Button fx:id="botonOK" mnemonicParsing="false" onAction="#btOK" prefWidth="100.0" text="Atrás" />
    </children>
 </VBox>

@@ -1,0 +1,96 @@
+.root {
+    /* "Segoe UI" es la estándar de Windows moderno. 
+       Otras opciones: "Arial", "Verdana", "Tahoma", "Helvetica" */
+    -fx-font-family: "Times New Roman"; 
+    -fx-font-size: 13px; /* Tamaño base para todo */
+}
+/* Estilo base del botón */
+.button {
+    -fx-background-color: #b7c9fa;  /* Color de fondo (Azul Material) */
+    -fx-text-fill: white;           /* Color del texto */
+    -fx-font-size: 14px;            /* Tamaño de letra */
+    -fx-font-family: "Times New Roman";       /* Tipo de letra */
+    -fx-background-radius: 5px;     /* Bordes redondeados */
+    -fx-padding: 8px 15px;          /* Margen interior */
+    -fx-cursor: hand;               /* Que el cursor cambie a manita */
+}
+
+/* Cuando pasas el ratón por encima (Hover) */
+.button:hover {
+    -fx-background-color: #8ca8f8;  /* Un azul un poco más oscuro */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Sombra */
+}
+
+/* Cuando haces clic (Pressed) */
+.button:pressed {
+    -fx-background-color: #668bf5;  /* Azul muy oscuro */
+    -fx-translate-y: 1;             /* Efecto visual de hundimiento */
+}
+
+.menu-button {
+    -fx-background-color: #b7c9fa;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+}
+.menu-button:hover {
+    -fx-background-color: #8ca8f8;
+}
+
+/* Texto general de la aplicación */
+.label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333; /* Gris oscuro (mejor que negro puro) */
+    -fx-font-family: "Times New Roman";
+}
+
+/* Títulos grandes*/
+.titulo-grande {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+/* Y para el de peligro específico */
+.menu-button.boton-peligro {
+    -fx-background-color: #fe7776;
+}
+.menu-button.boton-peligro:hover {
+    -fx-background-color: #f35649;
+}
+
+/* Botón de peligro (Rojo) */
+.boton-peligro {
+    -fx-background-color: #fe7776;
+    -fx-text-fill: white;
+}
+.boton-peligro:hover {
+    -fx-background-color: #f35649;
+}
+
+/* Botón de éxito/guardar (Verde) */
+.boton-exito {
+    -fx-background-color: #0ae000;
+    -fx-text-fill: white;
+}
+.boton-exito:hover {
+    -fx-background-color: #08c200;
+}
+
+.menu-bar {
+    -fx-background-color: #b7c9fa; /* Tu azul claro */
+    /* Si quieres un borde inferior */
+    -fx-border-color: #8ca8f8;
+    -fx-border-width: 0 0 1 0; /* Solo borde abajo */
+}
+
+.tab {
+    -fx-background-color: #b7c9fa; /* Tu azul claro */
+	-fx-font-weight: bold;
+}
+
+.tab:hover{
+	-fx-background-color: #8ca8f8;  /* Un azul un poco más oscuro */
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Sombra */
+}

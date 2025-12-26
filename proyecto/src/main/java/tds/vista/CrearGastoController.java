@@ -62,6 +62,7 @@ public class CrearGastoController {
 			                        }
 			                    }
 			                }
+			                categorias.setText(m.getText());
 			});
         }
     }

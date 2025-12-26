@@ -129,8 +129,8 @@
           <HBox alignment="CENTER" spacing="5">
              <children>
                 <Button mnemonicParsing="false" onAction="#atras" text="Atrás" />
-                <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiarFiltros" text="Limpiar" />
-                <Button fx:id="btnAplicarFiltros" mnemonicParsing="false" onAction="#aplicarFiltros" text="Aplicar filtros" />
+                <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiarFiltros" text="Limpiar" styleClass="boton-peligro" />
+                <Button fx:id="btnAplicarFiltros" mnemonicParsing="false" onAction="#aplicarFiltros" text="Aplicar filtros" styleClass="boton-exito" />
              </children>
           </HBox>
        </children>

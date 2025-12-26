@@ -84,7 +84,7 @@
                </padding>
                <children>
                   <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="-20.0" />
-                  <Button fx:id="crearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" translateX="20.0" />
+                  <Button fx:id="crearAlerta" mnemonicParsing="false" onAction="#crearAlerta" text="Crear Alerta" styleClass="boton-exito" translateX="20.0" />
                </children>
             </HBox>
          </children>
