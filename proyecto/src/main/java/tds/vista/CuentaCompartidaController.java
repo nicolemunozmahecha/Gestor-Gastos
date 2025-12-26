@@ -38,18 +38,12 @@ public class CuentaCompartidaController {
 
     // CUENTAS
     @FXML private MenuItem menuCrearCuenta;
-    @FXML private MenuItem menuEliminarCuenta1;
-    @FXML private MenuItem menuEliminarCuenta2;
 
     // CATEGORÍAS
     @FXML private MenuItem menuCrearCategoria;
-    @FXML private MenuItem menuEliminarCategoria1;
-    @FXML private MenuItem menuEliminarCategoria2;
 
     // ALERTAS
     @FXML private MenuItem menuCrearAlerta;
-    @FXML private MenuItem menuEliminarAlerta1;
-    @FXML private MenuItem menuEliminarAlerta2;
 
     // NOTIFICACIONES
     @FXML private MenuItem menuHistorialNotificaciones;
@@ -153,9 +147,11 @@ public class CuentaCompartidaController {
     public void setCuentaCompartidaController(CuentaCompartidaController controller) {
         this.controller = controller;
     }
+    
     public List<Persona> getPersonasCuenta(){
     	return cuenta.getPersonas();
     }
+    
     @FXML 
     private void crearGastoCompartida() throws IOException {
     	try {
@@ -165,9 +161,9 @@ public class CuentaCompartidaController {
             
         } catch (Exception e) {
             e.printStackTrace();
-        }
-       
+        } 
     }
+    
     @FXML
     private void cargarMenuEliminarGasto() {
         gestor = Configuracion.getInstancia().getGestorGastos();
@@ -183,12 +179,17 @@ public class CuentaCompartidaController {
             item.setUserData(g);
             item.setOnAction(ev -> {
                 Gasto gastoAEliminar = (Gasto) item.getUserData();
-                boolean ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
-                if (ok) {
-                    cargarGastos();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
-                }
+                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
+                a.showAndWait().ifPresent(r -> {
+                	if (r == ButtonType.OK) {
+			            boolean ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
+			            if (ok) {
+			                cargarGastos();
+			            } else {
+			                new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
+			            }
+                	}
+                });
             });
             btnEliminarGasto.getItems().add(item);
         }
@@ -283,4 +284,8 @@ public class CuentaCompartidaController {
             if (r == ButtonType.OK) System.exit(0);
         });
     }
+
+	public CuentaCompartidaController getController() {
+		return controller;
+	}
 }

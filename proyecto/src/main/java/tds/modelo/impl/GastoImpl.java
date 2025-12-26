@@ -4,7 +4,6 @@ import tds.modelo.Gasto;
 import tds.modelo.Categoria;
 import tds.modelo.Persona;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -16,13 +16,30 @@ public class CrearCategoriaController {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
     
+    private String formatearNombre(String campo) {
+        String[] palabras = campo.split(" ");
+        StringBuilder resultado = new StringBuilder();
+
+        for (String palabra : palabras) {
+            if (palabra.length() > 0) {
+                resultado.append(Character.toUpperCase(palabra.charAt(0)))
+                         .append(palabra.substring(1).toLowerCase())
+                         .append(" ");
+            }
+        }
+
+        return resultado.toString().trim();
+    }
+    
     @FXML
     private void crearCategoria() {
-    	String nombre = campoNombreCategoria.getText().trim();
+    	String nombre = campoNombreCategoria.getText().trim().replaceAll("\\s+", " ");
         if (nombre.isEmpty()) {
         	System.out.println("La categoria debe tener nombre");
             return;
         }
+        // Para que las categorias empiecen en Mayuscula
+        nombre = formatearNombre(nombre);
         gestor.crearCategoria(nombre);
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }

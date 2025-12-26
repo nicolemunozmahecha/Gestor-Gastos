@@ -89,7 +89,7 @@
                               <MenuItem mnemonicParsing="false" text="Importar gasto" />
                             </items>
                           </MenuButton>
-                          <MenuButton fx:id="btnEliminarGasto"
+                          <MenuButton maxWidth="Infinity" mnemonicParsing="false" fx:id="btnEliminarGasto"
 						            text="Eliminar Gasto"
 						            onShowing="#cargarMenuEliminarGasto">
 						    <items/>

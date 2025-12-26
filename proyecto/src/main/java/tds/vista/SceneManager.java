@@ -55,8 +55,7 @@ public class SceneManager {
                 // Así el controller no tiene que "ir a buscar" cuentas al gestor,
                 // y evitamos problemas de orden de inicialización.
                 ventanaPrincipalController.init(
-                        this.personal,
-                        Configuracion.getInstancia().getGestorGastos().getCuentasCompartidas()
+                        this.personal, Configuracion.getInstancia().getGestorGastos().getCuentasCompartidas()
                 );
             }
             
@@ -74,9 +73,6 @@ public class SceneManager {
         } catch (IOException e) {
             throw new RuntimeException("No se pudo cargar ventanaPrincipal", e);
         }
-    	
-        //cambiarEscena("ventanaPrincipal");
-        //stage.setTitle("Gestión de Gastos");
         stage.show();
     }
     
@@ -132,6 +128,7 @@ public class SceneManager {
 	    	CrearGastoController controller = loader.getController(); 
 	    	controller.cargarCategorias(); 
 	    	cambiarEscenaConRoot("crearGasto", root); 
+	    	stage.setTitle("Creando gasto");
     	} catch (IOException e) { 
     		e.printStackTrace(); }
     }
@@ -146,26 +143,23 @@ public class SceneManager {
             //crearGastoCompartidaController.cargarCategorias();
             
             cambiarEscenaConRoot("crearGastoCompartida", root);
+            stage.setTitle("Creando gasto en cuenta compartida");
             
         } catch (IOException e) {
             throw new RuntimeException("No se pudo cargar crear gasto compartida", e);
         }
     }
     public void showDistribucionCuentaCompartida(CuentaCompartidaController parentController) throws IOException {
-        /*cambiarEscena("distribucionCuentaCompartida");
-        stage.setTitle("Personalizar Distribución");
-        stage.show();*/
-
-    	 try {
+       try {
              FXMLLoader loader = new FXMLLoader(App.class.getResource("distribucionCuentaCompartida.fxml"));
              Parent root = loader.load();
              
              distribucionCuentaCompartidaController = loader.getController();
              distribucionCuentaCompartidaController.setCuentaCompartidaController(parentController);
-             //crearGastoCompartidaController.cargarCategorias();
              
              cambiarEscenaConRoot("distribucionCuentaCompartida", root);
-             
+             stage.setTitle("Personalizar Distribución");
+
          } catch (IOException e) {
              throw new RuntimeException("No se pudo cargar crear gasto compartida", e);
          }

@@ -18,7 +18,7 @@
             <Label text="Introduzca nombre de la cuenta" />
             <TextField fx:id="campoNombreCuenta" maxWidth="500" VBox.vgrow="NEVER" />
 
-            <Label text="Introduzca nombre(s) propietario(s) (binding)" />
+            <Label text="Introduzca nombre(s) propietario(s)" />
 
             <TextField fx:id="propietario1" maxWidth="500" promptText="Propietario 1" VBox.vgrow="NEVER" />
             <TextField fx:id="propietario2" maxWidth="500" promptText="Propietario 2" VBox.vgrow="NEVER" />

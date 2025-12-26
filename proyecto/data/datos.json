@@ -1,14 +1,13 @@
-<<<<<<< Updated upstream
 {
   "cuentasPersonales" : [ {
     "nombre" : "Principal",
     "gastos" : [ {
-      "nombre" : "PruebaGasto en Principal",
-      "cantidad" : 100.0,
-      "fecha" : [ 2025, 12, 18 ],
-      "descripcion" : "",
+      "nombre" : "Compra",
+      "cantidad" : 3250.0,
+      "fecha" : [ 2025, 12, 27 ],
+      "descripcion" : "Comida año nuevo",
       "categoria" : {
-        "nombre" : "Entretenimiento",
+        "nombre" : "Alimentación",
         "predefinida" : false
       },
       "pagador" : null
@@ -18,33 +17,34 @@
   "cuentasCompartidas" : [ {
     "nombre" : "Secundaria",
     "gastos" : [ {
-      "nombre" : "comida mes",
-      "cantidad" : 2500.0,
+      "nombre" : "cine",
+      "cantidad" : 25.0,
       "fecha" : [ 2025, 12, 11 ],
-      "descripcion" : "",
+      "descripcion" : "avatar 3",
       "categoria" : {
-        "nombre" : "Alimentación",
+        "nombre" : "Entretenimiento",
         "predefinida" : false
       },
       "pagador" : {
-        "nombre" : "bea",
-        "saldo" : 1666.6666666666667,
-        "porcentaje" : 0
+        "nombre" : "Nicole",
+        "saldo" : 17.5,
+        "porcentaje" : 30
       }
     } ],
     "personas" : [ {
-      "nombre" : "ana",
-      "saldo" : -833.3333333333333,
-      "porcentaje" : 0
+      "nombre" : "Lucia",
+      "saldo" : -12.5,
+      "porcentaje" : 50
     }, {
-      "nombre" : "bea",
-      "saldo" : 1666.6666666666667,
-      "porcentaje" : 0
+      "nombre" : "Guille",
+      "saldo" : -5.0,
+      "porcentaje" : 20
     }, {
-      "nombre" : "paco",
-      "saldo" : -833.3333333333333,
-      "porcentaje" : 0
-    } ]
+      "nombre" : "Nicole",
+      "saldo" : 17.5,
+      "porcentaje" : 30
+    } ],
+    "estrategiaId" : "PERSONALIZADA"
   } ],
   "categorias" : [ {
     "nombre" : "Alimentación",
@@ -55,27 +55,72 @@
   }, {
     "nombre" : "Entretenimiento",
     "predefinida" : true
+  }, {
+    "nombre" : "Electrónica",
+    "predefinida" : false
+  }, {
+    "nombre" : "Ropa",
+    "predefinida" : false
+  }, {
+    "nombre" : "Otra",
+    "predefinida" : false
   } ],
   "alertas" : [ ],
   "personas" : [ {
-    "nombre" : "paco",
-    "saldo" : -7052.666666666666,
-    "porcentaje" : 0
+    "nombre" : "Lucia",
+    "saldo" : -512.5,
+    "porcentaje" : 50
   }, {
-    "nombre" : "pepe",
+    "nombre" : "Guille",
+    "saldo" : 795.0,
+    "porcentaje" : 20
+  }, {
+    "nombre" : "Nicole",
+    "saldo" : -282.5,
+    "porcentaje" : 30
+  }, {
+    "nombre" : "Papa",
+    "saldo" : 942.0,
+    "porcentaje" : 25
+  }, {
+    "nombre" : "Mama",
+    "saldo" : -314.0,
+    "porcentaje" : 25
+  }, {
+    "nombre" : "Hijo1",
+    "saldo" : -314.0,
+    "porcentaje" : 25
+  }, {
+    "nombre" : "Hijo2",
+    "saldo" : -314.0,
+    "porcentaje" : 25
+  }, {
+    "nombre" : "ANA",
     "saldo" : 0.0,
-    "porcentaje" : 0
+    "porcentaje" : 34
   }, {
-    "nombre" : "ana",
-    "saldo" : -7052.666666666666,
-    "porcentaje" : 0
-  }, {
-    "nombre" : "maria",
+    "nombre" : "PACO",
     "saldo" : 0.0,
-    "porcentaje" : 0
+    "porcentaje" : 33
   }, {
-    "nombre" : "bea",
-    "saldo" : 14105.333333333334,
-    "porcentaje" : 0
+    "nombre" : "BEA",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "PEPE",
+    "saldo" : 0.0,
+    "porcentaje" : 25
+  }, {
+    "nombre" : "j",
+    "saldo" : 0.0,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "n",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "jk",
+    "saldo" : 0.0,
+    "porcentaje" : 33
   } ]
 }

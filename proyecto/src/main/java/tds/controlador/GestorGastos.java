@@ -177,18 +177,6 @@ public class GestorGastos {
         return cuenta;
     }
     
-    /* SE CREA DISTRBICUION EQUITATIVA POR DEFECTO Y LUEGO SE PUEDE MODIFICAR
-    public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas, EstrategiaDistribucion estrategia) {
-        CuentaCompartidaImpl cuenta = new CuentaCompartidaImpl(nombre, personas, estrategia);
-        try {
-            repositorioCuentas.addCuenta(cuenta);
-            cuentas.add(cuenta);
-        } catch (Exception e) {
-            System.err.println("Error al crear cuenta compartida: " + e.getMessage());
-        }
-        return cuenta;
-    }*/
-
     public boolean eliminarCuenta(Cuenta cuenta) {
         try {
             repositorioCuentas.removeCuenta((CuentaImpl) cuenta);

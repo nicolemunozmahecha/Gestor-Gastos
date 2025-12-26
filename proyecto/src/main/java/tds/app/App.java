@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import tds.Configuracion;
 import tds.ConfiguracionImpl;
-import tds.modelo.impl.CuentaImpl;
 import tds.modelo.impl.CuentaPersonalImpl;
 
 /**

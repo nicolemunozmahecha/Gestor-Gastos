@@ -44,8 +44,8 @@
       </HBox>
       <HBox prefHeight="88.0" prefWidth="600.0">
          <children>
-            <Button fx:id="aplicar" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Aplicar" translateX="150.0" translateY="10.0" />
-            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="320.0" translateY="10.0" />
+            <Button fx:id="atras" mnemonicParsing="false" onAction="#atras" text="Atrás" translateX="150.0" translateY="10.0" />
+            <Button fx:id="aplicar" mnemonicParsing="false" onAction="#personalizarDistribucion" text="Aplicar" translateX="320.0" translateY="10.0" />
          </children>
       </HBox>
    </children>

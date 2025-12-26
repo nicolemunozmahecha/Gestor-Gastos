@@ -2,7 +2,6 @@ package tds.modelo.impl;
 
 import tds.modelo.Categoria;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

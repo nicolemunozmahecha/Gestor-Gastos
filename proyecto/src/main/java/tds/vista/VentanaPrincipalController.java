@@ -264,35 +264,26 @@ public class VentanaPrincipalController {
             
             item.setOnAction(e -> {
                 Cuenta cuentaAEliminar = (Cuenta) item.getUserData();
-                // NUEVO: ELIMINAR PESTAÑA DE LA CUENTA
-                if (tabPane != null) {
-                    tabPane.getTabs().removeIf(t -> 
-                        t.getText().equals(cuentaAEliminar.getNombre())
-                    );
-                } else {
-                    System.err.println("ERROR: tabPane es null");
-                }
-                
-                gestor.eliminarCuenta(cuentaAEliminar);
-
-                
-                // Eliminar del gestor
-                boolean eliminada = gestor.eliminarCuenta(cuentaAEliminar);
-                
-                if (eliminada) {
-                    System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
-                    
-                    // NUEVO: Actualizar la interfaz inmediatamente
-                    if (cuentaAEliminar instanceof CuentaCompartida) {
-                        eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
+                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la cuenta " + cuentaAEliminar.getNombre() + " ?");
+                a.showAndWait().ifPresent(r -> {
+                    if (r == ButtonType.OK) {
+                    	 // Eliminar del gestor
+		                boolean eliminada = gestor.eliminarCuenta(cuentaAEliminar);
+		                
+		                if (eliminada) {
+		                    System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
+		                    
+		                    // NUEVO: Actualizar la interfaz inmediatamente
+		                    if (cuentaAEliminar instanceof CuentaCompartida) {
+		                        eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
+		                    }
+		                } else {
+		                    // Mostrar error si no se pudo eliminar
+		                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo eliminar la cuenta: " + cuentaAEliminar.getNombre());
+		                    alert.showAndWait();
+		                }
                     }
-                } else {
-                    // Mostrar error si no se pudo eliminar
-                    Alert alert = new Alert(Alert.AlertType.ERROR, 
-                        "No se pudo eliminar la cuenta: " + cuentaAEliminar.getNombre());
-                    alert.showAndWait();
-                }
-
+                });
             });
             
             menu.getItems().add(item);
@@ -313,8 +304,7 @@ public class VentanaPrincipalController {
         
         // Buscar y eliminar la pestaña que corresponde a esta cuenta
         boolean eliminado = tabPane.getTabs().removeIf(tab -> {
-            // Comparar por nombre de cuenta (o por userData si lo configuraste)
-            return cuenta.getNombre().equals(tab.getText()) ||
+        	return cuenta.getNombre().equals(tab.getText()) ||
                    (tab.getUserData() != null && tab.getUserData().equals(cuenta));
         });
         
@@ -368,8 +358,13 @@ public class VentanaPrincipalController {
 	        item.setUserData(c);
 	        
 	        item.setOnAction(e -> {
-	        	Categoria categoriaAEliminar = (Categoria) item.getUserData();    
-	            gestor.eliminarCategoria(categoriaAEliminar);
+	        	Categoria categoriaAEliminar = (Categoria) item.getUserData();
+                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la categoria " + categoriaAEliminar.getNombre() + " ?");
+	        	a.showAndWait().ifPresent(r -> {
+	                    if (r == ButtonType.OK) {
+	                    	gestor.eliminarCategoria(categoriaAEliminar);
+	                    }
+	        	 });
 	        });
 	        
 	        menu.getItems().add(item);
@@ -406,10 +401,7 @@ public class VentanaPrincipalController {
     @FXML 
     private void crearGasto() {
     	try {
-    		
             Configuracion.getInstancia().getSceneManager().showCrearGasto();
-            
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

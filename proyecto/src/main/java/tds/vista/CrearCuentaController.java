@@ -5,8 +5,6 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.CuentaCompartida;
@@ -20,8 +18,6 @@ public class CrearCuentaController {
     @FXML private TextField propietario4;
     @FXML private TextField propietario5;
     @FXML private TextField propietario6;
-
-    @FXML private Button btnCrearCuenta;
 
     private GestorGastos gestor;
 
@@ -75,10 +71,9 @@ public class CrearCuentaController {
         VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
         
         if (controller != null) {
-            //System.out.println("Controller obtenido, añadiendo pestaña...");
             controller.añadirPestañaCuentaCompartida(nuevaCuenta);
         } else {
-            //System.err.println("ERROR: Controller es null");
+            System.err.println("ERROR: Controller es null");
         }
         
         // Después volver a la ventana principal
