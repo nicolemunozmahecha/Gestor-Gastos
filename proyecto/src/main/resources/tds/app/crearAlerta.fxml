@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearAlertaController">
+<ScrollPane fitToWidth="true" fitToHeight="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearAlertaController">
    <content>
-      <VBox alignment="TOP_CENTER" spacing="15">
+      <VBox alignment="CENTER" spacing="15">
          <padding>
             <Insets bottom="20" left="20" right="20" top="20" />
          </padding>

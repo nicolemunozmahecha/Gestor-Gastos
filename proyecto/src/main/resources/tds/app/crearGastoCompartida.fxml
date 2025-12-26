@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearGastoCompartidaController">
+<ScrollPane fitToWidth="true" fitToHeight="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tds.vista.CrearGastoCompartidaController">
    <content>
-      <VBox alignment="TOP_CENTER" spacing="15">
+      <VBox alignment="CENTER" spacing="15">
          <padding>
             <Insets bottom="20" left="20" right="20" top="20" />
          </padding>
