@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
+import tds.modelo.Alerta;
 import tds.modelo.Categoria;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
@@ -58,6 +59,7 @@ public class VentanaPrincipalController {
     private GestorGastos gestor;
     private CuentaPersonal principal;
     private List<Cuenta> cuentas;
+    private List<Alerta> alertas;
     private List<Categoria> categorias;
     private final String[] PALETA_COLORES = {
         "#ffca28", "#ffa420", "#ca65e2", "#5c6bc0", "#ef5350", 
@@ -425,7 +427,41 @@ public class VentanaPrincipalController {
             e.printStackTrace();
         }
     }
-    @FXML public void eliminarAlerta() { System.out.println("Eliminar Alerta"); }
+    @FXML 
+    public void eliminarAlerta() {
+    	gestor = Configuracion.getInstancia().getGestorGastos();
+    	alertas = gestor.getAlertas();
+        Menu menu = menuController.getMenuEliminarAlerta();
+        menu.getItems().clear();
+               
+        for (Alerta a : alertas) {
+            MenuItem item = new MenuItem(a.getNombre());
+            item.setUserData(a);
+            item.getStyleClass().add("boton-peligro");
+            
+            item.setOnAction(e -> {
+                Alerta alertaAEliminar = (Alerta) item.getUserData();
+                Alert al = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la alerta " + alertaAEliminar.getNombre() + " ?");
+                al.showAndWait().ifPresent(r -> {
+                    if (r == ButtonType.OK) {
+                    	 // Eliminar del gestor
+		                boolean eliminada = gestor.eliminarAlerta(alertaAEliminar);
+		                
+		                if (eliminada) {
+		                    System.out.println("Alerta eliminada: " + alertaAEliminar.getNombre());
+		                  
+		                } else {
+		                    // Mostrar error si no se pudo eliminar
+		                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo eliminar la alerta: " + alertaAEliminar.getNombre());
+		                    alert.showAndWait();
+		                }
+                    }
+                });
+            });
+            
+            menu.getItems().add(item);
+        }
+    }
 
     @FXML 
     public void mostrarHistorial() {

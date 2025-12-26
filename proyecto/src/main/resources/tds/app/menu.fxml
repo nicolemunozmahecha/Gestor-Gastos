@@ -46,7 +46,11 @@
             <Menu mnemonicParsing="false" text="Alertas">
                <items>
                   <MenuItem fx:id="menuCrearAlerta" mnemonicParsing="false"  text="Crear Alerta" />
-                  <Menu fx:id="menuEliminarAlerta" mnemonicParsing="false" text="Eliminar Alerta" />
+                  <Menu fx:id="menuEliminarAlerta" mnemonicParsing="false" text="Eliminar Alerta" >
+                   <items>
+				    	<MenuItem text="Cargando..." />
+				  	</items>
+                  </Menu>
                </items>
             </Menu>
             

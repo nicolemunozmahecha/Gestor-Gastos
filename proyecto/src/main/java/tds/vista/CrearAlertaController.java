@@ -31,7 +31,9 @@ public class CrearAlertaController {
 
 	private List<Categoria> categoriasDisp;
 	private GestorGastos gestor;
-	double valor;
+	private double valor;
+	private final String TEXTO_DEFECTO2 = "Categoria";
+	private Categoria cat;
 	
     @FXML
     public void initialize() {
@@ -40,24 +42,31 @@ public class CrearAlertaController {
     }
     
     // PARA CARGAR LAS CATEGORIAS NUEVAS, Y QUE SOLO DEJE SELECCIONAR UNA
-    private void cargarCategorias() {
-        categoriasDisp = gestor.getCategoriasPersonalizadas();
+    public void cargarCategorias() {
+    	categorias.getItems().clear();
+        categoriasDisp = gestor.getCategorias();
         for (Categoria c : categoriasDisp) {
-            final CheckMenuItem item = new CheckMenuItem(c.getNombre());
+            CheckMenuItem item = new CheckMenuItem(c.getNombre());
             item.setUserData(c);
+
+            item.setOnAction(e -> {
+	            if (item.isSelected()) {
+	                // deseleccionar las demás
+	                for (MenuItem mi : categorias.getItems()) {
+	                    if (mi != item && mi instanceof CheckMenuItem) {
+	                        ((CheckMenuItem) mi).setSelected(false);
+	                    }
+	                }
+	                cat = c;
+	                categorias.setText(item.getText());
+
+	            } else {
+	                cat = null;
+	                categorias.setText(TEXTO_DEFECTO2);
+	            }
+	        });
+
             categorias.getItems().add(item);
-        }
-        for (MenuItem m : categorias.getItems()) {
-            m.setOnAction(e -> {
-			                if (((CheckMenuItem) m).isSelected()) {
-			                    for (MenuItem mi : categorias.getItems()) {
-			                        if (mi != m && mi instanceof CheckMenuItem) {
-			                            ((CheckMenuItem) mi).setSelected(false);
-			                        }
-			                    }
-			                }
-			                categorias.setText(m.getText());
-			});
         }
     }
     
@@ -100,10 +109,14 @@ public class CrearAlertaController {
         	System.out.println("La alerta debe tener un tipo de periodo");
         	return;
         }
-        
+        if(!activar.isSelected() && !noActivar.isSelected()) {
+        	System.out.println("Debes elegir si activar o no la alerta");
+        	return;
+        }
         if(ningunoSeleccionado()) {
         	gestor.crearAlerta(nombreAlerta, valor, p);
         }else {
+        	/*
         	// Obtenemos lista de categorias, y solo queremos una, SOLO SE ELIGE 1 CATEGORIA
         	Optional<CheckMenuItem> c = categorias.getItems().stream()
         			.filter(item -> item instanceof CheckMenuItem)
@@ -112,14 +125,12 @@ public class CrearAlertaController {
         	        .findFirst();
         	// creamos categoria nueva para la alerta, pero YA EXISTE en la lista de categorias
         	CheckMenuItem item = c.get();
-            Categoria cat = new CategoriaImpl(item.getText()); 
+            Categoria cat = new CategoriaImpl(item.getText()); */
+            
         	gestor.crearAlerta(nombreAlerta, valor, p, cat);
         }
         
-        if(!activar.isSelected() && !noActivar.isSelected()) {
-        	System.out.println("Debes elegir si activar o no la alerta");
-        	return;
-        }
+        
     	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
     

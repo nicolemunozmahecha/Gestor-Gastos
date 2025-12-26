@@ -138,7 +138,15 @@
     "nombre" : "Ropa",
     "predefinida" : false
   } ],
-  "alertas" : [ ],
+  "alertas" : [ {
+    "nombre" : "Navidad",
+    "limite" : 500.0,
+    "periodo" : "SEMANAL",
+    "categoria" : {
+      "nombre" : "Ropa",
+      "predefinida" : false
+    }
+  } ],
   "personas" : [ {
     "nombre" : "Lucia",
     "saldo" : -512.5,
