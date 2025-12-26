@@ -1,10 +1,11 @@
+/*BASE DISEÑO APP */
 .root {
-    /* "Segoe UI" es la estándar de Windows moderno. 
-       Otras opciones: "Arial", "Verdana", "Tahoma", "Helvetica" */
     -fx-font-family: "Times New Roman"; 
     -fx-font-size: 13px; /* Tamaño base para todo */
 }
-/* Estilo base del botón */
+
+
+/* ESTILOS BOTONES*/
 .button {
     -fx-background-color: #b7c9fa;  /* Color de fondo (Azul Material) */
     -fx-text-fill: white;           /* Color del texto */
@@ -37,10 +38,10 @@
     -fx-background-color: #8ca8f8;
 }
 
-/* Texto general de la aplicación */
+/* TEXTO APP */
 .label {
     -fx-font-size: 13px;
-    -fx-text-fill: #333333; /* Gris oscuro (mejor que negro puro) */
+    -fx-text-fill: #333333; /* Gris oscuro */
     -fx-font-family: "Times New Roman";
 }
 
@@ -52,7 +53,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
 }
 
-/* Y para el de peligro específico */
+/*BOTONES ROJOS*/
 .menu-button.boton-peligro {
     -fx-background-color: #fe7776;
 }
@@ -78,13 +79,14 @@
     -fx-background-color: #08c200;
 }
 
+/*COLOR BARRA MENU*/
 .menu-bar {
     -fx-background-color: #b7c9fa; /* Tu azul claro */
-    /* Si quieres un borde inferior */
     -fx-border-color: #8ca8f8;
     -fx-border-width: 0 0 1 0; /* Solo borde abajo */
 }
 
+/*COLORES VENTANAS*/
 .tab {
     -fx-background-color: #b7c9fa; /* Tu azul claro */
 	-fx-font-weight: bold;
@@ -93,4 +95,72 @@
 .tab:hover{
 	-fx-background-color: #8ca8f8;  /* Un azul un poco más oscuro */
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Sombra */
+}
+
+/* Fondo de la zona de las pestañas (para quitar el gris por defecto) */
+.tab-header-background {
+    -fx-background-color: transparent;
+}
+
+/* Pestaña seleccionada (La que estás viendo) */
+.tab:selected {
+    -fx-background-color: white; /* Blanco para que parezca conectada al contenido */
+    -fx-background-radius: 5px 5px 0 0; /* Redondeada solo arriba */
+    -fx-border-color: #b7c9fa;
+    -fx-border-width: 2 2 0 2; /* Borde azul arriba y lados */
+}
+
+/* Color del texto en la pestaña seleccionada */
+.tab:selected .tab-label {
+    -fx-text-fill: #668bf5; /* Letras azules */
+}
+
+/*DISEÑO TABLA DE GASTOS*/
+/* Cabecera*/
+.table-view .column-header {
+    -fx-background-color: #b7c9fa; 
+    -fx-size: 35px;
+    -fx-border-color: white;
+    -fx-border-width: 0 1 0 0; /* Líneas blancas entre columnas */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Filas de la tabla */
+.table-row-cell {
+    -fx-cell-size: 30px; 
+    -fx-background-insets: 0;
+}
+
+/* Efecto cebra */
+.table-row-cell:odd {
+    -fx-background-color: #f4f8ff;
+}
+
+/* Cuando seleccionas una fila */
+.table-view:focused .table-row-cell:filled:selected, 
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #8ca8f8; 
+    -fx-text-fill: white;
+}
+
+/*EXTRA*/
+.text-field, .text-area, .date-picker {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;   /* Bordes redondeados */
+    -fx-border-color: #b0c4de;    /* Gris azulado suave */
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+}
+
+/* Cuando click */
+.text-field:focused, .date-picker:focused {
+    -fx-border-color: #668bf5; /* Tu azul oscuro */
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(102, 139, 245, 0.3), 5, 0, 0, 0); /* Brillo azul suave */
 }
