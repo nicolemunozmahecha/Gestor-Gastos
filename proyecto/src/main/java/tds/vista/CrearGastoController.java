@@ -2,7 +2,6 @@ package tds.vista;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
@@ -15,7 +14,6 @@ import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
 import tds.modelo.CuentaPersonal;
-import tds.modelo.impl.CategoriaImpl;
 import tds.modelo.impl.CuentaPersonalImpl;
 import tds.modelo.impl.GastoImpl;
 
@@ -27,9 +25,11 @@ public class CrearGastoController {
 	@FXML private TextArea campoDescripcion;
 	@FXML private MenuButton categorias;
 
+	private final String TEXTO_DEFECTO = "Categoria";
 	private GestorGastos gestor;
 	private List<Categoria> categoriasDisp;
 	private double cantidadFinal;
+	private Categoria cat;
 
 	@FXML
     public void initialize() {
@@ -51,19 +51,25 @@ public class CrearGastoController {
         for (Categoria c : categoriasDisp) {
             CheckMenuItem item = new CheckMenuItem(c.getNombre());
             item.setUserData(c);
+
+            item.setOnAction(e -> {
+	            if (item.isSelected()) {
+	                // deseleccionar las demás
+	                for (MenuItem mi : categorias.getItems()) {
+	                    if (mi != item && mi instanceof CheckMenuItem) {
+	                        ((CheckMenuItem) mi).setSelected(false);
+	                    }
+	                }
+	                cat = c;
+	                categorias.setText(item.getText());
+
+	            } else {
+	                cat = null;
+	                categorias.setText(TEXTO_DEFECTO);
+	            }
+	        });
+
             categorias.getItems().add(item);
-        }
-        for (MenuItem m : categorias.getItems()) {
-            m.setOnAction(e -> {
-			                if (((CheckMenuItem) m).isSelected()) {
-			                    for (MenuItem mi : categorias.getItems()) {
-			                        if (mi != m && mi instanceof CheckMenuItem) {
-			                            ((CheckMenuItem) mi).setSelected(false);
-			                        }
-			                    }
-			                }
-			                categorias.setText(m.getText());
-			});
         }
     }
     
@@ -101,15 +107,6 @@ public class CrearGastoController {
             System.out.println("El gasto debe tener una categoria");
             return;
         }else {
-            // Obtenemos lista de categorias, y solo queremos una, SOLO SE ELIGE 1 CATEGORIA
-            Optional<CheckMenuItem> c = categorias.getItems().stream()
-                    .filter(item -> item instanceof CheckMenuItem)
-                    .map(item -> (CheckMenuItem) item)
-                    .filter(CheckMenuItem::isSelected)
-                    .findFirst();
-            // creamos categoria nueva para la alerta, pero YA EXISTE en la lista de categorias
-            CheckMenuItem item = c.get();
-            Categoria cat = new CategoriaImpl(item.getText()); 
             String descripcion = campoDescripcion.getText().trim();
             
             // Añadir gasto, luego cambiar de ventana

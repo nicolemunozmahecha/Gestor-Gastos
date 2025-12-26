@@ -33,6 +33,10 @@ public class CrearGastoCompartidaController {
 	private double cantidadFinal;
 	private Persona p;
 	private CuentaCompartidaController cuentaCompartidaController;
+	private final String TEXTO_DEFECTO = "Persona";
+	private final String TEXTO_DEFECTO2 = "Categoria";
+	private Categoria cat;
+
 	
 	@FXML
     public void initialize() {
@@ -47,26 +51,33 @@ public class CrearGastoCompartidaController {
     }
 	
     // PARA CARGAR TODAS LAS CATEGORIAS
-    public void cargarCategorias() {
-    	categorias.getItems().clear();
-        categoriasDisp = gestor.getCategorias();
-        for (Categoria c : categoriasDisp) {
-            final CheckMenuItem item = new CheckMenuItem(c.getNombre());
-            item.setUserData(c);
-            categorias.getItems().add(item);
-        }
-        for (MenuItem m : categorias.getItems()) {
-            m.setOnAction(e -> {
-			                if (((CheckMenuItem) m).isSelected()) {
-			                    for (MenuItem mi : categorias.getItems()) {
-			                        if (mi != m && mi instanceof CheckMenuItem) {
-			                            ((CheckMenuItem) mi).setSelected(false);
-			                        }
-			                    }
-			                }
-			});
-        }
-    }
+	 public void cargarCategorias() {
+	    	categorias.getItems().clear();
+	        categoriasDisp = gestor.getCategorias();
+	        for (Categoria c : categoriasDisp) {
+	            CheckMenuItem item = new CheckMenuItem(c.getNombre());
+	            item.setUserData(c);
+
+	            item.setOnAction(e -> {
+		            if (item.isSelected()) {
+		                // deseleccionar las demás
+		                for (MenuItem mi : categorias.getItems()) {
+		                    if (mi != item && mi instanceof CheckMenuItem) {
+		                        ((CheckMenuItem) mi).setSelected(false);
+		                    }
+		                }
+		                cat = c;
+		                categorias.setText(item.getText());
+
+		            } else {
+		                cat = null;
+		                categorias.setText(TEXTO_DEFECTO2);
+		            }
+		        });
+
+	            categorias.getItems().add(item);
+	        }
+	    }
     
     private boolean ningunaSeleccionada() {
         return personas.getItems().stream()
@@ -93,8 +104,11 @@ public class CrearGastoCompartidaController {
 	                    }
 	                }
 	                p = persona; // pagador seleccionado
+	                personas.setText(item.getText());
+
 	            } else {
 	                p = null;
+	                personas.setText(TEXTO_DEFECTO);
 	            }
 	        });
 
@@ -145,15 +159,6 @@ public class CrearGastoCompartidaController {
             System.out.println("El gasto debe tener una categoria");
             return;
         }else {
-            // Obtenemos lista de categorias, y solo queremos una, SOLO SE ELIGE 1 CATEGORIA
-            Optional<CheckMenuItem> c = categorias.getItems().stream()
-                    .filter(item -> item instanceof CheckMenuItem)
-                    .map(item -> (CheckMenuItem) item)
-                    .filter(CheckMenuItem::isSelected)
-                    .findFirst();
-            // creamos categoria nueva para la alerta, pero YA EXISTE en la lista de categorias
-            CheckMenuItem item = c.get();
-            Categoria cat = new CategoriaImpl(item.getText()); 
             String descripcion = campoDescripcion.getText().trim();
             
             if (descripcion.isEmpty()) {
