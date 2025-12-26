@@ -467,12 +467,17 @@ public class VentanaPrincipalController {
 
             item.setOnAction(ev -> {
                 Gasto gastoAEliminar = (Gasto) item.getUserData();
-                boolean ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
-                if (ok) {
-                    cargarGastos();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
-                }
+                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
+                a.showAndWait().ifPresent(r -> {
+                	if (r == ButtonType.OK) {
+		                boolean ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
+		                if (ok) {
+		                    cargarGastos();
+		                } else {
+		                    new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
+		                }
+                	}
+               }); 
             });
             btnEliminarGasto.getItems().add(item);
         }
