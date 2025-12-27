@@ -1,6 +1,7 @@
 package tds.vista;
 
 import java.io.IOException;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -22,6 +23,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import tds.Configuracion;
 import tds.app.App;
 import tds.controlador.GestorGastos;
@@ -278,7 +281,14 @@ public class VentanaPrincipalController {
     private void crearPestanasCompartidas(List<CuentaCompartida> compartidas) {
         if (tabPane == null) return;
 
-        // 1) Limpiar pestañas (dejando "Principal")
+        // Guardar la pestaña actualmente seleccionada para mantener el contexto
+        String pestañaSeleccionada = null;
+        Tab tabActual = tabPane.getSelectionModel().getSelectedItem();
+        if (tabActual != null) {
+            pestañaSeleccionada = tabActual.getText();
+        }
+
+        // Limpiar pestañas (dejando "Principal")
         tabPane.getTabs().removeIf(t -> t.getText() != null && !t.getText().equals("Principal"));
 
         if (compartidas == null) {
@@ -293,7 +303,21 @@ public class VentanaPrincipalController {
             num++;
         }
         System.out.println("DEBUG UI: Total pestañas cuentas compartidas creadas: " + num);
-        tabPane.getSelectionModel().select(0);
+
+        // Restaurar selección si existe, si no seleccionar "Principal"
+        boolean restored = false;
+        if (pestañaSeleccionada != null) {
+            for (Tab t : tabPane.getTabs()) {
+                if (pestañaSeleccionada.equals(t.getText())) {
+                    tabPane.getSelectionModel().select(t);
+                    restored = true;
+                    break;
+                }
+            }
+        }
+        if (!restored) {
+            tabPane.getSelectionModel().select(0);
+        }
     }
     
     @FXML 
@@ -336,12 +360,7 @@ public class VentanaPrincipalController {
         }
     }
 
-    /**
-     * Elimina la pestaña correspondiente a una cuenta compartida.
-     * Se invoca cuando se elimina una cuenta para actualizar la interfaz inmediatamente.
-     * 
-     * @param cuenta Cuenta compartida cuya pestaña se debe eliminar
-     */
+
     private void eliminarPestañaCuentaCompartida(CuentaCompartida cuenta) {
         if (tabPane == null) {
             System.err.println("ERROR: tabPane es null! No se puede eliminar la pestaña.");
@@ -519,7 +538,51 @@ public class VentanaPrincipalController {
         }
     }
     
-    @FXML private void importarGasto() { System.out.println("Importar Gasto"); }
+    @FXML
+    private void importarGasto() {
+        Window w = (tabPane != null && tabPane.getScene() != null) ? tabPane.getScene().getWindow() : null;
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Importar gastos");
+
+
+        File fichero = chooser.showOpenDialog(w);
+        if (fichero == null) {
+            return;
+        }
+
+        try {
+            gestor = Configuracion.getInstancia().getGestorGastos();
+            boolean ok = gestor.importarGastos(fichero);
+
+            if (!ok) {
+                new Alert(AlertType.ERROR, "No se pudo importar el fichero.").showAndWait();
+                return;
+            }
+
+            // Recargar pestañas cuentas compartidas (por si se han creado)
+            cargarPestañasCuentasCompartidasDesdePersistencia();
+            // RRecargar gastos de la principal
+            try {
+                CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(principal.getNombre());
+                setCuenta(cuentaActualizada);
+                Configuracion.getInstancia().getSceneManager().setPrincipal((tds.modelo.impl.CuentaPersonalImpl) cuentaActualizada);
+            } catch (Exception e) {
+                // Si falla, recargar tabla con lo que haya en memoria
+                cargarGastos();
+            }
+
+            new Alert(AlertType.INFORMATION, "Gastos importados correctamente.").showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(AlertType.ERROR, "No se pudo importar el fichero.").showAndWait();
+        }
+    }
+
+    public void importarGastosDesdeMenu() {
+        importarGasto();
+    }
 
   
     @FXML

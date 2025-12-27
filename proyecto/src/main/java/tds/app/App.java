@@ -8,9 +8,6 @@ import tds.Configuracion;
 import tds.ConfiguracionImpl;
 import tds.modelo.impl.CuentaPersonalImpl;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
 	@Override

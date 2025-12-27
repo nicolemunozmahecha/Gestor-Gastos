@@ -4,10 +4,19 @@ import tds.modelo.*;
 import tds.modelo.impl.*;
 import tds.adapters.repository.*;
 import tds.adapters.repository.exceptions.*;
+
+import tds.importacion.GastoImportado;
+import tds.importacion.ImportacionException;
+import tds.importacion.ImportadorGastos;
+import tds.importacion.ImportadorGastosFactory;
+
+import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -517,7 +526,7 @@ public class GestorGastos {
             }
         }
     }
-    
+
 
     public CuentaCompartida crearCuentaCompartidaConNombres(String nombreCuenta, List<String> nombresPropietarios) {
         if (nombresPropietarios == null || nombresPropietarios.size() < 2) {
@@ -541,5 +550,115 @@ public class GestorGastos {
         // Crear la cuenta compartida con las personas
         return crearCuentaCompartida(nombreCuenta, personas);
     }
+
+
+    // ========== IMPORTACIÓN DE GASTOS ==========
+
+
+    public boolean importarGastos(File fichero) {
+        try {
+            ImportadorGastos importador = ImportadorGastosFactory.crear(fichero);
+            List<GastoImportado> importados = importador.importar(fichero);
+
+            if (importados == null || importados.isEmpty()) {
+                return false;
+            }
+
+            // Preparar participantes por cuenta compartida (para crear cuentas si no existen)
+            Map<String, Set<String>> participantesPorCuenta = new HashMap<>();
+            for (GastoImportado g : importados) {
+                String cuenta = normalizarNombreCuenta(g.cuenta());
+                if (esCuentaPersonal(cuenta)) continue;
+                participantesPorCuenta
+                        .computeIfAbsent(cuenta, k -> new LinkedHashSet<>())
+                        .add(g.pagador().trim());
+            }
+
+            // Comprobar que existen las cuentas compartidas necesarias
+            for (Map.Entry<String, Set<String>> e : participantesPorCuenta.entrySet()) {
+                String nombreCuenta = e.getKey();
+                Cuenta existente = buscarCuenta(nombreCuenta);
+                if (existente != null) continue;
+
+                List<Persona> personas = e.getValue().stream()
+                        .filter(n -> n != null && !n.isBlank())
+                        .map(this::buscarOCrearPersona)
+                        .collect(Collectors.toList());
+
+
+                crearCuentaCompartida(nombreCuenta, personas);
+            }
+
+
+            Cuenta principal = buscarCuenta("Principal");
+            if (principal == null) {
+                crearCuentaPersonal(new CuentaPersonalImpl("Principal"));
+                principal = buscarCuenta("Principal");
+            }
+
+            // Importar cada gasto
+            int importadosOk = 0;
+            for (GastoImportado gi : importados) {
+                String nombreCuenta = normalizarNombreCuenta(gi.cuenta());
+                Cuenta cuentaDestino = esCuentaPersonal(nombreCuenta)
+                        ? principal
+                        : buscarCuenta(nombreCuenta);
+
+                if (cuentaDestino == null) {
+                    continue;
+                }
+
+                String nombreCategoria = (gi.categoria() == null || gi.categoria().isBlank())
+                        ? "Sin categoría"
+                        : gi.categoria().trim();
+
+                Categoria categoria = buscarCategoria(nombreCategoria);
+                if (categoria == null) {
+                    categoria = crearCategoria(nombreCategoria);
+                }
+
+                Persona pagador = buscarOCrearPersona(gi.pagador().trim());
+
+                // Si es cuenta compartida y el pagador no está en la cuenta, lo añadimos.
+                if (cuentaDestino instanceof CuentaCompartidaImpl ccImpl) {
+                    ccImpl.addPersonaSiNoExiste(pagador);
+                }
+
+                String descripcion = (gi.descripcion() == null) ? "" : gi.descripcion().trim();
+
+
+                String nombre = (gi.nombre() == null || gi.nombre().isBlank())
+                        ? "(Sin nombre)"
+                        : gi.nombre().trim();
+
+                Gasto gasto = crearGasto(nombre, gi.cantidad(), gi.fecha(), descripcion, categoria, pagador);
+                boolean ok = agregarGastoACuenta(cuentaDestino, gasto);
+                if (ok) {
+                    importadosOk++;
+                }
+            }
+
+            return importadosOk > 0;
+
+        } catch (ImportacionException e) {
+            System.err.println("Error en la importación: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private static boolean esCuentaPersonal(String nombreCuentaNormalizado) {
+        if (nombreCuentaNormalizado == null) return true;
+        String v = nombreCuentaNormalizado.trim();
+        return "principal".equalsIgnoreCase(v) || "personal".equalsIgnoreCase(v);
+    }
+
+    private static String normalizarNombreCuenta(String raw) {
+        if (raw == null) return "";
+        String v = raw.trim();
+        if (v.equalsIgnoreCase("Personal")) return "Principal";
+        return v;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package tds.vista;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -27,6 +28,8 @@ import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import tds.Configuracion;
 import tds.controlador.GestorGastos;
 import tds.modelo.Cuenta;
@@ -209,7 +212,31 @@ public class CuentaCompartidaController {
     }
     
     @FXML
-    private void importarGasto() { System.out.println("Importar Gasto"); }
+    private void importarGasto() {
+        Window w = (tabPane != null && tabPane.getScene() != null) ? tabPane.getScene().getWindow() : null;
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Importar gastos");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV (*.csv)", "*.csv"),
+                new FileChooser.ExtensionFilter("Todos los ficheros", "*.*")
+        );
+
+        File fichero = chooser.showOpenDialog(w);
+        if (fichero == null) {
+            return;
+        }
+
+        gestor = Configuracion.getInstancia().getGestorGastos();
+        boolean ok = gestor.importarGastos(fichero);
+        if (ok) {
+            // Refrescar la tabla de la cuenta actual (si el CSV contiene gastos de esta cuenta)
+            cargarGastos();
+            new Alert(AlertType.INFORMATION, "Gastos importados correctamente.").showAndWait();
+        } else {
+            new Alert(AlertType.ERROR, "No se pudo importar el fichero.").showAndWait();
+        }
+    }
 
 
     @FXML 

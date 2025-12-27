@@ -11,6 +11,7 @@ public class MenuController {
     @FXML private Menu menuEliminarCuenta;
     @FXML private MenuItem menuTotalCuenta;
     @FXML private MenuItem menuFiltrarGastos;
+    @FXML private MenuItem menuImportarGastos;
     @FXML private MenuItem menuCrearCategoria;
     @FXML private Menu menuEliminarCategoria;
     @FXML private MenuItem menuCrearAlerta;
@@ -62,6 +63,10 @@ public class MenuController {
         
         if (menuFiltrarGastos != null) {
             menuFiltrarGastos.setOnAction(e -> controladorPrincipal.filtrarGastos());
+        }
+
+        if (menuImportarGastos != null) {
+            menuImportarGastos.setOnAction(e -> controladorPrincipal.importarGastosDesdeMenu());
         }
         
         if (menuCrearAlerta != null) {

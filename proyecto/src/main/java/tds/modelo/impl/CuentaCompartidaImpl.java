@@ -162,6 +162,43 @@ public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida
         return Collections.unmodifiableList(new ArrayList<>(personas));
     }
 
+    /**
+     * Añade una persona a la cuenta si no existe todavía.
+     *
+     * Nota: para simplificar, si la estrategia era personalizada, se vuelve a
+     * la equitativa al añadir una nueva persona.
+     *
+     * Este método es útil, por ejemplo, al importar gastos de ficheros donde
+     * puede aparecer un pagador que no estaba en la cuenta.
+     */
+    public boolean addPersonaSiNoExiste(Persona persona) {
+        if (persona == null) return false;
+
+        // Comprobar por nombre (más estable que equals cuando vienen de JSON)
+        String nombre = persona.getNombre();
+        if (nombre == null) return false;
+
+        boolean yaEsta = personas.stream().anyMatch(p -> nombre.equalsIgnoreCase(p.getNombre()));
+        if (yaEsta) return false;
+
+        PersonaImpl pi = (persona instanceof PersonaImpl)
+                ? (PersonaImpl) persona
+                : new PersonaImpl(persona.getNombre(), persona.getSaldo());
+
+        // Añadir con saldo 0
+        pi.setSaldo(0.0);
+        personas.add(pi);
+
+        // Recalcular estrategia/porcentajes
+        this.estrategia = null;
+        this.estrategiaId = DistribucionEquitativaImpl.ID;
+        aplicarPorcentajesEquitativos();
+
+        // Recalcular saldos en base a los gastos ya existentes
+        recalcularTodosSaldos();
+        return true;
+    }
+
     // ===== Estrategia =====
 
     @JsonIgnore

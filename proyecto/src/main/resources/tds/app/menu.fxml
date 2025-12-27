@@ -27,6 +27,7 @@
             <Menu mnemonicParsing="false" text="Gastos">
                <items>
                   <MenuItem fx:id="menuFiltrarGastos" mnemonicParsing="false" text="Filtrar Gastos" />
+                  <MenuItem fx:id="menuImportarGastos" mnemonicParsing="false" text="Importar Gastos" />
                </items>
             </Menu>
             
