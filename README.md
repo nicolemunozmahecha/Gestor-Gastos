@@ -4,8 +4,10 @@
 
 **Integrantes del grupo:**
 - Guillermo
-- Nicole Muñoz Mahecha (G1.1.) -
-- Lucía Ludeña López (G1.1.) - lucia.l.l@um.es
+
+\- Nicole Muñoz Mahecha (G1.1.)
+
+\- Lucía Ludeña López (G1.1.) - lucia.l.l@um.es
 
 
 
@@ -18,21 +20,23 @@ El proyecto es una aplicación que sirve como un gestor de gastos personales y c
 
 1. Clonar el repositorio de GitHub en el que se encuentra el proyecto. Para ello:
 
-```bash
+```
 git clone https://github.com/Guillermo-MR/TDS.git
 
-'''
-
-
+```
 
 2\. Compilar y ejecutar. Para ello:
 
-```bash
+```
 
 mvn clean install
 mvn javafx:run
 
-'''
+```
+
+
+
+Un saludo, los miembros del grupo.
 
 
 
