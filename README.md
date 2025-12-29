@@ -21,7 +21,3 @@ mvn javafx:run
 
 **La documentación del proyecto se encuentra en:**
 - [Documentación completa del proyecto](docs/documentacion.md)
-
-El repositorio debe contener un README.MD con el nombre de los integrantes del grupo (mail y subgrupo
-de pertenencia), descripción breve de qué hace el proyecto y cómo ejecutar el proyecto. Incluir además los
-enlaces a los documentos relevantes de la documentación.
