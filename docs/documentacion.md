@@ -129,3 +129,13 @@ En /tds/modelo/impl tenemos las implementaciones de nuestras entidades.
 
 
 ### DECISIONES DE DISEÑO
+* **Separar interfaces e implementaciones en el dominio ->** Como hemos explicado en el apartado anterior, hemos decidido separar las interfaces (/tds/modelo) y las implementaciones (/tds/modelo/impl). De esta forma hemos conseguido facilitar la persistencia y permitir que fuera más sencillo ir añadiendo implementaciones.
+* **GestorGastos como único controlador ->** Creamos un único controlador llamado GestorGastos, al que la interfaz llama y él se encarga de llamar al dominio. De esa forma, la interfaz no tiene que acceder directamente al modelo.
+* **Persistencia mediante JSON ->** Decidimos almacenar toda la información en un único fichero JSON. Así, podíamos cambiar el mecanismo de persistencia sin afectar al resto del programa.
+* **Gestión de gastos en cuentas compartidas ->** Decidimos que la aplicación recaulculará los saldos automáticamente al añadir o eliminar un gasto a la cuenta compartida.
+* **Si los porcentajes personalizados no suman 100%, se toma DistribucionEquitativaImpl ->** Hemos decidido que en el caso de que los porcentajes introducidos por el usuario no sumen el 100%, en lugar de dar error y bloquearse, se haga una distribución equitativa de porcentajes entre los miembros de la cuenta.
+* **Las cuentas personales ignoran el pagador ->** Como en las cuentas personales no va a insertar gastos más que una persona, el propietario del gasto no afecta al cálculo del total.
+* **Las alertas sólo saltan al superar el límite ->** Tuvimos la duda de si la alerta debería saltar cuando gastoActual >= limite o si cuando gastoActual > limite. Al final decidimos que saltaran cuando se supere el límite (es decir, cuando gastoAcctual > limite), no al alcanzarlo.
+
+
+
