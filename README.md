@@ -1,8 +1,8 @@
 # README
 
 **Integrantes del grupo:**
-* Guillermo
-* Nicole Muñoz Mahecha (G1.1.)
+* Guillermo Martínez Ruiz - guillermo.martinezr1@um.es
+* Nicole Muñoz Mahecha (G1.1.) - nicole.munozm@um.es
 * Lucía Ludeña López (G1.1.) - lucia.l.l@um.es
 
 **Descripción del proyecto:**
