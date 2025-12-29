@@ -3,11 +3,10 @@
 
 
 **Integrantes del grupo:**
-- Guillermo
 
-\- Nicole Muñoz Mahecha (G1.1.)
-
-\- Lucía Ludeña López (G1.1.) - lucia.l.l@um.es
+* Guillermo
+* Nicole Muñoz Mahecha (G1.1.)
+* Lucía Ludeña López (G1.1.) - lucia.l.l@um.es
 
 
 
@@ -35,8 +34,6 @@ mvn javafx:run
 ```
 
 
-
-Un saludo, los miembros del grupo.
 
 
 
