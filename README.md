@@ -10,11 +10,13 @@ El proyecto es una aplicación que sirve como un gestor de gastos personales y c
 
 **Cómo ejecutar el proyecto:**
 
-1. Clonar el repositorio de GitHub en el que se encuentra el proyecto. Para ello:
-   git clone https://github.com/Guillermo-MR/TDS.git
-2. Compilar y ejecutar. Para ello:
-   mvn clean install
-   mvn javafx:run
+1.Clonar el repositorio de GitHub en el que se encuentra el proyecto. Para ello:
+	git clone https://github.com/Guillermo-MR/TDS.git
+
+2.Compilar y ejecutar. Para ello:
+
+&nbsp;	mvn clean install
+	mvn javafx:run
 
 
 
