@@ -129,6 +129,7 @@ En /tds/modelo/impl tenemos las implementaciones de nuestras entidades.
 
 
 ### DECISIONES DE DISEÑO
+Durante la creación de la aplicación, hemos tenido que tomar varias decisiones de diseño. Algunas de ls más destacables son:
 * **Separar interfaces e implementaciones en el dominio ->** Como hemos explicado en el apartado anterior, hemos decidido separar las interfaces (/tds/modelo) y las implementaciones (/tds/modelo/impl). De esta forma hemos conseguido facilitar la persistencia y permitir que fuera más sencillo ir añadiendo implementaciones.
 * **GestorGastos como único controlador ->** Creamos un único controlador llamado GestorGastos, al que la interfaz llama y él se encarga de llamar al dominio. De esa forma, la interfaz no tiene que acceder directamente al modelo.
 * **Persistencia mediante JSON ->** Decidimos almacenar toda la información en un único fichero JSON. Así, podíamos cambiar el mecanismo de persistencia sin afectar al resto del programa.
@@ -137,5 +138,13 @@ En /tds/modelo/impl tenemos las implementaciones de nuestras entidades.
 * **Las cuentas personales ignoran el pagador ->** Como en las cuentas personales no va a insertar gastos más que una persona, el propietario del gasto no afecta al cálculo del total.
 * **Las alertas sólo saltan al superar el límite ->** Tuvimos la duda de si la alerta debería saltar cuando gastoActual >= limite o si cuando gastoActual > limite. Al final decidimos que saltaran cuando se supere el límite (es decir, cuando gastoAcctual > limite), no al alcanzarlo.
 
+
+### PATRONES DE DISEÑO USADOS
+Hemos utilizado varios patrones de diseño de los vistos en clase:
+* **Patrón GRASP Controller ->** La clase GestorDatos actúa como puente entre la interfaz de usuario y el dominio. Recibe las peticiones de la vista y llama a las operaciones necesarias.
+* **Patrón Strategy ->** Se utiliza para poder repartir los gastos de distintas formas dentro de una cuenta compartida. Por ejemplo, a la hora de calcular el porcentaje, la cuenta no sabe cómo se calcula, sino que delega en la estrategia para que lo haga.
+* **Patrón Decorator para los filtros ->** Los filtros de gastos se implementan mediante el patrón Decorator, que permite combinar filtros sin cerar una combinación fija. Es decir, se pueden añadir nuevos filtros sin modificar los existentes.
+* **Patrón Factory Method ->** Utilizamos las factorías para decidir qué estrategia de distribución crear (Según el id) y para importar ficheros, ya que hay que seleccionar cómo importar según el tipo de archivo.
+* **Patrón Singleton ->** Con él garantizamos tener una única instancia global. Se usa en GestorGastos.getInstancia(). Es importante porque no puede ser que en el sistema existan dos controladores de aplicación.
 
 
