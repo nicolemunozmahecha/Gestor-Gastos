@@ -104,3 +104,15 @@ A continuación se muestran las historias de usuario del sistema:
 - Como usuario,
 - quiero ver el saldo de cada persona en una cuenta compartida,
 - para poder ver cuánto debe o le deben a una persona de la cuenta compartida.
+
+
+### DIAGRAMA DE INTERACCIÓN PARA UNA DE LAS HISTORIAS DE USUARIO
+Hemos decidido hacer el diagrama de interacción de la Historia de Usuario 5: Registrar un gasto.
+
+**Historia de Usuario 5: Registrar un gasto**
+- Como usuario,
+- quiero registrar un gasto, utilizando su nombre, cantidad, fecha y categoría,
+- para llevar un control de mis movimientos.
+
+A continuación se muestra su diagrama de interacción:
+![Diagrama de interacción de la Historia de Usuario 5](imagenes/diagrama_interaccion.png)
