@@ -31,6 +31,36 @@
         "predefinida" : false
       },
       "pagador" : null
+    }, {
+      "nombre" : "cosas varias",
+      "cantidad" : 3250.0,
+      "fecha" : [ 2025, 12, 4 ],
+      "descripcion" : "ccc",
+      "categoria" : {
+        "nombre" : "Ropa",
+        "predefinida" : false
+      },
+      "pagador" : null
+    }, {
+      "nombre" : "dddd",
+      "cantidad" : 20.0,
+      "fecha" : [ 2025, 12, 12 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Transporte",
+        "predefinida" : true
+      },
+      "pagador" : null
+    }, {
+      "nombre" : "dvdf",
+      "cantidad" : 26652.0,
+      "fecha" : [ 2025, 12, 11 ],
+      "descripcion" : "",
+      "categoria" : {
+        "nombre" : "Transporte",
+        "predefinida" : true
+      },
+      "pagador" : null
     } ],
     "propietario" : "User1"
   } ],
@@ -159,5 +189,6 @@
     "nombre" : "Nicole",
     "saldo" : -282.5,
     "porcentaje" : 30
-  }]
+  } ],
+  "notificaciones" : [ ]
 }

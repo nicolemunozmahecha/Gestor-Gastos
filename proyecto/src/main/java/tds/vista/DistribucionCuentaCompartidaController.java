@@ -143,7 +143,8 @@ public class DistribucionCuentaCompartidaController {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
-
+        
+        // LLAMAR FUNCION SON PORCENATJES VALIDOS..????
         if (sumaTotal != 100) {
             new Alert(Alert.AlertType.ERROR,
                     "Los porcentajes deben sumar 100%. Suma actual: " + sumaTotal + "%").showAndWait();
