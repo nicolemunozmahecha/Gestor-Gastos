@@ -116,3 +116,16 @@ Hemos decidido hacer el diagrama de interacción de la Historia de Usuario 5: Re
 
 A continuación se muestra su diagrama de interacción:
 ![Diagrama de interacción de la Historia de Usuario 5](imagenes/diagrama_interaccion.png)
+
+
+### ARQUITECTURA DE LA APLICACIÓN
+La aplicación la hemos diseñado con una arquitectura en capas, en la que se distinguen:
+* **La interfaz de usuario (tds.vista)** -> Tenemos varias clases Controller (por ejemplo, CrearAlertaController o CrearCategoriaController), que se encargan de gestionar las ventanas, actuando como puente entre la interfaz y el dominio. 
+* **La lógica de aplicación (tds.controlador)** -> Hemos creado un GestorGastos, el cuál actúa como controlador. Este se encarga de coordinar las operaciones que le solicite la interfaz.
+* **El dominio (tds.modelo)** -> Contiene las interfaces de las entidades principales de la aplicación, que serían: Cuenta, CuentaCompartida, CuentaPersonal, Gasto, Categoría, Persona, Alerta, Notificacion, Filtro, EstrategiaAlerta, EstrategiaDistribucion y PeriodoAlerta.
+Mediante EstrategiaAlertaFactory y EstrategiaDistribucionFactory tenemos factorías, que se encargan de ls creación de estrategias.
+En /tds/modelo/impl tenemos las implementaciones de nuestras entidades.
+* **La persistencia (tds.adapters.repository)** -> Mediante repositorios JSON se almacena toda la información en un único fichero, facilitando la gestión de datos.
+
+
+### DECISIONES DE DISEÑO
