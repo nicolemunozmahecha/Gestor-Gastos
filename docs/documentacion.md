@@ -6,6 +6,7 @@ Diseñamos el siguiente diagrama de clases del dominio del proyecto:
 
 En él se muestran las clases principales del dominio junto con sus relaciones dentr de la aplicación.
 
+
 ### ESPECIFICACIÓN DE LAS HISTORIAS DE USUARIO DEL PROYECTO
 A continuación se muestran las historias de usuario del sistema:
 
