@@ -3,31 +3,68 @@ package tds.modelo.impl;
 import tds.modelo.Notificacion;
 import tds.modelo.Alerta;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class NotificacionImpl implements Notificacion {
+    @JsonProperty("id")
     private String id;
+
+    @JsonProperty("mensaje")
     private String mensaje;
+
+    @JsonProperty("fechaHora")
     private LocalDateTime fechaHora;
-    private Alerta alertaOrigen;
+
+    @JsonProperty("alertaOrigen")
+    private AlertaImpl alertaOrigen;
+
+    @JsonProperty("leida")
     private boolean leida;
-    
-    public NotificacionImpl(Alerta alertaOrigen) {
+
+    @JsonProperty("periodoInicio")
+    private LocalDate periodoInicio;
+
+    @JsonProperty("periodoFin")
+    private LocalDate periodoFin;
+
+    // Constructor sin argumentos para json
+    public NotificacionImpl() {
         this.id = UUID.randomUUID().toString();
-        //this.mensaje = mensaje; Hay que escribir el mensaje
+        this.mensaje = "";
         this.fechaHora = LocalDateTime.now();
-        this.alertaOrigen = alertaOrigen;
+        this.alertaOrigen = null;
         this.leida = false;
+        this.periodoInicio = null;
+        this.periodoFin = null;
     }
     
-    public NotificacionImpl(String id, String mensaje, LocalDateTime fechaHora, Alerta alertaOrigen, boolean leida) {
+    public NotificacionImpl(Alerta alertaOrigen, String mensaje, LocalDate periodoInicio, LocalDate periodoFin) {
+        this.id = UUID.randomUUID().toString();
+        this.mensaje = mensaje;
+        this.fechaHora = LocalDateTime.now();
+        this.alertaOrigen = (alertaOrigen instanceof AlertaImpl)
+                ? (AlertaImpl) alertaOrigen
+                : (alertaOrigen != null ? new AlertaImpl(alertaOrigen.getNombre(), alertaOrigen.getLimite(), alertaOrigen.getPeriodo(), alertaOrigen.getCategoria()) : null);
+        this.leida = false;
+        this.periodoInicio = periodoInicio;
+        this.periodoFin = periodoFin;
+    }
+    
+    public NotificacionImpl(String id, String mensaje, LocalDateTime fechaHora, Alerta alertaOrigen, boolean leida, LocalDate periodoInicio, LocalDate periodoFin) {
         this.id = id;
         this.mensaje = mensaje;
         this.fechaHora = fechaHora;
-        this.alertaOrigen = alertaOrigen;
+        this.alertaOrigen = (alertaOrigen instanceof AlertaImpl)
+                ? (AlertaImpl) alertaOrigen
+                : (alertaOrigen != null ? new AlertaImpl(alertaOrigen.getNombre(), alertaOrigen.getLimite(), alertaOrigen.getPeriodo(), alertaOrigen.getCategoria()) : null);
         this.leida = leida;
+        this.periodoInicio = periodoInicio;
+        this.periodoFin = periodoFin;
     }
     
     @Override
@@ -71,6 +108,14 @@ public class NotificacionImpl implements Notificacion {
     public Alerta getAlertaOrigen() {
         return alertaOrigen;
     }
+
+    public LocalDate getPeriodoInicio() {
+        return periodoInicio;
+    }
+
+    public LocalDate getPeriodoFin() {
+        return periodoFin;
+    }
     
     @Override
     public boolean isLeida() {
@@ -93,6 +138,7 @@ public class NotificacionImpl implements Notificacion {
     @Override
     public String toString() {
         String estado = leida ? "Leída" : "No leída";
-        return String.format("[%s] %s - %s - Alerta: %s (%s)", estado, getFechaHoraFormateada(), mensaje, alertaOrigen.getNombre(), id.substring(0, 8));
+        String nombreAlerta = (alertaOrigen == null) ? "(sin alerta)" : alertaOrigen.getNombre();
+        return String.format("[%s] %s - %s - Alerta: %s (%s)", estado, getFechaHoraFormateada(), mensaje, nombreAlerta, id.substring(0, 8));
     }
 }

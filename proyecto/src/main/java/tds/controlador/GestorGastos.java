@@ -19,8 +19,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.time.DayOfWeek;
 import tds.modelo.estrategias.EstrategiaDistribucionFactory;
 
 public class GestorGastos {
@@ -32,6 +30,7 @@ public class GestorGastos {
     private final CategoriaRepository repositorioCategorias;
     private final AlertaRepository repositorioAlertas;
     private final PersonaRepository repositorioPersonas;
+    private final NotificacionRepository repositorioNotificaciones;
     
     private List<Cuenta> cuentas;
     private List<Categoria> categorias;
@@ -39,14 +38,15 @@ public class GestorGastos {
     private List<Notificacion> notificaciones;
     
 
-    private GestorGastos(GastoRepository gastoRepo, CuentaRepository cuentaRepo, 
+    private GestorGastos(GastoRepository gastoRepo, CuentaRepository cuentaRepo,
                         CategoriaRepository categoriaRepo, AlertaRepository alertaRepo,
-                        PersonaRepository personaRepo) {
+                        PersonaRepository personaRepo, NotificacionRepository notificacionRepo) {
         this.repositorioGastos = gastoRepo;
         this.repositorioCuentas = cuentaRepo;
         this.repositorioCategorias = categoriaRepo;
         this.repositorioAlertas = alertaRepo;
         this.repositorioPersonas = personaRepo;
+        this.repositorioNotificaciones = notificacionRepo;
         
         this.cuentas = new ArrayList<>();
         this.categorias = new ArrayList<>();
@@ -60,22 +60,25 @@ public class GestorGastos {
 
     
     private void cargarDatos() {
-        // Cargar las cuentas desde el repositorio
+        // Cargar las cuentas, categorias y alertas desde el repositorio
         this.cuentas = new ArrayList<>(repositorioCuentas.getCuentas());
-        // Cargar las categorías desde el repositorio
         this.categorias = new ArrayList<>(repositorioCategorias.getCategorias());
-        // Cargar las alertas desde el repositorio
         this.alertas = new ArrayList<>(repositorioAlertas.getAlertas());
+        // OJO: mantenemos referencia a la lista del repositorio para que cualquier cambio se persista correctamente.
+        @SuppressWarnings("unchecked")
+        List<Notificacion> listaRepo = (List<Notificacion>) (List<?>) repositorioNotificaciones.getNotificaciones();
+        this.notificaciones = (listaRepo != null) ? listaRepo : new ArrayList<>();
     }
     
-    // Método factory para crear la instancia con repositorios
-    public static synchronized GestorGastos crearInstancia(GastoRepository gastoRepo, 
+    // Método para crear la instancia con repositorios
+    public static synchronized GestorGastos crearInstancia(GastoRepository gastoRepo,
                                                            CuentaRepository cuentaRepo,
-                                                           CategoriaRepository categoriaRepo, 
+                                                           CategoriaRepository categoriaRepo,
                                                            AlertaRepository alertaRepo,
-                                                           PersonaRepository personaRepo) {
+                                                           PersonaRepository personaRepo,
+                                                           NotificacionRepository notificacionRepo) {
         if (instancia == null) {
-            instancia = new GestorGastos(gastoRepo, cuentaRepo, categoriaRepo, alertaRepo, personaRepo);
+            instancia = new GestorGastos(gastoRepo, cuentaRepo, categoriaRepo, alertaRepo, personaRepo, notificacionRepo);
         }
         return instancia;
     }
@@ -276,16 +279,54 @@ public class GestorGastos {
         }
     }
     
-    public void verificarAlertas() {
-        
+
+    public void verificarAlertas(Gasto gastoRecienAnadido) {
+        if (gastoRecienAnadido == null) return;
+
+        LocalDate fechaRef = (gastoRecienAnadido.getFecha() != null) ? gastoRecienAnadido.getFecha() : LocalDate.now();
+        Categoria categoriaGasto = gastoRecienAnadido.getCategoria();
+
         for (Alerta alerta : alertas) {
-            double gastoActual = calcularGastoPeriodo(alerta, LocalDate.now());
-            
-            if (alerta.superaLimite(gastoActual)) {
-                    Notificacion notificacion = new NotificacionImpl(alerta);
+  
+            if (!alerta.esGeneral()) {
+                if (categoriaGasto == null || alerta.getCategoria() == null) continue;
+                if (!alerta.getCategoria().equals(categoriaGasto)) continue;
+            }
+
+            double gastoActual = calcularGastoPeriodoNatural(alerta, fechaRef);
+            if (!alerta.superaLimite(gastoActual)) {
+                continue;
+            }
+
+            LocalDate inicio = alerta.getEstrategia().calcularInicioPeriodo(fechaRef);
+            LocalDate fin = alerta.getEstrategia().calcularFinPeriodo(fechaRef);
+
+            // Siempre se genera una nueva notificación
+            String mensaje = construirMensajeNotificacion(alerta, gastoActual, inicio, fin);
+            NotificacionImpl notificacion = new NotificacionImpl(alerta, mensaje, inicio, fin);
+            try {
+                repositorioNotificaciones.addNotificacion(notificacion);
+            } catch (Exception e) {
+           
+                System.err.println("Error al persistir notificación: " + e.getMessage());
+                if (!notificaciones.contains(notificacion)) {
                     notificaciones.add(notificacion);
+                }
             }
         }
+    }
+
+    private String construirMensajeNotificacion(Alerta alerta, double gastoActual, LocalDate inicio, LocalDate fin) {
+        java.time.format.DateTimeFormatter df = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String periodoTxt = alerta.getEstrategia().getNombrePeriodo();
+        String rango = (inicio != null && fin != null) ? (inicio.format(df) + " - " + fin.format(df)) : "";
+        String categoriaTxt = alerta.esGeneral()
+                ? "(general)"
+                : "(categoría: " + alerta.getCategoria().getNombre() + ")";
+        return String.format(
+                "Alerta '%s' superada %s. Total: %.2f€ (límite: %.2f€). Periodo %s %s.",
+                alerta.getNombre(), categoriaTxt, gastoActual, alerta.getLimite(), periodoTxt, rango
+        );
     }
     
  // ========== GESTIÓN DE GASTOS ==========
@@ -322,6 +363,9 @@ public class GestorGastos {
             }
             
             System.out.println("DEBUG: Gasto añadido. Cuenta tiene " + cuenta.getNumeroGastos() + " gastos");
+            // Tras cualquier modificación de gastos, comprobamos alertas y generamos notificaciones si procede.
+            // (Usando la fecha/categoría del propio gasto para aplicar el periodo natural.)
+            verificarAlertas(gasto);
             return true;
         } catch (Exception e) {
             System.err.println("Error al agregar gasto a cuenta: " + e.getMessage());
@@ -340,17 +384,17 @@ public class GestorGastos {
     }
     
 
-    private double calcularGastoPeriodo(Alerta alerta, LocalDate fecha) {
-        LocalDate inicio;
+    /**
+     * Calcula el gasto acumulado dentro del periodo NATURAL de la alerta que contiene a fecha,
+     * pero acumulado HASTA la fecha indicada (inclusive).
+     * 
+     * Ejemplo: alerta mensual -> desde día 1 del mes hasta la fecha del gasto.
+     */
+    private double calcularGastoPeriodoNatural(Alerta alerta, LocalDate fecha) {
+        LocalDate inicio = alerta.getEstrategia().calcularInicioPeriodo(fecha);
         LocalDate fin = fecha;
-        
-        if (alerta.getPeriodo() == PeriodoAlerta.SEMANAL) {
-            inicio = fecha.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        } else { // MENSUAL
-            inicio = fecha.with(TemporalAdjusters.firstDayOfMonth());
-        }
-        
-        return getGastosFiltrados(new FiltroImpl(null, inicio, fin, 
+
+        return getGastosFiltrados(new FiltroImpl(null, inicio, fin,
                                  alerta.esGeneral() ? null : List.of(alerta.getCategoria())))
                .stream()
                .mapToDouble(Gasto::getCantidad)
@@ -458,23 +502,62 @@ public class GestorGastos {
                            .filter(n -> !n.isLeida())
                            .collect(Collectors.toList());
     }
+
+    /**
+     * Devuelve el número de notificaciones sin leer.
+     * Útil para mostrar un indicador en la interfaz (menú Notificaciones, badge, etc.).
+     */
+    public int getNumeroNotificacionesNoLeidas() {
+        return (int) notificaciones.stream().filter(n -> !n.isLeida()).count();
+    }
     
 
     public void marcarNotificacionComoLeida(Notificacion notificacion) {
         if (notificacion != null) {
             notificacion.marcarComoLeida();
+            if (notificacion instanceof NotificacionImpl) {
+                try {
+                    repositorioNotificaciones.updateNotificacion((NotificacionImpl) notificacion);
+                } catch (Exception e) {
+                    System.err.println("Error al persistir cambio de notificación: " + e.getMessage());
+                }
+            }
         }
     }
     
 
     public void marcarTodasNotificacionesComoLeidas() {
         notificaciones.forEach(Notificacion::marcarComoLeida);
+        try {
+            repositorioNotificaciones.guardarNotificaciones();
+        } catch (Exception e) {
+            System.err.println("Error al persistir notificaciones: " + e.getMessage());
+        }
+    }
+
+    public boolean eliminarNotificacion(Notificacion notificacion) {
+        if (notificacion == null) return false;
+
+        try {
+            if (notificacion instanceof NotificacionImpl) {
+                repositorioNotificaciones.removeNotificacion((NotificacionImpl) notificacion);
+            }
+            return notificaciones.remove(notificacion);
+        } catch (Exception e) {
+            System.err.println("Error al eliminar notificación: " + e.getMessage());
+            return false;
+        }
     }
     
 
     public void limpiarNotificacionesAntiguas() {
         LocalDate hace30Dias = LocalDate.now().minusDays(30);
         notificaciones.removeIf(n -> n.getFechaHora().toLocalDate().isBefore(hace30Dias));
+        try {
+            repositorioNotificaciones.guardarNotificaciones();
+        } catch (Exception e) {
+            System.err.println("Error al persistir limpieza de notificaciones: " + e.getMessage());
+        }
     }
     
     // ========== GETTERS ==========

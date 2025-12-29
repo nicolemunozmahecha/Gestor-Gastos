@@ -138,6 +138,7 @@ public class PersonaRepositoryJSONImpl implements PersonaRepository {
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
         datos.setPersonas(datosCargados.getPersonas());
+        datos.setNotificaciones(datosCargados.getNotificaciones());
 
         this.personas = datosCargados.getPersonas();
         return personas;

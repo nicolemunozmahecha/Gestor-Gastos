@@ -159,49 +159,5 @@
     "nombre" : "Nicole",
     "saldo" : -282.5,
     "porcentaje" : 30
-  }, {
-    "nombre" : "Papa",
-    "saldo" : 942.0,
-    "porcentaje" : 25
-  }, {
-    "nombre" : "Mama",
-    "saldo" : -314.0,
-    "porcentaje" : 25
-  }, {
-    "nombre" : "Hijo1",
-    "saldo" : -314.0,
-    "porcentaje" : 25
-  }, {
-    "nombre" : "Hijo2",
-    "saldo" : -314.0,
-    "porcentaje" : 25
-  }, {
-    "nombre" : "ANA",
-    "saldo" : 0.0,
-    "porcentaje" : 34
-  }, {
-    "nombre" : "PACO",
-    "saldo" : 0.0,
-    "porcentaje" : 33
-  }, {
-    "nombre" : "BEA",
-    "saldo" : 0.0,
-    "porcentaje" : 33
-  }, {
-    "nombre" : "PEPE",
-    "saldo" : 0.0,
-    "porcentaje" : 25
-  }, {
-    "nombre" : "j",
-    "saldo" : 0.0,
-    "porcentaje" : 34
-  }, {
-    "nombre" : "n",
-    "saldo" : 0.0,
-    "porcentaje" : 33
-  }, {
-    "nombre" : "jk",
-    "saldo" : 0.0,
-    "porcentaje" : 33
-  } ]
+  }]
 }

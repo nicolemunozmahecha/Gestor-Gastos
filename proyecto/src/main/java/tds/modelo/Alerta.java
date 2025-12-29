@@ -11,4 +11,5 @@ public interface Alerta {
     void setCategoria(Categoria categoria);
     boolean superaLimite(double gastoActual);
     boolean esGeneral();
+    EstrategiaAlerta getEstrategia();
 }

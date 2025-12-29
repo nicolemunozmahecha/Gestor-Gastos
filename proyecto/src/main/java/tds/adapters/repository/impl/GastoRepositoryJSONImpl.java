@@ -22,11 +22,7 @@ import tds.modelo.impl.GastoImpl;
 import tds.modelo.impl.CuentaImpl;
 import tds.modelo.impl.DatosGastos;
 
-/**
- * Repositorio de gastos.
- * NOTA: Los gastos ahora existen solo dentro de las cuentas.
- * Este repositorio obtiene los gastos de todas las cuentas.
- */
+
 public class GastoRepositoryJSONImpl implements GastoRepository {
     
     private List<GastoImpl> gastos = null;
@@ -72,30 +68,7 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
         return gasto.orElse(null);
     }
 
-    @Override
-    public void addGasto(GastoImpl gasto) throws ElementoExistenteException, ErrorPersistenciaException {
-        // Este método ya no debe usarse - los gastos se añaden a través de las cuentas
-        throw new UnsupportedOperationException(
-            "No se pueden añadir gastos directamente. Use agregarGastoACuenta() del GestorGastos");
-    }
 
-    @Override
-    public void removeGasto(GastoImpl gasto) throws ErrorPersistenciaException {
-        // Este método ya no debe usarse - los gastos se eliminan a través de las cuentas
-        throw new UnsupportedOperationException(
-            "No se pueden eliminar gastos directamente. Elimínelos de la cuenta correspondiente");
-    }
-
-    @Override
-    public GastoImpl updateGasto(GastoImpl gasto) throws ErrorPersistenciaException {
-        // Este método ya no debe usarse - los gastos se actualizan a través de las cuentas
-        throw new UnsupportedOperationException(
-            "No se pueden actualizar gastos directamente. Actualice la cuenta correspondiente");
-    }
-
-    /**
-     * Carga los gastos de todas las cuentas
-     */
     private List<GastoImpl> cargarGastos(String rutaFichero) throws Exception {
     	File ficheroStream = new File(rutaFichero);
     	if (!ficheroStream.exists()) {
@@ -115,6 +88,7 @@ public class GastoRepositoryJSONImpl implements GastoRepository {
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
         datos.setPersonas(datosCargados.getPersonas());
+        datos.setNotificaciones(datosCargados.getNotificaciones());
 
         // Obtener todos los gastos de todas las cuentas
         List<GastoImpl> todosLosGastos = new ArrayList<>();

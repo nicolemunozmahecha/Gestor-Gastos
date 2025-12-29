@@ -7,10 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-/**
- * Clase que almacena todos los datos del sistema de gastos para persistencia JSON
- * NOTA: Los gastos NO tienen un array separado - existen solo dentro de las cuentas
- */
+
+// Clase que almacena todos los datos del sistema de gastos para persistencia
+
 public class DatosGastos {
     
     @JsonProperty("cuentasPersonales")
@@ -27,6 +26,9 @@ public class DatosGastos {
     
     @JsonProperty("personas")
     private List<PersonaImpl> personas;
+
+    @JsonProperty("notificaciones")
+    private List<NotificacionImpl> notificaciones;
     
     public DatosGastos() {
         this.cuentasPersonales = new ArrayList<>();
@@ -34,17 +36,20 @@ public class DatosGastos {
         this.categorias = new ArrayList<>();
         this.alertas = new ArrayList<>();
         this.personas = new ArrayList<>();
+        this.notificaciones = new ArrayList<>();
     }
     
     public DatosGastos(List<CuentaPersonalImpl> cuentasPersonales,
                       List<CuentaCompartidaImpl> cuentasCompartidas,
                       List<CategoriaImpl> categorias, List<AlertaImpl> alertas,
-                      List<PersonaImpl> personas) {
+                      List<PersonaImpl> personas,
+                      List<NotificacionImpl> notificaciones) {
         this.cuentasPersonales = cuentasPersonales;
         this.cuentasCompartidas = cuentasCompartidas;
         this.categorias = categorias;
         this.alertas = alertas;
         this.personas = personas;
+        this.notificaciones = notificaciones;
     }
     
     // Métodos para obtener todas las cuentas como CuentaImpl
@@ -131,5 +136,13 @@ public class DatosGastos {
     
     public void setPersonas(List<PersonaImpl> personas) {
         this.personas = personas;
+    }
+
+    public List<NotificacionImpl> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(List<NotificacionImpl> notificaciones) {
+        this.notificaciones = (notificaciones != null) ? notificaciones : new ArrayList<>();
     }
 }

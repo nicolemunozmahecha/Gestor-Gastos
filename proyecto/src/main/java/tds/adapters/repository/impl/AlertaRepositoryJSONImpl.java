@@ -74,7 +74,7 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
             rutaFichero = Configuracion.getInstancia().getRutaDatos();
         }
         
-        // Si la alerta ya existe no puedo insertarla
+        // Si la alerta ya existe no se inserta
         if (alertas.contains(alerta)) {
             throw new ElementoExistenteException("La alerta " + alerta.getNombre() + " ya existe");
         }
@@ -119,12 +119,7 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
     }
 
     private List<AlertaImpl> cargarAlertas(String rutaFichero) throws Exception {
-        /*InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
-        
-        if (ficheroStream == null) {
-            // Si no existe el fichero, devolver lista vacía
-            return new ArrayList<>();
-        }*/
+
         File ficheroStream = new File(rutaFichero);
     	if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
@@ -143,6 +138,7 @@ public class AlertaRepositoryJSONImpl implements AlertaRepository {
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
         datos.setPersonas(datosCargados.getPersonas());
+        datos.setNotificaciones(datosCargados.getNotificaciones());
 
         this.alertas = datosCargados.getAlertas();
         return alertas;

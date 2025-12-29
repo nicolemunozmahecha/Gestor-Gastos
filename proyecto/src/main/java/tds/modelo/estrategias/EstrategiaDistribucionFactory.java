@@ -7,12 +7,7 @@ import tds.modelo.Persona;
 import tds.modelo.impl.DistribucionEquitativaImpl;
 import tds.modelo.impl.DistribucionPersonalizadaImpl;
 
-/**
- * Factoría sencilla de estrategias de distribución.
- *
- * - No usa reflexión ni escaneo de clases.
- * - El controlador solo maneja IDs (String) y la factoría devuelve la estrategia.
- */
+
 public final class EstrategiaDistribucionFactory {
 
     private EstrategiaDistribucionFactory() {

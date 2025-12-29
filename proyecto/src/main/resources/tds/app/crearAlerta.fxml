@@ -60,25 +60,7 @@
                      </items>
                   </MenuButton>
                </children>
-            </VBox>
-            
-            <VBox maxWidth="500" spacing="10">
-               <children>
-                  <Label text="¿Desea activar la categoria?" />
-                  <HBox alignment="CENTER_LEFT" spacing="30">
-                     <children>
-                        <RadioButton fx:id="activar" mnemonicParsing="false" text="SI">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="activarGroup" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="noActivar" mnemonicParsing="false" text="NO" toggleGroup="$activarGroup" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            
-            <HBox alignment="CENTER">
+            </VBox><HBox alignment="CENTER">
                <padding>
                   <Insets top="10" />
                </padding>

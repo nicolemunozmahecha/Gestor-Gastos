@@ -90,6 +90,19 @@ public class VentanaPrincipalController {
             setCuenta(principal);
         }
         crearPestanasCompartidas(compartidas);
+
+        // Al abrir la ventana principal, refrescar el indicador de notificaciones.
+        actualizarIndicadorNotificaciones();
+    }
+
+    /**
+     * Delegamos en el MenuController para que el indicador (texto del menú)
+     * se mantenga actualizado.
+     */
+    public void actualizarIndicadorNotificaciones() {
+        if (menuController != null) {
+            menuController.actualizarIndicadorNotificaciones();
+        }
     }
     
     public void setCuenta(CuentaPersonal p) {
@@ -128,6 +141,10 @@ public class VentanaPrincipalController {
         tablaGastos.getItems().addAll(gastos);
 
         actualizarGraficas();
+
+        // Por si se han generado nuevas notificaciones al añadir un gasto,
+        // refrescamos el indicador del menú.
+        actualizarIndicadorNotificaciones();
     }
     
     private String obtenerColor(String nombreCategoria) {
@@ -172,7 +189,7 @@ public class VentanaPrincipalController {
                 String categoria = data.getXValue();
                 String colorHex = obtenerColor(categoria);
                 // Propiedad CSS para barras
-                nodo.setStyle("-fx-bar-fill: " + colorHex + ";");
+                nodo.setStyle("-fx-background-color: " + colorHex + ";");
             }
         }
 
@@ -210,12 +227,7 @@ public class VentanaPrincipalController {
         añadirPestañaCuentaCompartida(cuenta, true);
     }
 
-    /**
-     * Añade una pestaña para una cuenta compartida.
-     *
-     * @param cuenta Cuenta compartida a mostrar
-     * @param seleccionar Si true, selecciona la pestaña recién creada
-     */
+
     public void añadirPestañaCuentaCompartida(CuentaCompartida cuenta, boolean seleccionar) {
     	// si la pestaña a crear es vacia
         if (tabPane == null) {
@@ -262,15 +274,7 @@ public class VentanaPrincipalController {
         }
     }
 
-    /**
-     * Crea (o recrea) las pestañas de todas las cuentas compartidas que haya
-     * actualmente en el gestor (lo que viene de la persistencia al arrancar).
-     *
-     * Lógica:
-     * - Deja la pestaña "Principal" tal cual.
-     * - Elimina cualquier otra pestaña existente (para evitar duplicados).
-     * - Añade una pestaña por cada CuentaCompartida cargada.
-     */
+
     public void cargarPestañasCuentasCompartidasDesdePersistencia() {
         // Mantengo este método por compatibilidad, pero la lógica real está en
         // crearPestanasCompartidas(...) y se alimenta desde el gestor.
@@ -452,6 +456,13 @@ public class VentanaPrincipalController {
     	alertas = gestor.getAlertas();
         Menu menu = menuController.getMenuEliminarAlerta();
         menu.getItems().clear();
+
+        if (alertas == null || alertas.isEmpty()) {
+            MenuItem vacio = new MenuItem("No hay alertas");
+            vacio.setDisable(true);
+            menu.getItems().add(vacio);
+            return;
+        }
                
         for (Alerta a : alertas) {
             MenuItem item = new MenuItem(a.getNombre());
@@ -468,7 +479,9 @@ public class VentanaPrincipalController {
 		                
 		                if (eliminada) {
 		                    System.out.println("Alerta eliminada: " + alertaAEliminar.getNombre());
-		                  
+
+                            // Refrescar el submenú la próxima vez que se abra (y, si sigue visible, también)
+                            javafx.application.Platform.runLater(this::eliminarAlerta);
 		                } else {
 		                    // Mostrar error si no se pudo eliminar
 		                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo eliminar la alerta: " + alertaAEliminar.getNombre());
@@ -486,6 +499,15 @@ public class VentanaPrincipalController {
     public void mostrarHistorial() {
     	try {
             Configuracion.getInstancia().getSceneManager().showMostrarHistorial();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void mostrarAlertas() {
+        try {
+            Configuracion.getInstancia().getSceneManager().showMostrarAlertas();
         } catch (Exception e) {
             e.printStackTrace();
         }

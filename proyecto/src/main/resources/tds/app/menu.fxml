@@ -44,9 +44,10 @@
             </Menu>
             
 			<!--============= ALERTAS ==================-->
-            <Menu mnemonicParsing="false" text="Alertas">
+            <Menu fx:id="menuAlertas" mnemonicParsing="false" text="Alertas">
                <items>
                   <MenuItem fx:id="menuCrearAlerta" mnemonicParsing="false"  text="Crear Alerta" />
+                  <MenuItem fx:id="menuVerAlertas" mnemonicParsing="false"  text="Ver Alertas" />
                   <Menu fx:id="menuEliminarAlerta" mnemonicParsing="false" text="Eliminar Alerta" >
                    <items>
 				    	<MenuItem text="Cargando..." />
@@ -56,7 +57,7 @@
             </Menu>
             
 			<!--============= NOTIFICACIONES ==================-->
-            <Menu mnemonicParsing="false" text="Notificaciones">
+	            <Menu fx:id="menuNotificaciones" mnemonicParsing="false" text="Notificaciones">
                <items>
                   <MenuItem fx:id="menuHistorialNotificaciones" mnemonicParsing="false"  text="Historial" />
                </items>

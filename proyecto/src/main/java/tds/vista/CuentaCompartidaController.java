@@ -230,7 +230,7 @@ public class CuentaCompartidaController {
         gestor = Configuracion.getInstancia().getGestorGastos();
         boolean ok = gestor.importarGastos(fichero);
         if (ok) {
-            // Refrescar la tabla de la cuenta actual (si el CSV contiene gastos de esta cuenta)
+            // Refrescar la tabla
             cargarGastos();
             new Alert(AlertType.INFORMATION, "Gastos importados correctamente.").showAndWait();
         } else {
@@ -260,7 +260,7 @@ public class CuentaCompartidaController {
 		a.showAndWait();
     }
 
-    // Agrupa las gráficas por categorías (por defecto).
+    // Agrupa las gráficas por categorías (por defecto)
     @FXML
     private void agruparGraficasPorCategorias() {
         agrupacionActual = AgrupacionGraficas.CATEGORIAS;
@@ -269,7 +269,7 @@ public class CuentaCompartidaController {
         actualizarGraficas();
     }
 
-    // Agrupa las gráficas por personas (por el pagador del gasto).
+    // Agrupa las gráficas por personas
     @FXML
     private void agruparGraficasPorPersonas() {
         agrupacionActual = AgrupacionGraficas.PERSONAS;
@@ -323,7 +323,7 @@ public class CuentaCompartidaController {
                 String categoria = data.getXValue();
                 String colorHex = obtenerColor(categoria);
                 // Propiedad CSS para barras
-                nodo.setStyle("-fx-bar-fill: " + colorHex + ";");
+                nodo.setStyle("-fx-background-color: " + colorHex + ";");
             }
         }
 

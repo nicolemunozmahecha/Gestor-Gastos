@@ -6,10 +6,7 @@ import tds.adapters.repository.impl.*;
 
 import java.nio.file.Paths;
 
-/**
- * Implementación concreta de la configuración.
- * Instancia los controladores y repositorios reales.
- */
+
 public class ConfiguracionImpl extends Configuracion {
 
     private GestorGastos gestor;
@@ -28,7 +25,8 @@ public class ConfiguracionImpl extends Configuracion {
             new CuentaRepositoryJSONImpl(),
             new CategoriaRepositoryJSONImpl(),
             new AlertaRepositoryJSONImpl(),
-            new PersonaRepositoryJSONImpl()
+            new PersonaRepositoryJSONImpl(),
+            new NotificacionRepositoryJSONImpl()
         );
     }
 

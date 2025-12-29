@@ -80,7 +80,6 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         
         if (yaExiste) {
             System.out.println("DEBUG addCuenta: La cuenta '" + cuenta.getNombre() + "' ya existe. No se añade de nuevo.");
-            // NO lanzar excepción, simplemente no hacer nada
             return;
         }
         
@@ -125,8 +124,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
     }
 
     private List<CuentaImpl> cargarCuentas(String rutaFichero) throws Exception {
-        // IMPORTANTÍSIMO: el JSON NO debe leerse/escribirse desde resources.
-        // Se debe usar un fichero real en disco (rutaFichero), para que sea persistente.
+
         File ficheroStream = new File(rutaFichero);
         if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
@@ -146,6 +144,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
         datos.setPersonas(datosCargados.getPersonas());
+        datos.setNotificaciones(datosCargados.getNotificaciones());
 
         this.cuentas = datosCargados.getCuentas();
         System.out.println("DEBUG cargarCuentas: Cargadas " + cuentas.size() + " cuentas desde " + ficheroStream.getAbsolutePath());

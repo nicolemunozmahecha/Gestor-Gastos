@@ -25,8 +25,6 @@ public class CrearAlertaController {
 	@FXML private CheckMenuItem categoriaAlimentacion;
 	@FXML private CheckMenuItem categoriaTransporte;
 	@FXML private CheckMenuItem categoriaEntretenimiento;
-	@FXML private RadioButton activar;
-	@FXML private RadioButton noActivar;
 
 	private List<Categoria> categoriasDisp;
 	private GestorGastos gestor;
@@ -71,8 +69,8 @@ public class CrearAlertaController {
     
     private boolean ningunoSeleccionado() {
         return categorias.getItems().stream()
-                .map(item -> (CheckMenuItem) item)               // Convertimos a CheckMenuItem
-                .noneMatch(CheckMenuItem::isSelected);          // Ninguno está seleccionado
+                .map(item -> (CheckMenuItem) item)         
+                .noneMatch(CheckMenuItem::isSelected);          
     }
     
     
@@ -104,12 +102,7 @@ public class CrearAlertaController {
 	        	p = PeriodoAlerta.SEMANAL;
 	        }else {
 	        	throw new IllegalArgumentException("La alerta debe tener un tipo de periodo");
-	        }
-	        if(!activar.isSelected() && !noActivar.isSelected()) {
-	        	throw new IllegalArgumentException("Debes elegir si activar o no la alerta");
-	        }
-	        
-        }catch(IllegalArgumentException e){
+	        }}catch(IllegalArgumentException e){
        	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
@@ -117,17 +110,7 @@ public class CrearAlertaController {
         if(ningunoSeleccionado()) {
         	gestor.crearAlerta(nombreAlerta, valor, p);
         }else {
-        	/*
-        	// Obtenemos lista de categorias, y solo queremos una, SOLO SE ELIGE 1 CATEGORIA
-        	Optional<CheckMenuItem> c = categorias.getItems().stream()
-        			.filter(item -> item instanceof CheckMenuItem)
-        	        .map(item -> (CheckMenuItem) item)
-        	        .filter(CheckMenuItem::isSelected)
-        	        .findFirst();
-        	// creamos categoria nueva para la alerta, pero YA EXISTE en la lista de categorias
-        	CheckMenuItem item = c.get();
-            Categoria cat = new CategoriaImpl(item.getText()); */
-            
+
         	gestor.crearAlerta(nombreAlerta, valor, p, cat);
         }
         

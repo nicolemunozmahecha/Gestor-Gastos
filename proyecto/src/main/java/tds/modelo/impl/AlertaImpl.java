@@ -2,7 +2,9 @@ package tds.modelo.impl;
 
 import tds.modelo.Alerta;
 import tds.modelo.Categoria;
+import tds.modelo.EstrategiaAlerta;
 import tds.modelo.PeriodoAlerta;
+import tds.modelo.estrategias.EstrategiaAlertaFactory;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,12 +23,17 @@ public class AlertaImpl implements Alerta {
     @JsonProperty("categoria")
     private CategoriaImpl categoria; // null si la alerta es general (no específica de categoría)    
 
-    // Constructor sin argumentos para Jackson
+
+    @JsonIgnore
+    private transient EstrategiaAlerta estrategia;
+
+    // Constructor sin argumentos para json
     public AlertaImpl() {
         this.nombre = "";
         this.limite = 0.0;
         this.periodo = PeriodoAlerta.MENSUAL;
         this.categoria = null;
+        this.estrategia = EstrategiaAlertaFactory.crearOporDefecto(this.periodo);
     }
 
     public AlertaImpl(String nombre, double limite, PeriodoAlerta periodo) {
@@ -40,6 +47,7 @@ public class AlertaImpl implements Alerta {
         // Convertir a implementación concreta
         this.categoria = categoria instanceof CategoriaImpl ? (CategoriaImpl) categoria :
                         (categoria != null ? new CategoriaImpl(categoria.getNombre(), categoria.isPredefinida()) : null);
+        this.estrategia = EstrategiaAlertaFactory.crearOporDefecto(this.periodo);
     }
     
     @Override
@@ -81,6 +89,15 @@ public class AlertaImpl implements Alerta {
     @Override
     public void setPeriodo(PeriodoAlerta periodo) {
         this.periodo = periodo;
+        this.estrategia = EstrategiaAlertaFactory.crearOporDefecto(this.periodo);
+    }
+
+    @Override
+    public EstrategiaAlerta getEstrategia() {
+        if (estrategia == null) {
+            estrategia = EstrategiaAlertaFactory.crearOporDefecto(this.periodo);
+        }
+        return estrategia;
     }
     
     @JsonIgnore
@@ -93,7 +110,13 @@ public class AlertaImpl implements Alerta {
     @JsonIgnore
     @Override
     public void setCategoria(Categoria categoria) {
-        this.categoria = (CategoriaImpl) categoria;
+        if (categoria == null) {
+            this.categoria = null;
+            return;
+        }
+        this.categoria = (categoria instanceof CategoriaImpl)
+                ? (CategoriaImpl) categoria
+                : new CategoriaImpl(categoria.getNombre(), categoria.isPredefinida());
     }
     
     @Override

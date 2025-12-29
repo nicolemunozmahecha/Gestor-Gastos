@@ -13,9 +13,7 @@ import tds.Configuracion;
 import tds.app.App;
 import tds.modelo.impl.CuentaPersonalImpl;
 
-/**
- * Se encarga de coordinar la navegación entre ventanas.
- */
+
 public class SceneManager {
 
     private Stage stage;
@@ -26,9 +24,7 @@ public class SceneManager {
     private DistribucionCuentaCompartidaController distribucionCuentaCompartidaController;
     private CuentaPersonalImpl personal;
 
-    /**
-     * Inicializa el gestor de escenas con el stage principal.
-     */
+
     public void inicializar(Stage stage) {
         this.stage = stage;
     }
@@ -40,9 +36,7 @@ public class SceneManager {
     	return personal;
     }
 
-    /**
-     * Muestra la ventana principal de la aplicación.
-     */
+
     public void showVentanaPrincipal() {
     	try {
             // Si es la primera vez, cargar el FXML
@@ -70,6 +64,12 @@ public class SceneManager {
             
             stage.setTitle("Gestión de Gastos");
             stage.show();
+
+            // Refrescar el indicador de notificaciones (por si se han generado nuevas
+            // notificaciones en otras pantallas, p.ej. al crear un gasto).
+            if (ventanaPrincipalController != null) {
+                ventanaPrincipalController.actualizarIndicadorNotificaciones();
+            }
             
         } catch (IOException e) {
             throw new RuntimeException("No se pudo cargar ventanaPrincipal", e);
@@ -113,6 +113,12 @@ public class SceneManager {
     public void showCrearAlerta() throws IOException {
         cambiarEscena("crearAlerta");
         stage.setTitle("Creando alerta");
+        stage.show();
+    }
+
+    public void showMostrarAlertas() throws IOException {
+        cambiarEscena("alertas");
+        stage.setTitle("Alertas");
         stage.show();
     }
     
@@ -166,10 +172,7 @@ public class SceneManager {
          }
     }
     
-    /**
-     * Muestra un diálogo modal a partir de un FXML.
-     * (Por si en el futuro quieres diálogos de ayuda, etc.)
-     */
+
     public void showDialog(String fxml) {
         try {
             DialogPane pane = FXMLLoader.load(App.class.getResource(fxml + ".fxml"));
@@ -183,9 +186,7 @@ public class SceneManager {
         }
     }
 
-    /**
-     * Cambia la escena actual por la asociada al FXML indicado (sin extensión).
-     */
+
     private void cambiarEscena(String fxml) {
         try {
             Parent root = loadFXML(fxml);
@@ -206,8 +207,7 @@ public class SceneManager {
     }
 
     private Parent loadFXML(String fxml) throws IOException {
-        // Los FXML están en el mismo paquete que App (tds.app)
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 }

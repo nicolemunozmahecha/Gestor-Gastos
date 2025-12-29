@@ -36,7 +36,6 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
     }
 
     @Override
-   // public List<? extends CategoriaImpl> getCategorias() {
     public List<CategoriaImpl> getCategorias() {
         if (categorias == null) {
             try {
@@ -75,7 +74,6 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
             rutaFichero = Configuracion.getInstancia().getRutaDatos();
         }
         
-        // Si la categoria ya existe no puedo insertarla
         if (categorias.contains(categoria)) {
             throw new ElementoExistenteException("La categoria " + categoria.getNombre() + " ya existe");
         }
@@ -121,12 +119,7 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
     }
 
     private List<CategoriaImpl> cargarCategorias(String rutaFichero) throws Exception {
-        /*InputStream ficheroStream = getClass().getResourceAsStream(rutaFichero);
-        
-        if (ficheroStream == null) {
-            // Si no existe el fichero, devolver lista vacía
-            return new ArrayList<>();
-        }*/
+
     	File ficheroStream = new File(rutaFichero);
     	if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
@@ -146,17 +139,16 @@ public class CategoriaRepositoryJSONImpl implements CategoriaRepository {
         datos.setCategorias(datosCargados.getCategorias());
         datos.setAlertas(datosCargados.getAlertas());
         datos.setPersonas(datosCargados.getPersonas());
+        datos.setNotificaciones(datosCargados.getNotificaciones());
 
         this.categorias = datosCargados.getCategorias();
         return categorias;
     }
 
     private void guardarCategorias(List<CategoriaImpl> categorias, String rutaFichero) throws Exception {
-        // Se carga mediante URL para prevenir problemas con rutas con espacios en blanco
-        //URL url = getClass().getResource(rutaFichero);
+;
         try {
-            // Cargo el fichero a partir de la URL local
-            /*File ficheroJSon = Paths.get(url.toURI()).toFile();*/
+
         	File ficheroJson = new File(rutaFichero);
         	if(ficheroJson.getParentFile() != null) {
         		ficheroJson.getParentFile().mkdirs();
