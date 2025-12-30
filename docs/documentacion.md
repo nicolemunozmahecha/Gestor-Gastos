@@ -170,7 +170,13 @@ Para **eliminar una cuenta**, deberemos ir a la barra de la parte superior de la
 Para calcular el **total de una cuenta**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Cuentas" -> "Total Cuenta". Se nos abrirá una pestaña en la que podremos seleccionar la cuenta de la que queramos saber el total.
 ![Total Cuenta](imagenes/Total_Cuenta.png)
 
+Para **filtrar los gastos de la cuenta**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Gastos" -> "Filtrar Gastos". Se nos abrirá una pestaña en la que podremos seleccionar los filtros que queramos aplicar. Podremos pulsar "Aplicar filtros" o "Borrar selección"
+![Filtrar Gasto](imagenes/Filtrar_Gasto.png)
 
+Para **importar gastos desde un fichero externo**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Gastos" -> "Importar Gastos". Se nos abrirá una pestaña en la que podremos navegar por nuestro dispositivo y seleccionar el fichero de gastos que queramos importar.
+
+Para **crear una categoría**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Categorias" -> "Crear Categoria". Se nos abrirá una pestaña en la que podremos introducir el nombre de la nueva categoría y crearla pulsando "Crear Categoria".
+![Crear Categoria](imagenes/Crear_Categoria.png)
 
 
 
