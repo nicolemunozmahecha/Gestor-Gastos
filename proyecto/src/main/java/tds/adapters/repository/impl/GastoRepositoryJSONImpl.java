@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 
 import tds.Configuracion;
 import tds.adapters.repository.GastoRepository;
-import tds.adapters.repository.exceptions.ElementoExistenteException;
 import tds.adapters.repository.exceptions.ElementoNoEncontradoException;
 import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.modelo.impl.GastoImpl;

@@ -38,30 +38,14 @@ import tds.modelo.Gasto;
 import tds.modelo.Persona;
 import tds.modelo.impl.GastoImpl;
 
-// HACER QUE EL CONTROLADOR SEA UN TIPO DE LA VENTANA PRINCIPAL PARA AHORRAR CODIGO????
 public class CuentaCompartidaController {
 	@FXML private TabPane tabPane;
-
-    // CUENTAS
-    @FXML private MenuItem menuCrearCuenta;
-
-    // CATEGORÍAS
-    @FXML private MenuItem menuCrearCategoria;
-
-    // ALERTAS
-    @FXML private MenuItem menuCrearAlerta;
-
-    // NOTIFICACIONES
-    @FXML private MenuItem menuHistorialNotificaciones;
-
-    // SALIR
-    @FXML private MenuItem menuSalir;
 
     // GASTOS
     @FXML private MenuButton btnCrearGasto;
     @FXML private MenuButton btnEliminarGasto;
+   
     @FXML private MenuItem menuGastoNuevo;
-    @FXML private MenuItem menuImportarGasto;
 
     // DISTRIBUCION
     @FXML private MenuButton btnDistribucion;
@@ -157,7 +141,11 @@ public class CuentaCompartidaController {
     	tablaGastos.getItems().add(g);            
 		actualizarGraficas();
     }
-
+    
+	public CuentaCompartidaController getController() {
+			return controller;
+	}
+	
     public void setCuentaCompartidaController(CuentaCompartidaController controller) {
         this.controller = controller;
     }
@@ -191,7 +179,7 @@ public class CuentaCompartidaController {
                     g.getFecha(), g.getPagador() != null ? g.getPagador().getNombre() : "-");
             MenuItem item = new MenuItem(texto);
             item.setUserData(g);
-            item.getStyleClass().add("boton-peligro");
+            item.getStyleClass().add("boton-peligro2");
 
             item.setOnAction(ev -> {
                 Gasto gastoAEliminar = (Gasto) item.getUserData();
@@ -353,16 +341,5 @@ public class CuentaCompartidaController {
         }
     }
         
-    
-    @FXML
-    private void salirAplicacion() {
-        Alert a = new Alert(AlertType.CONFIRMATION, "¿Salir?");
-        a.showAndWait().ifPresent(r -> {
-            if (r == ButtonType.OK) System.exit(0);
-        });
-    }
-
-	public CuentaCompartidaController getController() {
-		return controller;
-	}
+	
 }

@@ -334,7 +334,7 @@ public class VentanaPrincipalController {
         for (Cuenta c : cuentas) {
             MenuItem item = new MenuItem(c.getNombre());
             item.setUserData(c);
-            item.getStyleClass().add("boton-peligro");
+            item.getStyleClass().add("boton-peligro2");
             
             item.setOnAction(e -> {
                 Cuenta cuentaAEliminar = (Cuenta) item.getUserData();
@@ -425,7 +425,7 @@ public class VentanaPrincipalController {
 	    for (Categoria c : categorias) {
 	        MenuItem item = new MenuItem(c.getNombre());
 	        item.setUserData(c);
-            item.getStyleClass().add("boton-peligro");
+            item.getStyleClass().add("boton-peligro2");
 
 	        item.setOnAction(e -> {
 	        	Categoria categoriaAEliminar = (Categoria) item.getUserData();
@@ -467,7 +467,7 @@ public class VentanaPrincipalController {
         for (Alerta a : alertas) {
             MenuItem item = new MenuItem(a.getNombre());
             item.setUserData(a);
-            item.getStyleClass().add("boton-peligro");
+            item.getStyleClass().add("boton-peligro2");
             
             item.setOnAction(e -> {
                 Alerta alertaAEliminar = (Alerta) item.getUserData();
@@ -540,7 +540,7 @@ public class VentanaPrincipalController {
                     g.getNombre(), g.getCantidad(), g.getCategoria().getNombre(), g.getFecha());
             MenuItem item = new MenuItem(texto);
             item.setUserData(g);
-            item.getStyleClass().add("boton-peligro");
+            item.getStyleClass().add("boton-peligro2");
 
             item.setOnAction(ev -> {
                 Gasto gastoAEliminar = (Gasto) item.getUserData();

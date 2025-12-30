@@ -55,7 +55,7 @@
 
 /*BOTONES ROJOS*/
 .menu-button.boton-peligro {
-    -fx-background-color: #fe7776;
+    -fx-background-color: #b7c9fa;
 }
 .menu-button.boton-peligro:hover {
     -fx-background-color: #f35649;
@@ -66,10 +66,16 @@
     -fx-background-color: #fe7776;
     -fx-text-fill: white;
 }
+.boton-peligro2 {
+    -fx-background-color: #b7c9fa;
+    -fx-text-fill: white;
+}
 .boton-peligro:hover {
     -fx-background-color: #f35649;
 }
-
+.boton-peligro2:hover {
+    -fx-background-color: #f35649;
+}
 /* Botón de éxito/guardar (Verde) */
 .boton-exito {
     -fx-background-color: #0ae000;
