@@ -1,5 +1,5 @@
 # DOCUMENTACIÓN DEL PROYECTO
-### DIAGRAMA DE CLASES DEL DOMINO DEL PROYECTO
+## DIAGRAMA DE CLASES DEL DOMINO DEL PROYECTO
 Diseñamos el siguiente diagrama de clases del dominio del proyecto:
 
 ![Diagrama de clases del dominio](imagenes/diagrama_clases.png)
@@ -7,7 +7,7 @@ Diseñamos el siguiente diagrama de clases del dominio del proyecto:
 En él se muestran las clases principales del dominio junto con sus relaciones dentr de la aplicación.
 
 
-### ESPECIFICACIÓN DE LAS HISTORIAS DE USUARIO DEL PROYECTO
+## ESPECIFICACIÓN DE LAS HISTORIAS DE USUARIO DEL PROYECTO
 A continuación se muestran las historias de usuario del sistema:
 
 **Historia de Usuario 1: Crear una cuenta personal**
@@ -106,7 +106,7 @@ A continuación se muestran las historias de usuario del sistema:
 - para poder ver cuánto debe o le deben a una persona de la cuenta compartida.
 
 
-### DIAGRAMA DE INTERACCIÓN PARA UNA DE LAS HISTORIAS DE USUARIO
+## DIAGRAMA DE INTERACCIÓN PARA UNA DE LAS HISTORIAS DE USUARIO
 Hemos decidido hacer el diagrama de interacción de la Historia de Usuario 5: Registrar un gasto.
 
 **Historia de Usuario 5: Registrar un gasto**
@@ -118,7 +118,7 @@ A continuación se muestra su diagrama de interacción:
 ![Diagrama de interacción de la Historia de Usuario 5](imagenes/diagrama_interaccion.png)
 
 
-### ARQUITECTURA DE LA APLICACIÓN
+## ARQUITECTURA DE LA APLICACIÓN
 La aplicación la hemos diseñado con una arquitectura en capas, en la que se distinguen:
 * **La interfaz de usuario (tds.vista) ->** Tenemos varias clases Controller (por ejemplo, CrearAlertaController o CrearCategoriaController), que se encargan de gestionar las ventanas, actuando como puente entre la interfaz y el dominio. 
 * **La lógica de aplicación (tds.controlador) ->** Hemos creado un GestorGastos, el cuál actúa como controlador. Este se encarga de coordinar las operaciones que le solicite la interfaz.
@@ -128,7 +128,7 @@ En /tds/modelo/impl tenemos las implementaciones de nuestras entidades.
 * **La persistencia (tds.adapters.repository) ->** Mediante repositorios JSON se almacena toda la información en un único fichero, facilitando la gestión de datos.
 
 
-### DECISIONES DE DISEÑO
+## DECISIONES DE DISEÑO
 Durante la creación de la aplicación, hemos tenido que tomar varias decisiones de diseño. Algunas de ls más destacables son:
 * **Separar interfaces e implementaciones en el dominio ->** Como hemos explicado en el apartado anterior, hemos decidido separar las interfaces (/tds/modelo) y las implementaciones (/tds/modelo/impl). De esta forma hemos conseguido facilitar la persistencia y permitir que fuera más sencillo ir añadiendo implementaciones.
 * **GestorGastos como único controlador ->** Creamos un único controlador llamado GestorGastos, al que la interfaz llama y él se encarga de llamar al dominio. De esa forma, la interfaz no tiene que acceder directamente al modelo.
@@ -139,7 +139,7 @@ Durante la creación de la aplicación, hemos tenido que tomar varias decisiones
 * **Las alertas sólo saltan al superar el límite ->** Tuvimos la duda de si la alerta debería saltar cuando gastoActual >= limite o si cuando gastoActual > limite. Al final decidimos que saltaran cuando se supere el límite (es decir, cuando gastoAcctual > limite), no al alcanzarlo.
 
 
-### PATRONES DE DISEÑO USADOS
+## PATRONES DE DISEÑO USADOS
 Hemos utilizado varios patrones de diseño de los vistos en clase:
 * **Patrón GRASP Controller ->** La clase GestorDatos actúa como puente entre la interfaz de usuario y el dominio. Recibe las peticiones de la vista y llama a las operaciones necesarias.
 * **Patrón Strategy ->** Se utiliza para poder repartir los gastos de distintas formas dentro de una cuenta compartida. Por ejemplo, a la hora de calcular el porcentaje, la cuenta no sabe cómo se calcula, sino que delega en la estrategia para que lo haga.
@@ -150,11 +150,28 @@ Hemos utilizado varios patrones de diseño de los vistos en clase:
 
 ## MANUAL DE USUARIO
 A continuación especificamos un manual de usuario para indicar el uso de la aplicación.
-Comenzamos en la ventana principal. Al abrir la aplicación se crea automáticamente la cuenta Principal y se nos abre la ventana principal de la Cuenta.
+Comenzamos en la **ventana principal**. Al abrir la aplicación se crea automáticamente la cuenta Principal y se nos abre la ventana principal de la Cuenta.
 ![Ventana Principal](imagenes/Ventana_Principal.png)
 
-Además de ver el listado de gastos de la cuenta Principal en formato de listado (o tabla) también podemos verlo como gráfica de barras o como gráfica circular. Para ello, pulsamos las pestañas Gráfica de barras o Gráfica circular respectivamente.
+Además de ver el listado de gastos de la cuenta Principal en formato de listado (o tabla) también podemos verlo como **gráfica de barras o como gráfica circular**. Para ello, pulsamos las pestañas Gráfica de barras o Gráfica circular respectivamente.
 ![Grafica Barras](imagenes/Grafica_Barras.png)
 ![Grafica Circular](imagenes/Grafica_Circular.png)
+
+Para **crear un gasto nuevo en la cuenta Principal**, debemos pulsar el botón "Crear Gasto" que queda a la derecha del listado de gastos. A continuación, se debe pulsar "Gasto Nuevo". Se nos abrirá una pestaña en la que deberemos introducir los datos del gasto y pulsar "Aceptar".
+![Crear Gasto](imagenes/Crear_Gasto.png)
+
+Para **eliminar un gasto en la cuenta Principal**, debemos pulsar el botón "Eliminar Gasto" que queda a la derecha del listado de gastos. A continuación, se desplegará un listado con todos los gastos de la cuenta Principal, por lo que simplemente debemos pulsar el que deseemos eliminar.
+
+Para **crear una nueva cuenta compartida**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Cuentas" -> "Crear Cuenta". Se nos abrirá una pestaña en la que podremos introducir los datos de esta nueva conta compartirla y pulsar "Crear Cuenta" para crearla.
+![Crear Cuenta Compartida](imagenes/Crear_Cuenta_Compartida.png)
+
+Para **eliminar una cuenta**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Cuentas" -> "Eliminar Cuenta". Se nos abrirá un desplegable con todas las cuentas existentes. Pulsamos la cuenta que deseamos eliminar.
+
+Para calcular el **total de una cuenta**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Cuentas" -> "Total Cuenta". Se nos abrirá una pestaña en la que podremos seleccionar la cuenta de la que queramos saber el total.
+![Total Cuenta](imagenes/Total_Cuenta.png)
+
+
+
+
 
 
