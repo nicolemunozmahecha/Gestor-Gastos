@@ -148,3 +148,13 @@ Hemos utilizado varios patrones de diseño de los vistos en clase:
 * **Patrón Singleton ->** Con él garantizamos tener una única instancia global. Se usa en GestorGastos.getInstancia(). Es importante porque no puede ser que en el sistema existan dos controladores de aplicación.
 
 
+## MANUAL DE USUARIO
+A continuación especificamos un manual de usuario para indicar el uso de la aplicación.
+Comenzamos en la ventana principal. Al abrir la aplicación se crea automáticamente la cuenta Principal y se nos abre la ventana principal de la Cuenta.
+![Ventana Principal](imagenes/Ventana_Principal.png)
+
+Además de ver el listado de gastos de la cuenta Principal en formato de listado (o tabla) también podemos verlo como gráfica de barras o como gráfica circular. Para ello, pulsamos las pestañas Gráfica de barras o Gráfica circular respectivamente.
+![Grafica Barras](imagenes/Grafica_Barras.png)
+![Grafica Circular](imagenes/Grafica_Circular.png)
+
+
