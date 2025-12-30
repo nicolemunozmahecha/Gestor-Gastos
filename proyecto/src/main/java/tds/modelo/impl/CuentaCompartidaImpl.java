@@ -162,15 +162,7 @@ public class CuentaCompartidaImpl extends CuentaImpl implements CuentaCompartida
         return Collections.unmodifiableList(new ArrayList<>(personas));
     }
 
-    /**
-     * Añade una persona a la cuenta si no existe todavía.
-     *
-     * Nota: para simplificar, si la estrategia era personalizada, se vuelve a
-     * la equitativa al añadir una nueva persona.
-     *
-     * Este método es útil, por ejemplo, al importar gastos de ficheros donde
-     * puede aparecer un pagador que no estaba en la cuenta.
-     */
+
     public boolean addPersonaSiNoExiste(Persona persona) {
         if (persona == null) return false;
 

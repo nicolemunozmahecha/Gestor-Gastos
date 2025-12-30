@@ -35,7 +35,18 @@ public class App extends Application {
 	}
     
     public static void main(String[] args) {
-        launch();
+        // Si se pasa -cli como argumento (ejecutar como pone en el README)
+        if (args.length > 0 && args[0].equals("-cli")) {
+            // Modo línea de comandos
+            Configuracion configuracion = new ConfiguracionImpl();
+            Configuracion.setInstancia(configuracion);
+            
+            CLI cli = new CLI(configuracion);
+            cli.ejecutar();
+        } else {
+            // Modo interfaz gráfica (por defecto)
+            launch();
+        }
     }
 
 }
