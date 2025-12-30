@@ -15,8 +15,15 @@ git clone https://github.com/Guillermo-MR/TDS.git
 ```
 2. Compilar y ejecutar. Para ello:
 ```
+En la carpeta proyecto ejecutar:
+
 mvn clean install
+
+(Para GUI)
 mvn javafx:run
+
+(para CLI)
+mvn exec:java -Dexec.mainClass="tds.app.App" -Dexec.args="-cli"
 ```
 
 **La documentación del proyecto se encuentra en:**
