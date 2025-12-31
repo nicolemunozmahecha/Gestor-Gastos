@@ -194,7 +194,22 @@ Para **ver el historial de notificaciones**, deberemos ir a la barra de la parte
 Para **ver una la ventana principal de una cuenta compartida** que ya tengamos creada, debemos pulsar la pestaña de dicha cuenta.
 ![Ventana Principal Cuenta Secundaria](imagenes/Ventana_Principal_Cuenta_Secundaria.png)
 
+Para **crear un gasto en una cuenta compartida**, debemos pulsar el botón "Crear Gasto" que queda a la derecha del listado de gastos. A continuación, se debe pulsar "Gasto Nuevo". Se nos abrirá una pestaña en la que deberemos introducir los datos del gasto (esta vez, introduciendo también qué persona de la cuenta ha realizado el gasto) y pulsar "Aceptar".
+![Crear Gasto Cuenta Compartida](imagenes/Crear_Gasto_Cuenta_Compartida.png)
 
+Para **definir el porcentaje de gasto asumido por cada persona**, debemos pulsar el botón "Distribucion" -> "Personalizar" que queda a la derecha del listado de gastos de la cuenta compartida. Se nos abrirá una pestaña en la que podremos introducir el porcentaje de cada miembro y, pulsando "Aplicar", se define el nuevo porcentaje de gasto.
+![Personalizar Distribucion Cuenta Compartida](imagenes/Personalizar_Distribucion_Cuenta_Compartida.png)
 
+Para ver el **gasto por persona en una cuenta compartida**, debemos pulsar el botón "Saldo" -> "Por persona" que queda a la derecha del listado de gastos de la cuenta compartida. Se nos abrirá una pestaña en la que podremos ver el gasto por persona.
+![Saldo Por Persona Cuenta Compartida](imagenes/Saldo_Por_Persona_Cuenta_Compartida.png)
 
+Los gráficos tanto de barras como circular se pueden consultar de la misma manera que se hacía para la cuenta Principal, pulsando la pestaña "Gráfica de barras" y "Gráfica circular" respectivamente. Sin embargo, ahora podemos **ordenar por categoría o por persona los gastos de la cuenta compartida**.
+Para esto, debemos marcar "Por persona" o "Por categoría" en el botón que queda a la derecha del listado de gastos de la cuenta compartida.
+![DB_Por_Categoria](imagenes/DB_Por_Categoria.png)
+![DB_Por_Persona](imagenes/DB_Por_Persona.png)
+![DC_Por_Categoria](imagenes/DC_Por_Categoria.png)
+![DC_Por_Persona](imagenes/DC_Por_Persona.png)
+
+Para **salir de la aplicación**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Salir". Se nos abrirá una pestaña en la que nos pregunta si queremos salir. Pulsamos "Aceptar" para salir.
+![Salir](imagenes/Salir.png)
 
