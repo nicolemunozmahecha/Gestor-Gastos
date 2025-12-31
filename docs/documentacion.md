@@ -178,6 +178,23 @@ Para **importar gastos desde un fichero externo**, deberemos ir a la barra de la
 Para **crear una categoría**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Categorias" -> "Crear Categoria". Se nos abrirá una pestaña en la que podremos introducir el nombre de la nueva categoría y crearla pulsando "Crear Categoria".
 ![Crear Categoria](imagenes/Crear_Categoria.png)
 
+Para **eliminar una categoría**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Categorias" -> "Eliminar Categoria". Se nos abrirá un desplegable en el que podremos seleccionar el nombre de la cuenta que queramos eliminar.
+
+Para **crear una alerta**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Alertas" -> "Crear Alerta". Se nos abrirá una pestaña en la que podremos establecer los datos de la alerta y crearla pulsando "Crear Alerta".
+![Crear Alerta](imagenes/Crear_Alerta.png)
+
+Para **eliminar una alerta**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Alertas" -> "Eliminar Alerta". Se nos abrirá un desplegable en el que podremos seleccionar el nombre de la alerta que queramos eliminar.
+
+Para **ver las alertas activas**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Alertas" -> "Ver Alerta". Se nos abrirá una pestaña en la que podremos ver el listado de alertas activas. Aquí además se nos dará la opción de pulsar en una alerta y pulsar "Eliminar Alerta".
+![Ver Alertas](imagenes/Ver_Alertas.png)
+
+Para **ver el historial de notificaciones**, deberemos ir a la barra de la parte superior de la aplicación. Una vez en ella, debemos pulsar "Notificaciones" -> "Historial". Se nos abrirá una pestaña en la que podremos marcar notificaciones como leídas o eliminar notificaciones del historial.
+![Historial Notificaciones](imagenes/Historial_Notificaciones.png)
+
+Para **ver una la ventana principal de una cuenta compartida** que ya tengamos creada, debemos pulsar la pestaña de dicha cuenta.
+![Ventana Principal Cuenta Secundaria](imagenes/Ventana_Principal_Cuenta_Secundaria.png)
+
+
 
 
 
