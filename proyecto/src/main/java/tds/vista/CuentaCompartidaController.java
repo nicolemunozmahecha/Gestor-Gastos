@@ -31,12 +31,13 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.Gasto;
 import tds.modelo.Persona;
-import tds.modelo.impl.GastoImpl;
 
 public class CuentaCompartidaController {
 	@FXML private TabPane tabPane;
@@ -96,8 +97,8 @@ public class CuentaCompartidaController {
         barChart.getYAxis().setTickLabelFont(Font.font("Times New Roman", 12));
     }
 
-    public void setCuenta(CuentaCompartida p) {
-    	this.cuenta = p;
+    public void setCuenta(Cuenta cuentaActualizada) {
+    	this.cuenta = (CuentaCompartida) cuentaActualizada;
         cargarGastos();
 
     }
@@ -137,7 +138,7 @@ public class CuentaCompartidaController {
     }
 
     
-    public void añadirGastoTabla(GastoImpl g) {
+    public void añadirGastoTabla(Gasto g) {
     	tablaGastos.getItems().add(g);            
 		actualizarGraficas();
     }
@@ -186,7 +187,13 @@ public class CuentaCompartidaController {
                 Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
                 a.showAndWait().ifPresent(r -> {
                 	if (r == ButtonType.OK) {
-			            boolean ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
+			            boolean ok = false;
+						try {
+							ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
+						} catch (ErrorPersistenciaException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 			            if (ok) {
 			                cargarGastos();
 			            } else {
@@ -200,7 +207,7 @@ public class CuentaCompartidaController {
     }
     
     @FXML
-    private void importarGasto() {
+    private void importarGasto() throws ElementoExistenteException, ErrorPersistenciaException {
         Window w = (tabPane != null && tabPane.getScene() != null) ? tabPane.getScene().getWindow() : null;
 
         FileChooser chooser = new FileChooser();

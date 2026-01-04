@@ -41,26 +41,6 @@
         "predefinida" : false
       },
       "pagador" : null
-    }, {
-      "nombre" : "dddd",
-      "cantidad" : 20.0,
-      "fecha" : [ 2025, 12, 12 ],
-      "descripcion" : "",
-      "categoria" : {
-        "nombre" : "Transporte",
-        "predefinida" : true
-      },
-      "pagador" : null
-    }, {
-      "nombre" : "dvdf",
-      "cantidad" : 26652.0,
-      "fecha" : [ 2025, 12, 11 ],
-      "descripcion" : "",
-      "categoria" : {
-        "nombre" : "Transporte",
-        "predefinida" : true
-      },
-      "pagador" : null
     } ],
     "propietario" : "User1"
   } ],
@@ -164,9 +144,6 @@
   }, {
     "nombre" : "Electrónica",
     "predefinida" : false
-  }, {
-    "nombre" : "Ropa",
-    "predefinida" : false
   } ],
   "alertas" : [ {
     "nombre" : "Navidad",
@@ -175,6 +152,14 @@
     "categoria" : {
       "nombre" : "Ropa",
       "predefinida" : false
+    }
+  }, {
+    "nombre" : "tas pasao",
+    "limite" : 50.0,
+    "periodo" : "SEMANAL",
+    "categoria" : {
+      "nombre" : "Alimentación",
+      "predefinida" : true
     }
   } ],
   "personas" : [ {
@@ -189,6 +174,42 @@
     "nombre" : "Nicole",
     "saldo" : -282.5,
     "porcentaje" : 30
+  }, {
+    "nombre" : "paco",
+    "saldo" : -1150.0,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "kike",
+    "saldo" : 2300.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "lucia",
+    "saldo" : -1150.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "pringada",
+    "saldo" : 1.0,
+    "porcentaje" : 50
+  }, {
+    "nombre" : "lento",
+    "saldo" : -1.0,
+    "porcentaje" : 50
   } ],
-  "notificaciones" : [ ]
+  "notificaciones" : [ {
+    "id" : "deb25476-1065-484f-8021-93f4e91d0a1b",
+    "mensaje" : "Alerta 'Navidad' superada (categoría: Ropa). Total: 3450,00€ (límite: 500,00€). Periodo mensual 01/01/2026 - 31/01/2026.",
+    "fechaHora" : [ 2026, 1, 4, 12, 51, 41, 945584200 ],
+    "alertaOrigen" : {
+      "nombre" : "Navidad",
+      "limite" : 500.0,
+      "periodo" : "SEMANAL",
+      "categoria" : {
+        "nombre" : "Ropa",
+        "predefinida" : false
+      }
+    },
+    "leida" : false,
+    "periodoInicio" : [ 2026, 1, 1 ],
+    "periodoFin" : [ 2026, 1, 31 ]
+  } ]
 }

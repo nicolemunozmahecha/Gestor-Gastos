@@ -6,12 +6,14 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import tds.Configuracion;
 import tds.ConfiguracionImpl;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.modelo.impl.CuentaPersonalImpl;
 
 public class App extends Application {
 
 	@Override
-	public void start(Stage stage) throws IOException {
+	public void start(Stage stage) throws IOException, ElementoExistenteException, ErrorPersistenciaException {
 	    // Inicialización
 	    Configuracion configuracion = new ConfiguracionImpl();
 	    Configuracion.setInstancia(configuracion);
@@ -22,10 +24,8 @@ public class App extends Application {
 	    CuentaPersonalImpl p = null;
 	    try {
 	        p = (CuentaPersonalImpl) configuracion.getGestorGastos().getCuentaPorNombre("Principal");
-	        System.out.println("DEBUG App: Cuenta Principal cargada del repositorio con " + p.getNumeroGastos() + " gastos");
 	    } catch (Exception e) {
 	        // Si no existe, crear una nueva
-	        System.out.println("DEBUG App: Cuenta Principal no existe, creando nueva");
 	        p = new CuentaPersonalImpl("Principal", "User1");
 	        configuracion.getGestorGastos().crearCuentaPersonal(p);
 	    }
@@ -34,7 +34,7 @@ public class App extends Application {
 	    configuracion.getSceneManager().showVentanaPrincipal();
 	}
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ElementoExistenteException, ErrorPersistenciaException {
         // Si se pasa -cli como argumento (ejecutar como pone en el README)
         if (args.length > 0 && args[0].equals("-cli")) {
             // Modo línea de comandos

@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.Alerta;
 
@@ -55,7 +56,7 @@ public class MostrarAlertasController {
     }
 
     @FXML
-    private void eliminarSeleccionada() {
+    private void eliminarSeleccionada() throws ErrorPersistenciaException {
         Alerta seleccionada = tablaAlertas.getSelectionModel().getSelectedItem();
         if (seleccionada == null) return;
 

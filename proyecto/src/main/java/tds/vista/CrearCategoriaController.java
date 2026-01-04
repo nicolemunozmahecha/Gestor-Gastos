@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 
 public class CrearCategoriaController {
@@ -33,7 +35,7 @@ public class CrearCategoriaController {
     }
     
     @FXML
-    private void crearCategoria() {
+    private void crearCategoria() throws ElementoExistenteException, ErrorPersistenciaException {
     	String nombre = campoNombreCategoria.getText().trim().replaceAll("\\s+", " ");
         try{
         	if (nombre.isEmpty()) {

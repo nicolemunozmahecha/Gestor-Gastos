@@ -12,11 +12,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
-import tds.modelo.CuentaPersonal;
+import tds.modelo.Cuenta;
+import tds.modelo.Gasto;
 import tds.modelo.impl.CuentaPersonalImpl;
-import tds.modelo.impl.GastoImpl;
 
 public class CrearGastoController {
 	
@@ -74,9 +76,12 @@ public class CrearGastoController {
         }
     }
     
+    private void mostrarError(String mensaje) {
+        new Alert(Alert.AlertType.ERROR, mensaje).showAndWait();
+    }
     
     @FXML
-    private void crearGasto() {
+    private void crearGasto() throws ElementoExistenteException, ErrorPersistenciaException {
     	 String nombre = campoNombreGasto.getText().trim();
          String descripcion = campoDescripcion.getText().trim();
          LocalDate fecha = campoFechaGasto.getValue();
@@ -114,59 +119,30 @@ public class CrearGastoController {
         // Añadir gasto, luego cambiar de ventana
         VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
         
-        if (descripcion.isEmpty()) {
-            GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, "", cat);
-            if (controller != null) {
-                // Añadir a la cuenta Y persistir el cambio
-                boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
-                if (exito) {
-                    System.out.println("DEBUG: Gasto añadido exitosamente");
-                    // Actualizar la tabla visual
-                    controller.añadirGastoTabla(g);
-                    
-                    // Recargar la cuenta desde el repositorio
-                    try {
-                        CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
-                        controller.setCuenta(cuentaActualizada);
-                        Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
-                        System.out.println("DEBUG: Cuenta recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
-                    } catch (Exception e) {
-                        System.err.println("Error al recargar cuenta: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                } else {
-                    System.err.println("ERROR: No se pudo añadir el gasto");
+        Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
+        if (controller != null) {
+            // Añadir a la cuenta Y persistir el cambio
+            boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
+            if (exito) {
+                // Actualizar la tabla visual
+                controller.añadirGastoTabla(g);
+                
+                // Recargar la cuenta desde el repositorio
+                try {
+                    Cuenta cuentaActualizada = gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
+                    controller.setCuenta(cuentaActualizada);
+                    Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
+                } catch (Exception e) {
+                    mostrarError("Error al recargar cuenta: " + e.getMessage());
+                    e.printStackTrace();
                 }
             } else {
-                System.err.println("ERROR: Controller es null");
+            	mostrarError("ERROR: No se pudo añadir el gasto");
             }
-        }else {
-            GastoImpl g = (GastoImpl) gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
-            if (controller != null) {
-                // Añadir a la cuenta Y persistir el cambio
-                boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
-                if (exito) {
-                    System.out.println("DEBUG: Gasto añadido exitosamente");
-                    // Actualizar la tabla visual
-                    controller.añadirGastoTabla(g);
-                    
-                    // Recargar la cuenta desde el repositorio
-                    try {
-                        CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
-                        controller.setCuenta(cuentaActualizada);
-                        Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
-                        System.out.println("DEBUG: Cuenta recargada. Total gastos: " + cuentaActualizada.getNumeroGastos());
-                    } catch (Exception e) {
-                        System.err.println("Error al recargar cuenta: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                } else {
-                    System.err.println("ERROR: No se pudo añadir el gasto");
-                }
-            } else {
-                System.err.println("ERROR: Controller es null");
-            }
+        } else {
+        	mostrarError("ERROR: No se pudo conectar con la pantalla anterior"); // controller null
         }
+        
         Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
     }
     

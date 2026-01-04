@@ -54,6 +54,7 @@ public class FiltrarGastosController {
     @FXML private Button btnLimpiar;
     
     private GestorGastos gestor;
+    private List<CheckBox> todosLosMeses;
 
     @FXML
     public void initialize() {
@@ -61,7 +62,11 @@ public class FiltrarGastosController {
         configurarTabla();
         cargarCategorias();
         cargarGastos();
+        todosLosMeses = List.of(checkEnero, checkFebrero, checkMarzo, checkAbril, 
+                checkMayo, checkJunio, checkJulio, checkAgosto, 
+                checkSeptiembre, checkOctubre, checkNoviembre, checkDiciembre);
     }
+    
     
     private void configurarTabla() {
         colNombre.setCellValueFactory(cellData -> 
@@ -140,19 +145,11 @@ public class FiltrarGastosController {
     private List<String> obtenerMesesSeleccionados() {
         List<String> meses = new ArrayList<>();
         
-        if (checkEnero.isSelected()) meses.add("1");
-        if (checkFebrero.isSelected()) meses.add("2");
-        if (checkMarzo.isSelected()) meses.add("3");
-        if (checkAbril.isSelected()) meses.add("4");
-        if (checkMayo.isSelected()) meses.add("5");
-        if (checkJunio.isSelected()) meses.add("6");
-        if (checkJulio.isSelected()) meses.add("7");
-        if (checkAgosto.isSelected()) meses.add("8");
-        if (checkSeptiembre.isSelected()) meses.add("9");
-        if (checkOctubre.isSelected()) meses.add("10");
-        if (checkNoviembre.isSelected()) meses.add("11");
-        if (checkDiciembre.isSelected()) meses.add("12");
-        
+        for (int i = 0; i < todosLosMeses.size(); i++) {
+            if (todosLosMeses.get(i).isSelected()) {
+                meses.add(String.valueOf(i + 1));
+            }
+        }
         return meses;
     }
     
@@ -199,18 +196,7 @@ public class FiltrarGastosController {
     @FXML
     private void limpiarFiltros() {
         // Limpiar CheckBoxes de meses
-        checkEnero.setSelected(false);
-        checkFebrero.setSelected(false);
-        checkMarzo.setSelected(false);
-        checkAbril.setSelected(false);
-        checkMayo.setSelected(false);
-        checkJunio.setSelected(false);
-        checkJulio.setSelected(false);
-        checkAgosto.setSelected(false);
-        checkSeptiembre.setSelected(false);
-        checkOctubre.setSelected(false);
-        checkNoviembre.setSelected(false);
-        checkDiciembre.setSelected(false);
+    	todosLosMeses.forEach(cb -> cb.setSelected(false));
         
         // Limpiar DatePickers
         fechaDesde.setValue(null);

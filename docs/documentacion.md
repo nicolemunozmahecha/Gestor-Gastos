@@ -141,10 +141,10 @@ Durante la creación de la aplicación, hemos tenido que tomar varias decisiones
 
 ## PATRONES DE DISEÑO USADOS
 Hemos utilizado varios patrones de diseño de los vistos en clase:
-* **Patrón GRASP Controller ->** La clase GestorDatos actúa como puente entre la interfaz de usuario y el dominio. Recibe las peticiones de la vista y llama a las operaciones necesarias.
-* **Patrón Strategy ->** Se utiliza para poder repartir los gastos de distintas formas dentro de una cuenta compartida. Por ejemplo, a la hora de calcular el porcentaje, la cuenta no sabe cómo se calcula, sino que delega en la estrategia para que lo haga.
+* **Patrón GRASP Controlador ->** La clase GestorDatos actúa como puente entre la interfaz de usuario y el dominio. Recibe las peticiones de la vista y llama a las operaciones necesarias.
+* **Patrón Estrategia ->** Se utiliza para poder repartir los gastos de distintas formas dentro de una cuenta compartida. Por ejemplo, a la hora de calcular el porcentaje, la cuenta no sabe cómo se calcula, sino que delega en la estrategia para que lo haga.
 * **Patrón Decorator para los filtros ->** Los filtros de gastos se implementan mediante el patrón Decorator, que permite combinar filtros sin cerar una combinación fija. Es decir, se pueden añadir nuevos filtros sin modificar los existentes.
-* **Patrón Factory Method ->** Utilizamos las factorías para decidir qué estrategia de distribución crear (Según el id) y para importar ficheros, ya que hay que seleccionar cómo importar según el tipo de archivo.
+* **Patrón Factoría ->** Utilizamos las factorías para decidir qué estrategia de distribución crear (Según el id) y para importar ficheros, ya que hay que seleccionar cómo importar según el tipo de archivo.
 * **Patrón Singleton ->** Con él garantizamos tener una única instancia global. Se usa en GestorGastos.getInstancia(). Es importante porque no puede ser que en el sistema existan dos controladores de aplicación.
 
 

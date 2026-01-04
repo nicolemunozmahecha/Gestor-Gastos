@@ -26,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.app.App;
 import tds.controlador.GestorGastos;
 import tds.modelo.Alerta;
@@ -34,7 +35,6 @@ import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
-import tds.modelo.impl.GastoImpl;
 
 public class VentanaPrincipalController {
 
@@ -105,8 +105,8 @@ public class VentanaPrincipalController {
         }
     }
     
-    public void setCuenta(CuentaPersonal p) {
-    	this.principal = p;
+    public void setCuenta(Cuenta cuentaActualizada) {
+    	this.principal = (CuentaPersonal) cuentaActualizada;
         cargarGastos();
     }
     public CuentaPersonal getCuenta() {
@@ -231,7 +231,6 @@ public class VentanaPrincipalController {
     public void añadirPestañaCuentaCompartida(CuentaCompartida cuenta, boolean seleccionar) {
     	// si la pestaña a crear es vacia
         if (tabPane == null) {
-            System.err.println("ERROR: tabPane es null!");
             return;
         }
 
@@ -296,17 +295,12 @@ public class VentanaPrincipalController {
         tabPane.getTabs().removeIf(t -> t.getText() != null && !t.getText().equals("Principal"));
 
         if (compartidas == null) {
-            System.out.println("DEBUG UI: No hay cuentas compartidas para crear pestañas");
             return;
         }
 
-        int num = 0;
         for (CuentaCompartida cc : compartidas) {
             añadirPestañaCuentaCompartida(cc, false);
-            System.out.println("DEBUG UI: Pestaña creada para cuenta compartida '" + cc.getNombre() + "' con " + cc.getNumeroGastos() + " gastos");
-            num++;
         }
-        System.out.println("DEBUG UI: Total pestañas cuentas compartidas creadas: " + num);
 
         // Restaurar selección si existe, si no seleccionar "Principal"
         boolean restored = false;
@@ -342,11 +336,15 @@ public class VentanaPrincipalController {
                 a.showAndWait().ifPresent(r -> {
                     if (r == ButtonType.OK) {
                     	 // Eliminar del gestor
-		                boolean eliminada = gestor.eliminarCuenta(cuentaAEliminar);
+		                boolean eliminada = false;;
+						try {
+							eliminada = gestor.eliminarCuenta(cuentaAEliminar);
+						} catch (ErrorPersistenciaException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 		                
-		                if (eliminada) {
-		                    System.out.println("Cuenta eliminada: " + cuentaAEliminar.getNombre());
-		                    
+		                if (eliminada) {		                    
 		                    // NUEVO: Actualizar la interfaz inmediatamente
 		                    if (cuentaAEliminar instanceof CuentaCompartida) {
 		                        eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
@@ -367,7 +365,6 @@ public class VentanaPrincipalController {
 
     private void eliminarPestañaCuentaCompartida(CuentaCompartida cuenta) {
         if (tabPane == null) {
-            System.err.println("ERROR: tabPane es null! No se puede eliminar la pestaña.");
             return;
         }
         
@@ -377,15 +374,11 @@ public class VentanaPrincipalController {
                    (tab.getUserData() != null && tab.getUserData().equals(cuenta));
         });
         
-        if (eliminado) {
-            System.out.println("DEBUG UI: Pestaña eliminada para cuenta '" + cuenta.getNombre() + "'");
-            
+        if (eliminado) {            
             // Seleccionar la pestaña "Principal" después de eliminar
             if (!tabPane.getTabs().isEmpty()) {
                 tabPane.getSelectionModel().select(0);
             }
-        } else {
-            System.err.println("DEBUG UI: No se encontró pestaña para cuenta '" + cuenta.getNombre() + "'");
         }
     }
     
@@ -432,7 +425,12 @@ public class VentanaPrincipalController {
                 Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la categoria " + categoriaAEliminar.getNombre() + " ?");
 	        	a.showAndWait().ifPresent(r -> {
 	                    if (r == ButtonType.OK) {
-	                    	gestor.eliminarCategoria(categoriaAEliminar);
+	                    	try {
+								gestor.eliminarCategoria(categoriaAEliminar);
+							} catch (ErrorPersistenciaException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 	                    }
 	        	 });
 	        });
@@ -475,11 +473,15 @@ public class VentanaPrincipalController {
                 al.showAndWait().ifPresent(r -> {
                     if (r == ButtonType.OK) {
                     	 // Eliminar del gestor
-		                boolean eliminada = gestor.eliminarAlerta(alertaAEliminar);
+		                boolean eliminada = false;;
+						try {
+							eliminada = gestor.eliminarAlerta(alertaAEliminar);
+						} catch (ErrorPersistenciaException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 		                
 		                if (eliminada) {
-		                    System.out.println("Alerta eliminada: " + alertaAEliminar.getNombre());
-
                             // Refrescar el submenú la próxima vez que se abra (y, si sigue visible, también)
                             javafx.application.Platform.runLater(this::eliminarAlerta);
 		                } else {
@@ -514,7 +516,7 @@ public class VentanaPrincipalController {
     }
 
     
-    public void añadirGastoTabla(GastoImpl g) {
+    public void añadirGastoTabla(Gasto g) {
     	tablaGastos.getItems().add(g);            
 		actualizarGraficas();
     }
@@ -547,7 +549,13 @@ public class VentanaPrincipalController {
                 Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
                 a.showAndWait().ifPresent(r -> {
                 	if (r == ButtonType.OK) {
-		                boolean ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
+		                boolean ok = false;;
+						try {
+							ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
+						} catch (ErrorPersistenciaException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 		                if (ok) {
 		                    cargarGastos();
 		                } else {

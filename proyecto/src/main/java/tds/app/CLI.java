@@ -10,7 +10,9 @@ import tds.Configuracion;
 import tds.modelo.*;
 import tds.modelo.impl.*;
 import tds.controlador.GestorGastos;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
 import tds.adapters.repository.exceptions.ElementoNoEncontradoException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 
 
 public class CLI {
@@ -20,7 +22,7 @@ public class CLI {
     private Cuenta cuentaActual;
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    public CLI(Configuracion configuracion) {
+    public CLI(Configuracion configuracion) throws ElementoExistenteException, ErrorPersistenciaException {
         this.gestor = configuracion.getGestorGastos();
         this.scanner = new Scanner(System.in);
         
@@ -38,7 +40,7 @@ public class CLI {
         }
     }
     
-    public void ejecutar() {
+    public void ejecutar() throws ErrorPersistenciaException {
         mostrarBienvenida();
         
         boolean continuar = true;
@@ -323,7 +325,7 @@ public class CLI {
         }
     }
     
-    private void borrarGasto() {
+    private void borrarGasto() throws ErrorPersistenciaException {
         List<Gasto> gastos = cuentaActual.getGastos();
         
         if (gastos.isEmpty()) {

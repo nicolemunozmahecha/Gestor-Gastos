@@ -10,6 +10,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.Categoria;
 import tds.modelo.PeriodoAlerta;
@@ -75,7 +77,7 @@ public class CrearAlertaController {
     
     
     @FXML
-    private void crearAlerta() {
+    private void crearAlerta() throws ElementoExistenteException, ErrorPersistenciaException {
     	// tienen que estar todos los campos llenos
     	String nombreAlerta = campoNombreAlerta.getText().trim();
         String limiteGasto = campoLimiteGasto.getText().trim();
@@ -102,7 +104,8 @@ public class CrearAlertaController {
 	        	p = PeriodoAlerta.SEMANAL;
 	        }else {
 	        	throw new IllegalArgumentException("La alerta debe tener un tipo de periodo");
-	        }}catch(IllegalArgumentException e){
+	        }
+    	}catch(IllegalArgumentException e){
        	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
@@ -110,7 +113,6 @@ public class CrearAlertaController {
         if(ningunoSeleccionado()) {
         	gestor.crearAlerta(nombreAlerta, valor, p);
         }else {
-
         	gestor.crearAlerta(nombreAlerta, valor, p, cat);
         }
         

@@ -79,11 +79,9 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
             .anyMatch(c -> c.getNombre().equals(cuenta.getNombre()));
         
         if (yaExiste) {
-            System.out.println("DEBUG addCuenta: La cuenta '" + cuenta.getNombre() + "' ya existe. No se añade de nuevo.");
-            return;
+            throw new ElementoExistenteException("La cuenta '" + cuenta.getNombre() + "' ya existe.");
         }
         
-        System.out.println("DEBUG addCuenta: Añadiendo cuenta '" + cuenta.getNombre() + "'");
         cuentas.add(cuenta);
         try {
             guardarCuentas(cuentas, rutaFichero);
@@ -128,7 +126,6 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         File ficheroStream = new File(rutaFichero);
         if (!ficheroStream.exists()) {
             // Si no existe el fichero, devolver lista vacía
-            System.out.println("DEBUG cargarCuentas: Fichero no encontrado: " + ficheroStream.getAbsolutePath());
             return new ArrayList<>();
         }
         
@@ -147,7 +144,6 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         datos.setNotificaciones(datosCargados.getNotificaciones());
 
         this.cuentas = datosCargados.getCuentas();
-        System.out.println("DEBUG cargarCuentas: Cargadas " + cuentas.size() + " cuentas desde " + ficheroStream.getAbsolutePath());
         return cuentas;
     }
 
@@ -164,20 +160,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
         DatosGastos datos = (DatosGastos) Configuracion.getInstancia().getDatosGastos();
         datos.setCuentas(cuentas);
         this.cuentas = cuentas;
-        
-        // DEBUG: Ver qué se está guardando
-        System.out.println("DEBUG guardarCuentas: Guardando " + cuentas.size() + " cuentas en " + rutaFichero);
-        for (CuentaImpl c : cuentas) {
-            System.out.println("  - Cuenta: " + c.getNombre() + ", tipo: " + c.getClass().getSimpleName() + ", gastos: " + c.getNumeroGastos());
-            if (c.getNumeroGastos() > 0) {
-                for (int i = 0; i < c.getGastos().size(); i++) {
-                    System.out.println("    * Gasto " + (i+1) + ": " + c.getGastos().get(i).getNombre());
-                }
-            }
-        }
-        System.out.println("DEBUG: Cuentas personales en datos: " + datos.getCuentasPersonales().size());
-        System.out.println("DEBUG: Cuentas compartidas en datos: " + datos.getCuentasCompartidas().size());
-        
+                
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
@@ -185,9 +168,7 @@ public class CuentaRepositoryJSONImpl implements CuentaRepository {
             mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
             mapper.writerWithDefaultPrettyPrinter().writeValue(ficheroJson, datos);
-            System.out.println("DEBUG guardarCuentas: Datos guardados exitosamente en " + ficheroJson.getAbsolutePath());
         } catch (Exception e) {
-            System.err.println("ERROR guardarCuentas: Error al escribir JSON: " + e.getMessage());
             e.printStackTrace();
             throw e;
         }

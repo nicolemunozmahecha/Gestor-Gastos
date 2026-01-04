@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.beans.property.SimpleStringProperty;
 
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.Notificacion;
 
@@ -81,7 +82,7 @@ public class MostrarHistorialController {
     }
 
     @FXML
-    private void eliminarSeleccionada() {
+    private void eliminarSeleccionada() throws ErrorPersistenciaException {
         Notificacion seleccionada = tablaNotificaciones.getSelectionModel().getSelectedItem();
         if (seleccionada == null) return;
 

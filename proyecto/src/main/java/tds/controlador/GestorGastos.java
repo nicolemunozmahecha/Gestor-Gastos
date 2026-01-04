@@ -128,26 +128,21 @@ public class GestorGastos {
     }
 
 
-    public boolean actualizarEstrategiaDistribucion(CuentaCompartida cuenta, EstrategiaDistribucion estrategia) {
-        if (cuenta == null || estrategia == null) return false;
+    public boolean actualizarEstrategiaDistribucion(CuentaCompartida cuenta, EstrategiaDistribucion estrategia)
+    		throws ErrorPersistenciaException {
+        if (cuenta == null || estrategia == null) throw new IllegalArgumentException("Cuenta o estrategia nulos");
 
-        try {
-            cuenta.setEstrategiaDistribucion(estrategia);
-            CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
+        cuenta.setEstrategiaDistribucion(estrategia);
+        CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
 
-            // Actualizar la cuenta en la lista local
-            for (int i = 0; i < cuentas.size(); i++) {
-                if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
-                    cuentas.set(i, cuentaActualizada);
-                    break;
-                }
+        // Actualizar la cuenta en la lista local
+        for (int i = 0; i < cuentas.size(); i++) {
+            if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
+                cuentas.set(i, cuentaActualizada);
+                break;
             }
-            return true;
-        } catch (Exception e) {
-            System.err.println("Error al actualizar estrategia de distribución: " + e.getMessage());
-            e.printStackTrace();
-            return false;
         }
+        return true;
     }
 
     public List<CuentaCompartida> getCuentasCompartidas() {
@@ -158,45 +153,27 @@ public class GestorGastos {
     }
 
     
-    public CuentaPersonal crearCuentaPersonal(CuentaPersonalImpl cuenta) {
-        try {
-            repositorioCuentas.addCuenta(cuenta);
-            cuentas.add(cuenta);
-        } catch (Exception e) {
-            System.err.println("Error al crear cuenta personal: " + e.getMessage());
-        }
+    public CuentaPersonal crearCuentaPersonal(CuentaPersonalImpl cuenta) 
+    		throws ElementoExistenteException, ErrorPersistenciaException{
+        
+        repositorioCuentas.addCuenta(cuenta);
+        cuentas.add(cuenta);
         return cuenta;
     }
     
     
-    public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas) {
-        System.out.println("DEBUG: Creando cuenta compartida: " + nombre);
-        System.out.println("DEBUG: Número de personas: " + personas.size());
-        
+    public CuentaCompartida crearCuentaCompartida(String nombre, List<Persona> personas) 
+    		throws ElementoExistenteException, ErrorPersistenciaException{
         CuentaCompartidaImpl cuenta = new CuentaCompartidaImpl(nombre, personas);
-        System.out.println("DEBUG: Cuenta creada en memoria");
         
-        try {
-            System.out.println("DEBUG: Intentando añadir al repositorio...");
-            repositorioCuentas.addCuenta(cuenta);
-            System.out.println("DEBUG: Cuenta añadida al repositorio");
-            cuentas.add(cuenta);
-            System.out.println("DEBUG: Cuenta añadida a la lista local");
-        } catch (Exception e) {
-            System.err.println("Error al crear cuenta compartida: " + e.getMessage());
-            e.printStackTrace();  // Imprimir el stack trace completo
-        }
+        repositorioCuentas.addCuenta(cuenta);
+        cuentas.add(cuenta);
         return cuenta;
     }
     
-    public boolean eliminarCuenta(Cuenta cuenta) {
-        try {
-            repositorioCuentas.removeCuenta((CuentaImpl) cuenta);
-            return cuentas.remove(cuenta);
-        } catch (Exception e) {
-            System.err.println("Error al eliminar cuenta: " + e.getMessage());
-            return false;
-        }
+    public boolean eliminarCuenta(Cuenta cuenta) throws ErrorPersistenciaException{
+       repositorioCuentas.removeCuenta((CuentaImpl) cuenta);
+       return cuentas.remove(cuenta); 
     }
     
     public Cuenta buscarCuenta(String nombre) {
@@ -206,39 +183,23 @@ public class GestorGastos {
     
     // ========== GESTIÓN DE CATEGORÍAS ==========
     
-    public Categoria crearCategoria(String nombre) {
+    public Categoria crearCategoria(String nombre) 
+    		throws ElementoExistenteException, ErrorPersistenciaException{
         CategoriaImpl categoria = new CategoriaImpl(nombre, false);
-        System.out.println("repositorioCategorias = " + repositorioCategorias);
-        System.out.println("categorias = " + categorias);
-
-        try {
-        	repositorioCategorias.addCategoria(categoria);
-        	categorias.add(categoria);
-        } catch (Exception e) {
-            System.err.println("Error al crear categoría: " + e.getMessage());
-            e.printStackTrace();
-        }
+        repositorioCategorias.addCategoria(categoria);
+        categorias.add(categoria);
         return categoria;
     }
 
-    public boolean eliminarCategoria(Categoria categoria) {
+    public boolean eliminarCategoria(Categoria categoria) 
+    		throws ErrorPersistenciaException{
         
     	// Quizás en la interfaz grafica
     	if (categoria == null || categoria.isPredefinida()) {
-            return false;
+    		throw new IllegalArgumentException("Categoria nula o predefinida");
         }
-        
-        boolean enUso = cuentas.stream().flatMap(c -> c.getGastos().stream()).anyMatch(g -> g.getCategoria().equals(categoria));
-        
-        // Hay que comprobar si está en uso pero en la interfaz grafica.
-        
-        try {
-            repositorioCategorias.removeCategoria((CategoriaImpl) categoria);
-            return categorias.remove(categoria);
-        } catch (Exception e) {
-            System.err.println("Error al eliminar categoría: " + e.getMessage());
-            return false;
-        }
+        repositorioCategorias.removeCategoria((CategoriaImpl) categoria);
+        return categorias.remove(categoria);
     }
     
     public Categoria buscarCategoria(String nombre) {
@@ -247,41 +208,31 @@ public class GestorGastos {
     
     // ========== GESTIÓN DE ALERTAS ==========
     
-    public Alerta crearAlerta(String nombre, double limite, PeriodoAlerta periodo) {
+    public Alerta crearAlerta(String nombre, double limite, PeriodoAlerta periodo)
+    		throws ElementoExistenteException, ErrorPersistenciaException{
         AlertaImpl alerta = new AlertaImpl(nombre, limite, periodo);
-        try {
-            repositorioAlertas.addAlerta(alerta);
-            alertas.add(alerta);
-        } catch (Exception e) {
-            System.err.println("Error al crear alerta: " + e.getMessage());
-        }
+        repositorioAlertas.addAlerta(alerta);
+        alertas.add(alerta);
         return alerta;
     }
 
-    public Alerta crearAlerta(String nombre, double limite, PeriodoAlerta periodo, Categoria categoria) {
-        AlertaImpl alerta = new AlertaImpl(nombre, limite, periodo, categoria);
-        try {
-            repositorioAlertas.addAlerta(alerta);
-            alertas.add(alerta);
-        } catch (Exception e) {
-            System.err.println("Error al crear alerta: " + e.getMessage());
-        }
-        return alerta;
+    public Alerta crearAlerta(String nombre, double limite, PeriodoAlerta periodo, Categoria categoria) 
+    		throws ErrorPersistenciaException, ElementoExistenteException{
+       AlertaImpl alerta = new AlertaImpl(nombre, limite, periodo, categoria);
+       repositorioAlertas.addAlerta(alerta);
+       alertas.add(alerta);
+       
+       return alerta;
     }
     
-    public boolean eliminarAlerta(Alerta alerta) {
-        try {
-            repositorioAlertas.removeAlerta((AlertaImpl) alerta);
-            return alertas.remove(alerta);
-        } catch (Exception e) {
-            System.err.println("Error al eliminar alerta: " + e.getMessage());
-            return false;
-        }
+    public boolean eliminarAlerta(Alerta alerta) throws ErrorPersistenciaException{
+    	repositorioAlertas.removeAlerta((AlertaImpl) alerta);
+        return alertas.remove(alerta);
     }
     
 
     public void verificarAlertas(Gasto gastoRecienAnadido) {
-        if (gastoRecienAnadido == null) return;
+        if (gastoRecienAnadido == null) throw new IllegalArgumentException("Gasto nulo");
 
         LocalDate fechaRef = (gastoRecienAnadido.getFecha() != null) ? gastoRecienAnadido.getFecha() : LocalDate.now();
         Categoria categoriaGasto = gastoRecienAnadido.getCategoria();
@@ -332,46 +283,52 @@ public class GestorGastos {
  // ========== GESTIÓN DE GASTOS ==========
     
 
-    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador) {
+    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador)
+    		throws ElementoExistenteException, ErrorPersistenciaException{
         return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador);
     }
     
 
-    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
+    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria)
+    		throws ElementoExistenteException, ErrorPersistenciaException{
         return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria);
     }
     
 
-    public boolean agregarGastoACuenta(Cuenta cuenta, Gasto gasto) {
+    public boolean agregarGastoACuenta(Cuenta cuenta, Gasto gasto) 
+    		throws ErrorPersistenciaException{
         if (cuenta == null || gasto == null) {
-            return false;
+            //return false;
+        	throw new IllegalArgumentException("Cuenta o gasto nulos");
         }
         
+        // Añadir el gasto a la cuenta
+        cuenta.agregarGasto(gasto);
+        
         try {
-            // Añadir el gasto a la cuenta
-            cuenta.agregarGasto(gasto);
-            
-            // Actualizar la cuenta en el repositorio para persistir el cambio
-            CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
-            
-            // Actualizar la cuenta en la lista local de cuentas del gestor
-            for (int i = 0; i < cuentas.size(); i++) {
-                if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
-                    cuentas.set(i, cuentaActualizada);
-                    break;
-                }
-            }
-            
-            System.out.println("DEBUG: Gasto añadido. Cuenta tiene " + cuenta.getNumeroGastos() + " gastos");
-            // Tras cualquier modificación de gastos, comprobamos alertas y generamos notificaciones si procede.
-            // (Usando la fecha/categoría del propio gasto para aplicar el periodo natural.)
-            verificarAlertas(gasto);
-            return true;
-        } catch (Exception e) {
-            System.err.println("Error al agregar gasto a cuenta: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
+	       
+	        // Actualizar la cuenta en el repositorio para persistir el cambio
+	        CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
+	        
+	        // Actualizar la cuenta en la lista local de cuentas del gestor
+	        for (int i = 0; i < cuentas.size(); i++) {
+	            if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
+	                cuentas.set(i, cuentaActualizada);
+	                break;
+	            }
+	        }
+	        
+	        // Tras cualquier modificación de gastos, comprobamos alertas y generamos notificaciones si procede.
+	        // (Usando la fecha/categoría del propio gasto para aplicar el periodo natural.)
+	        verificarAlertas(gasto);
+	        return true;
+	        
+        }catch(Exception e){
+	    	if (e instanceof ErrorPersistenciaException) {
+	            throw (ErrorPersistenciaException) e;
+	        }
+	    }
+        return false;
     }
     
     
@@ -401,22 +358,26 @@ public class GestorGastos {
                .sum();
     }
     
-    public boolean eliminarGastoDeCuenta(Cuenta cuenta, Gasto gasto) {
-        if (cuenta == null || gasto == null) return false;
+    public boolean eliminarGastoDeCuenta(Cuenta cuenta, Gasto gasto) 
+            throws ErrorPersistenciaException {
+        if (cuenta == null || gasto == null) {
+            throw new IllegalArgumentException("Cuenta o gasto nulos");
+        }
+       
+        boolean eliminado = cuenta.eliminarGasto(gasto);
+        if (!eliminado) return false;
 
         try {
-            boolean eliminado = cuenta.eliminarGasto(gasto);
-            if (!eliminado) return false;
-
-            // Persistir cambios
             repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
 
-            return true;
         } catch (Exception e) {
-            System.err.println("Error al eliminar gasto de cuenta: " + e.getMessage());
-            e.printStackTrace();
-            return false;
+            cuenta.agregarGasto(gasto);
+
+            if (e instanceof ErrorPersistenciaException) {
+                throw (ErrorPersistenciaException) e;
+            }
         }
+        return true;
     }
 
     
@@ -535,18 +496,14 @@ public class GestorGastos {
         }
     }
 
-    public boolean eliminarNotificacion(Notificacion notificacion) {
-        if (notificacion == null) return false;
-
-        try {
-            if (notificacion instanceof NotificacionImpl) {
-                repositorioNotificaciones.removeNotificacion((NotificacionImpl) notificacion);
-            }
-            return notificaciones.remove(notificacion);
-        } catch (Exception e) {
-            System.err.println("Error al eliminar notificación: " + e.getMessage());
-            return false;
-        }
+    public boolean eliminarNotificacion(Notificacion notificacion) throws ErrorPersistenciaException {
+        if (notificacion == null) throw new IllegalArgumentException("Notificacion nula");
+		
+        if (notificacion instanceof NotificacionImpl) {
+		        repositorioNotificaciones.removeNotificacion((NotificacionImpl) notificacion);
+	    }
+	    return notificaciones.remove(notificacion);
+        
     }
     
 
@@ -611,7 +568,8 @@ public class GestorGastos {
     }
 
 
-    public CuentaCompartida crearCuentaCompartidaConNombres(String nombreCuenta, List<String> nombresPropietarios) {
+    public CuentaCompartida crearCuentaCompartidaConNombres(String nombreCuenta, List<String> nombresPropietarios) 
+    		throws ElementoExistenteException, ErrorPersistenciaException {
         if (nombresPropietarios == null || nombresPropietarios.size() < 2) {
             return null;
         }
@@ -638,13 +596,13 @@ public class GestorGastos {
     // ========== IMPORTACIÓN DE GASTOS ==========
 
 
-    public boolean importarGastos(File fichero) {
+    public boolean importarGastos(File fichero) throws ElementoExistenteException, ErrorPersistenciaException {
         try {
             ImportadorGastos importador = ImportadorGastosFactory.crear(fichero);
             List<GastoImportado> importados = importador.importar(fichero);
 
             if (importados == null || importados.isEmpty()) {
-                return false;
+            	throw new ImportacionException("El fichero está vacío o no contiene gastos válidos.");
             }
 
             // Preparar participantes por cuenta compartida (para crear cuentas si no existen)
@@ -708,8 +666,6 @@ public class GestorGastos {
                 }
 
                 String descripcion = (gi.descripcion() == null) ? "" : gi.descripcion().trim();
-
-
                 String nombre = (gi.nombre() == null || gi.nombre().isBlank())
                         ? "(Sin nombre)"
                         : gi.nombre().trim();
