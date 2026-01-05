@@ -1,0 +1,513 @@
+<diagram program="umletino" version="15.1"><zoom_level>3</zoom_level><help_text>m1=1
+m2=0..n
+guarda</help_text><element><id>UMLClass</id><coordinates><x>468</x><y>417</y><w>210</w><h>315</h></coordinates><panel_attributes>GestorGastos (Controlador, singleton)
+--
+- static instancia: GestorGastos
+- static final CUENTA_PRINCIPAL: String = "principal"
+- static final CUENTA_PERSONAL: String = "personal"
+- repositorioGastos: GastoRepository
+- repositorioCuentas: CuentaRepository
+- repositorioCategorias: CategoriaRepository
+- repositorioAlertas: AlertaRepository
+- repositorioPersonas: PersonaRepository
+- repositorioNotificaciones: NotificacionRepository
+- cuentas: List&lt;Cuenta&gt;
+- categorias: List&lt;Categoria&gt;
+- alertas: List&lt;Alerta&gt;
+- notificaciones: List&lt;Notificacion&gt;
+
+--
+
+GestorGastos(gastoRepo: GastoRepository,  cuentaRepo: CuentaRepository,  categoriaRepo: CategoriaRepository,  
+alertaRepo: AlertaRepository,  personaRepo: PersonaRepository,  notificacionRepo: NotificacionRepository)
++ static crearInstancia(gastoRepo: GastoRepository, cuentaRepo: CuentaRepository,  categoriaRepo: CategoriaRepository, 
+alertaRepo: AlertaRepository,  personaRepo: PersonaRepository, notificacionRepo: NotificacionRepository): GestorGastos
++ static getInstancia(): GestorGastos
++ static resetInstancia(): void
+- cargarDatos(): void
+- inicializarCategoriasPredefinidas(): void
+
++ crearEstrategiaDistribucion(estrategiaId: String, participantes: List&lt;Persona&gt;): EstrategiaDistribucion
++ actualizarEstrategiaDistribucion(cuenta: CuentaCompartida, estrategia: EstrategiaDistribucion): boolean
++ getCuentasCompartidas(): List&lt;CuentaCompartida&gt;
++ crearCuentaPersonal(cuenta: CuentaPersonalImpl): CuentaPersonal
++ crearCuentaCompartida(nombre: String, personas: List&lt;Persona&gt;): CuentaCompartida
++ crearCuentaCompartidaConNombres(nombreCuenta: String, nombresPropietarios: List&lt;String&gt;): CuentaCompartida
++ eliminarCuenta(cuenta: Cuenta): boolean
++ buscarCuenta(nombre: String): Cuenta
+- actualizarCuentaEnLista(cuenta: CuentaImpl): void
+
++ crearCategoria(nombre: String): Categoria
++ eliminarCategoria(categoria: Categoria): boolean
++ buscarCategoria(nombre: String): Categoria
+
++ crearAlerta(nombre: String, limite: double, periodo: PeriodoAlerta): Alerta
++ crearAlerta(nombre: String, limite: double, periodo: PeriodoAlerta, categoria: Categoria): Alerta
++ eliminarAlerta(alerta: Alerta): boolean
++ verificarAlertas(gastoRecienAnadido: Gasto): void
+- calcularGastoPeriodoNatural(alerta: Alerta, fecha: LocalDate): double
++ getNotificacionesNoLeidas(): List&lt;Notificacion&gt;
++ getNumeroNotificacionesNoLeidas(): int
++ marcarNotificacionComoLeida(notificacion: Notificacion): void
++ marcarTodasNotificacionesComoLeidas(): void
++ eliminarNotificacion(notificacion: Notificacion): boolean
++ limpiarNotificacionesAntiguas(): void
+- construirMensajeNotificacion(alerta: Alerta, gastoActual: double, inicio: LocalDate, fin: LocalDate): String
+
++ crearGasto(nombre: String, cantidad: double, fecha: LocalDate, descripcion: String, categoria: Categoria, pagador: 
+Persona): Gasto
++ crearGasto(nombre: String, cantidad: double, fecha: LocalDate, descripcion: String, categoria: Categoria): Gasto
++ agregarGastoACuenta(cuenta: Cuenta, gasto: Gasto): boolean
++ eliminarGastoDeCuenta(cuenta: Cuenta, gasto: Gasto): boolean
++ getGastos(): List&lt;Gasto&gt;
++ getGastosPorCuenta(cuenta: Cuenta): List&lt;Gasto&gt;
++ getGastosFiltrados(filtro: Filtro): List&lt;Gasto&gt;
++ crearFiltroCompuesto(meses: List&lt;String&gt;, fechaInicio: LocalDate, fechaFin: LocalDate, categorias: List&lt;Categoria&gt;): Filtro
++ getTotalCuenta(cuenta: Cuenta): double
++ getTotalesPorCategoria(): Map&lt;Categoria, Double&gt;
+
+- buscarOCrearPersona(nombre: String): Persona
++ importarGastos(fichero: File): boolean
+- static esCuentaPersonal(nombreCuentaNormalizado: String): boolean
+- static normalizarNombreCuenta(raw: String): String
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>300</x><y>648</y><w>78</w><h>75</h></coordinates><panel_attributes>/Abstract Class CuentaImpl/
+--
+# nombre: String
+# gastos: List&lt;GastoImpl&gt;
+--
++ CuentaImpl()
++ CuentaImpl(nombre: String)
++ agregarGasto(gasto: Gasto): void
++ eliminarGasto(gasto: Gasto): boolean
++ calcularTotal(): double
++ calcularTotal(categoria: Categoria): double
++ getGastosPorCategoria(categoria: Categoria): List&lt;Gasto&gt;
++ tieneGastos(): boolean
++ getNumeroGastos(): int
++ getGastos(): List&lt;Gasto&gt;
++ limpiarGastos(): void
++ toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>177</x><y>591</y><w>108</w><h>45</h></coordinates><panel_attributes>CuentaPersonal
+--
+-String propietario
+--
++ CuentaPersonalImpl()
++ CuentaPersonalImpl(nombre: String, propietario: String)
++ CuentaPersonalImpl(propietario: String)
++ agregarGasto(gasto: Gasto): void
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>63</x><y>690</y><w>180</w><h>138</h></coordinates><panel_attributes>CuentaCompartidaImpl
+--
+- personas: List&lt;PersonaImpl&gt;
+- estrategiaId: String
+- estrategia: EstrategiaDistribucion
+--
++ CuentaCompartidaImpl()
++ CuentaCompartidaImpl(nombre: String, personas: List&lt;Persona&gt;)
++ CuentaCompartidaImpl(nombre: String, personas: List&lt;Persona&gt;, estrategia: EstrategiaDistribucion)
+- static convertirAPersonaImpl(personas: List&lt;Persona&gt;): List&lt;PersonaImpl&gt;
+- inicializarSaldos(): void
++ agregarGasto(gasto: Gasto): void
++ eliminarGasto(gasto: Gasto): boolean
+- actualizarSaldos(gasto: Gasto): void
+- recalcularTodosSaldos(): void
++ calcularSaldos(): Map&lt;Persona, Double&gt;
++ getSaldo(persona: Persona): double
++ getSaldo(nombrePersona: String): double
++ getTotalGastadoPor(persona: Persona): double
++ getPersonas(): List&lt;Persona&gt;
++ addPersonaSiNoExiste(persona: Persona): boolean
++ getEstrategiaDistribucion(): EstrategiaDistribucion
++ setEstrategiaDistribucion(estrategia: EstrategiaDistribucion): void
+- asegurarEstrategia(): void
+- inferirEstrategiaId(): String
+- aplicarPorcentajesEquitativosSiHaceFalta(): void
+- aplicarPorcentajesEquitativos(): void
+- sonPorcentajesPersonalizadosValidos(): boolean
+- validarPorcentajesPersonalizados(): void
++ contienePersona(persona: Persona): boolean
++ getNumeroPersonas(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>321</x><y>786</y><w>69</w><h>60</h></coordinates><panel_attributes>GastoImpl
+--
+- nombre: String
+- cantidad: double
+- fecha: LocalDate
+- descripcion: String
+- categoria: CategoriaImpl
+- pagador: PersonaImpl
+- id: UUID
+--
++ GastoImpl()
++ equals(o: Object): boolean
++ hashCode(): int
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>135</x><y>861</y><w>87</w><h>36</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+EstrategiaDistribucion
+--
++ getId(): String
++ calcularPorcentaje(persona: Persona): double
++ contienePersona(persona: Persona): boolean
++ getNumeroPersonas(): int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>48</x><y>933</y><w>99</w><h>60</h></coordinates><panel_attributes>DistribucionEquitativaImpl
+--
++ static final ID: String = "EQUITATIVA"
+- personas: List&lt;Persona&gt;
+--
+
++ DistribucionEquitativaImpl(personas: List&lt;Persona&gt;)
++ getId(): String
++ calcularPorcentaje(persona: Persona): double
++ contienePersona(persona: Persona): boolean
++ getNumeroPersonas(): int
++ getPersonas(): List&lt;Persona&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>171</x><y>933</y><w>153</w><h>57</h></coordinates><panel_attributes>DistribucionPersonalizadaImpl
+--
++ static final ID: String = "PERSONALIZADA"
+- porcentajesFraccion: Map&lt;Persona, Double&gt;
+--
++ DistribucionPersonalizadaImpl(porcentajesFraccion: Map&lt;Persona, Double&gt;)
++ static desdePersonas(participantes: List&lt;Persona&gt;): DistribucionPersonalizadaImpl
++ getId(): String
++ calcularPorcentaje(persona: Persona): double
++ contienePersona(persona: Persona): boolean
++ getNumeroPersonas(): int
++ getPorcentajesFraccion(): Map&lt;Persona, Double&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>381</x><y>516</y><w>93</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..n
+m2=1
+tiene</panel_attributes><additional_attributes>10;20;290;20</additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>684</y><w>66</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;-
+extends
+</panel_attributes><additional_attributes>200;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>282</x><y>606</y><w>36</w><h>51</h></coordinates><panel_attributes>lt=&lt;&lt;-
+
+extends</panel_attributes><additional_attributes>60;150;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>156</x><y>825</y><w>15</w><h>42</h></coordinates><panel_attributes>lt=-&gt;
+m1=0..n
+m2=1
+usa </panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>120</x><y>894</y><w>45</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes><additional_attributes>110;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>159</x><y>894</y><w>45</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes><additional_attributes>10;10;120;130</additional_attributes></element><element><id>Relation</id><coordinates><x>339</x><y>720</y><w>24</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n
+contiene </panel_attributes><additional_attributes>10;10;10;220</additional_attributes></element><element><id>Relation</id><coordinates><x>387</x><y>813</y><w>192</w><h>15</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..n
+tiene</panel_attributes><additional_attributes>620;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>594</x><y>729</y><w>24</w><h>87</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
+m1=1
+m2=1..n
+gestiona</panel_attributes><additional_attributes>10;10;10;270</additional_attributes></element><element><id>UMLClass</id><coordinates><x>795</x><y>774</y><w>84</w><h>54</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; Notificacion
+--
++ getId(): String
++ getMensaje(): String
++ setMensaje(mensaje: String): void
++ getFechaHora(): LocalDateTime
++ getAlertaOrigen(): Alerta
++ isLeida(): boolean
++ marcarComoLeida(): void
++ marcarComoNoLeida(): void
++ getFechaHoraFormateada(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>675</y><w>114</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..1
+gestiona</panel_attributes><additional_attributes>10;20;360;20</additional_attributes></element><element><id>Relation</id><coordinates><x>657</x><y>723</y><w>138</w><h>99</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..n
+
+
+tiene</panel_attributes><additional_attributes>10;290;420;290;420;10</additional_attributes></element><element><id>Relation</id><coordinates><x>813</x><y>723</y><w>21</w><h>57</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=1..n
+genera</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>867</x><y>675</y><w>45</w><h>15</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=1..n
+tiene</panel_attributes><additional_attributes>130;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>417</y><w>285</w><h>258</h></coordinates><panel_attributes>lt=.&gt;
+</panel_attributes><additional_attributes>10;20;930;20;930;840</additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>756</y><w>72</w><h>111</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=2..n
+compuesta por</panel_attributes><additional_attributes>10;10;140;10;140;350</additional_attributes></element><element><id>Relation</id><coordinates><x>357</x><y>843</y><w>39</w><h>33</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1
+m2=0..n
+paga</panel_attributes><additional_attributes>10;80;90;80;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>744</x><y>486</y><w>69</w><h>42</h></coordinates><panel_attributes>Filtro
+--
+-List&lt;String&gt; meses
+-LocalDate fechaInicio
+-LocalDate fechaFin
+-List&lt;Categoria&gt; categorias
+--
++aplicar(gastos: List&lt;Gasto&gt;): List&lt;Gasto&gt;
++cumpleFiltro(gasto: Gasto): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>444</y><w>123</w><h>48</h></coordinates><panel_attributes>lt=&lt;.
+usa</panel_attributes><additional_attributes>390;140;240;20;10;30</additional_attributes></element><element><id>Relation</id><coordinates><x>609</x><y>840</y><w>30</w><h>45</h></coordinates><panel_attributes>lt=.&gt;&gt;
+implements
+</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>813</x><y>627</y><w>30</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements
+</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>297</x><y>489</y><w>87</w><h>63</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; Cuenta
+--
++ agregarGasto(gasto: Gasto): void
++ eliminarGasto(gasto: Gasto): boolean
++ calcularTotal(): double
++ calcularTotal(categoria: Categoria): double
++ getGastosPorCategoria(categoria: Categoria): List&lt;Gasto&gt;
++ tieneGastos(): boolean
++ getNumeroGastos(): int
++ getNombre(): String
++ setNombre(nombre: String): void
++ getGastos(): List&lt;Gasto&gt;
++ limpiarGastos(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>336</x><y>549</y><w>30</w><h>105</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements
+</panel_attributes><additional_attributes>10;10;10;330</additional_attributes></element><element><id>Relation</id><coordinates><x>117</x><y>504</y><w>186</w><h>33</h></coordinates><panel_attributes>lt=&lt;&lt;-
+extends </panel_attributes><additional_attributes>600;20;10;20;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>213</x><y>516</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-
+extends</panel_attributes><additional_attributes>280;20;10;20;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>189</x><y>540</y><w>87</w><h>24</h></coordinates><panel_attributes>	&lt;&lt;interface&gt;&gt; CuentaPersonal
+--
++ getPropietario(): String
++ setPropietario(propietario: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>54</x><y>531</y><w>126</w><h>54</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; CuentaCompartida
+--
++ calcularSaldos(): Map&lt;Persona, Double&gt;
++ getSaldo(persona: Persona): double
++ getSaldo(nombrePersona: String): double
++ getTotalGastadoPor(persona: Persona): double
++ getPersonas(): List&lt;Persona&gt;
++ getEstrategiaDistribucion(): EstrategiaDistribucion
++ setEstrategiaDistribucion(estrategia: EstrategiaDistribucion): void
++ contienePersona(persona: Persona): boolean
++ getNumeroPersonas(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>159</x><y>582</y><w>30</w><h>114</h></coordinates><panel_attributes>lt=&lt;&lt;.
+
+
+
+
+implements
+</panel_attributes><additional_attributes>10;10;10;360</additional_attributes></element><element><id>Relation</id><coordinates><x>249</x><y>561</y><w>30</w><h>36</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements
+</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>438</x><y>741</y><w>90</w><h>66</h></coordinates><panel_attributes>	&lt;&lt;interface&gt;&gt; Gasto
+--
++ getNombre(): String
++ setNombre(nombre: String): void
++ getCantidad(): double
++ setCantidad(cantidad: double): void
++ getFecha(): LocalDate
++ setFecha(fecha: LocalDate): void
++ getDescripcion(): String
++ setDescripcion(descripcion: String): void
++ getCategoria(): Categoria
++ setCategoria(categoria: Categoria): void
++ getPagador(): Persona
++ setPagador(pagador: Persona): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>387</x><y>771</y><w>57</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements
+</panel_attributes><additional_attributes>10;50;170;10</additional_attributes></element><element><id>Relation</id><coordinates><x>357</x><y>870</y><w>48</w><h>30</h></coordinates><panel_attributes>lt=.&gt;&gt;
+implements
+</panel_attributes><additional_attributes>140;80;140;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>561</x><y>879</y><w>102</w><h>54</h></coordinates><panel_attributes>CategoriaImpl
+--
+- nombre: String
+- predefinida: boolean
+
+--
++ CategoriaImpl()
++ CategoriaImpl(nombre: String, predefinida: boolean)
++ CategoriaImpl(nombre: String)
++ equals(obj: Object): boolean
++ hashCode(): int
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>573</x><y>810</y><w>87</w><h>33</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; Categoria
+--
++ getNombre(): String
++ setNombre(nombre: String): void
++ isPredefinida(): boolean
++ setPredefinida(predefinida: boolean): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>783</x><y>663</y><w>87</w><h>63</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; Alerta
+--
++ getNombre(): String
++ setNombre(nombre: String): void
++ getLimite(): double
++ setLimite(limite: double): void
++ getPeriodo(): PeriodoAlerta
++ setPeriodo(periodo: PeriodoAlerta): void
++ getCategoria(): Categoria
++ setCategoria(categoria: Categoria): void
++ superaLimite(gastoActual: double): boolean
++ esGeneral(): boolean
++ getEstrategia(): EstrategiaAlerta</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>741</x><y>540</y><w>153</w><h>90</h></coordinates><panel_attributes>Alerta
+--
+- nombre: String
+- limite: double
+- periodo: PeriodoAlerta
+- categoria: CategoriaImpl
+- estrategia: EstrategiaAlerta
+--
++ AlertaImpl()
++ AlertaImpl(nombre: String, limite: double, periodo: PeriodoAlerta)
++ AlertaImpl(nombre: String, limite: double, periodo: PeriodoAlerta, categoria: Categoria)
++ superaLimite(gastoActual: double): boolean
++ esGeneral(): boolean
++ getEstrategia(): EstrategiaAlerta
++ setPeriodo(periodo: PeriodoAlerta): void
++ setCategoria(categoria: Categoria): void
++ equals(obj: Object): boolean
++ hashCode(): int
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>273</x><y>861</y><w>87</w><h>36</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+Persona
+--
++ getNombre(): String
++ setNombre(nombre: String): void
++ getSaldo(): double
++ setSaldo(saldo: double): void
++ getPorcentaje(): int
++ setPorcentaje(p: int): void
++ actualizarSaldo(cantidad: double): void
++ resetearSaldo(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>393</x><y>894</y><w>75</w><h>66</h></coordinates><panel_attributes>PersonaImpl
+--
+- nombre: String
+- saldo: double
+- porcentaje: int
+--
++ PersonaImpl()
++ PersonaImpl(nombre: String)
++ PersonaImpl(nombre: String, saldoInicial: double)
++ actualizarSaldo(cantidad: double): void
++ resetearSaldo(): void
++ equals(obj: Object): boolean
++ hashCode(): int
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1008</x><y>729</y><w>120</w><h>36</h></coordinates><panel_attributes>EstrategiaAlertaSemanalImpl
+--
++ getPeriodo(): PeriodoAlerta
++ calcularInicioPeriodo(fechaReferencia: LocalDate): LocalDate
++ calcularFinPeriodo(fechaReferencia: LocalDate): LocalDate
++ getNombrePeriodo(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>999</x><y>702</y><w>39</w><h>33</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes><additional_attributes>10;10;110;90</additional_attributes></element><element><id>Relation</id><coordinates><x>903</x><y>702</y><w>39</w><h>36</h></coordinates><panel_attributes>lt=&lt;&lt;.
+implements</panel_attributes><additional_attributes>70;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>882</x><y>732</y><w>111</w><h>33</h></coordinates><panel_attributes>EstrategiaAlertaMensualImpl
+--
++ getPeriodo(): PeriodoAlerta
++ calcularInicioPeriodo(fechaReferencia: LocalDate): LocalDate
++ calcularFinPeriodo(fechaReferencia: LocalDate): LocalDate
++ getNombrePeriodo(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>906</x><y>669</y><w>111</w><h>36</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+EstrategiaAlerta
+--
++ getPeriodo(): PeriodoAlerta
++ calcularInicioPeriodo(fechaReferencia: LocalDate): LocalDate
++ calcularFinPeriodo(fechaReferencia: LocalDate): LocalDate
++ getNombrePeriodo(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>729</x><y>75</y><w>123</w><h>63</h></coordinates><panel_attributes>NotificacionRepositoryJSONImpl
+--
+- notificaciones: List&lt;NotificacionImpl&gt;
+- rutaFichero: String
+--
++ getNotificaciones(): List&lt;? extends NotificacionImpl&gt;
++ findById(id: String): NotificacionImpl
++ addNotificacion(notificacion: NotificacionImpl): void
++ removeNotificacion(notificacion: NotificacionImpl): void
++ updateNotificacion(notificacion: NotificacionImpl): NotificacionImpl
++ guardarNotificaciones(): void
+- cargaNotificaciones(): void
+- cargarNotificaciones(rutaFichero: String): List&lt;NotificacionImpl&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>321</x><y>75</y><w>126</w><h>63</h></coordinates><panel_attributes>CuentaRepositoryJSONImpl
+--
+- cuentas: List&lt;CuentaImpl&gt;
+- rutaFichero: String
+--
++ getCuentas(): List&lt;? extends CuentaImpl&gt;
++ findByNombre(nombre: String): CuentaImpl
++ addCuenta(cuenta: CuentaImpl): void
++ removeCuenta(cuenta: CuentaImpl): void
++ updateCuenta(cuenta: CuentaImpl): CuentaImpl
+- cargaCuentas(): void
+- cargarCuentas(rutaFichero: String): List&lt;CuentaImpl&gt;
+- guardarCuentas(cuentas: List&lt;CuentaImpl&gt;, rutaFichero: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>471</x><y>75</y><w>90</w><h>63</h></coordinates><panel_attributes>GastoRepositoryJSONImpl
+--
+- gastos: List&lt;GastoImpl&gt;
+- rutaFichero: String
+--
++ getGastos(): List&lt;? extends GastoImpl&gt;
++ findByNombre(nombre: String): GastoImpl
+- cargaGastos(): void
+- cargarGastos(rutaFichero: String): List&lt;GastoImpl&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>399</x><y>267</y><w>87</w><h>42</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; CuentaRepository
+--
++ getCuentas(): List&lt;? extends CuentaImpl&gt;
++ findByNombre(nombre: String): CuentaImpl
++ addCuenta(cuenta: CuentaImpl): void
++ removeCuenta(cuenta: CuentaImpl): void
++ updateCuenta(cuenta: CuentaImpl): CuentaImpl</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>699</x><y>267</y><w>126</w><h>42</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; NotificacionRepository
+--
++ getNotificaciones(): List&lt;? extends NotificacionImpl&gt;
++ findById(id: String): NotificacionImpl
++ addNotificacion(notificacion: NotificacionImpl): void
++ removeNotificacion(notificacion: NotificacionImpl): void
++ updateNotificacion(notificacion: NotificacionImpl): NotificacionImpl
++ guardarNotificaciones(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>543</x><y>306</y><w>12</w><h>117</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;20;370</additional_attributes></element><element><id>Relation</id><coordinates><x>645</x><y>306</y><w>111</w><h>117</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>350;10;10;370</additional_attributes></element><element><id>Relation</id><coordinates><x>618</x><y>306</y><w>9</w><h>117</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;370</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>306</y><w>213</w><h>117</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>690;10;10;370</additional_attributes></element><element><id>Relation</id><coordinates><x>441</x><y>306</y><w>84</w><h>117</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;260;370</additional_attributes></element><element><id>Relation</id><coordinates><x>339</x><y>306</y><w>153</w><h>117</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;490;370</additional_attributes></element><element><id>Relation</id><coordinates><x>267</x><y>135</y><w>75</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;230;440</additional_attributes></element><element><id>Relation</id><coordinates><x>366</x><y>135</y><w>75</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;230;440</additional_attributes></element><element><id>Relation</id><coordinates><x>537</x><y>135</y><w>9</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;440</additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>135</y><w>42</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>120;10;10;440</additional_attributes></element><element><id>Relation</id><coordinates><x>753</x><y>135</y><w>42</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>120;10;10;440</additional_attributes></element><element><id>Relation</id><coordinates><x>903</x><y>135</y><w>69</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>210;10;10;440</additional_attributes></element><element><id>UMLClass</id><coordinates><x>288</x><y>267</y><w>99</w><h>42</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; PersonaRepository
+--
++ getPersonas(): List&lt;? extends PersonaImpl&gt;
++ findByNombre(nombre: String): PersonaImpl
++ addPersona(persona: PersonaImpl): void
++ removePersona(persona: PersonaImpl): void
++ updatePersona(persona: PersonaImpl): PersonaImpl</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>834</x><y>267</y><w>87</w><h>42</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; AlertaRepository
+--
+&lt;&lt;interface&gt;&gt;
++ getAlertas(): List&lt;? extends AlertaImpl&gt;
++ findByNombre(nombre: String): AlertaImpl
++ addAlerta(alerta: AlertaImpl): void
++ removeAlerta(alerta: AlertaImpl): void
++ updateAlerta(alerta: AlertaImpl): AlertaImpl
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>864</x><y>75</y><w>117</w><h>63</h></coordinates><panel_attributes>AlertaRepositoryJSONImpl
+--
+- alertas: List&lt;AlertaImpl&gt;
+- rutaFichero: String
+--
++ getAlertas(): List&lt;? extends AlertaImpl&gt;
++ findByNombre(nombre: String): AlertaImpl
++ addAlerta(alerta: AlertaImpl): void
++ removeAlerta(alerta: AlertaImpl): void
++ updateAlerta(alerta: AlertaImpl): AlertaImpl
+- cargaAlertas(): void
+- cargarAlertas(rutaFichero: String): List&lt;AlertaImpl&gt;
+- guardarAlertas(alertas: List&lt;AlertaImpl&gt;, rutaFichero: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>183</x><y>75</y><w>132</w><h>63</h></coordinates><panel_attributes>PersonaRepositoryJSONImpl
+--
+- personas: List&lt;PersonaImpl&gt;
+- rutaFichero: String
+--
++ getPersonas(): List&lt;? extends PersonaImpl&gt;
++ findByNombre(nombre: String): PersonaImpl
++ addPersona(persona: PersonaImpl): void
++ removePersona(persona: PersonaImpl): void
++ updatePersona(persona: PersonaImpl): PersonaImpl
+- cargaPersonas(): void
+- cargarPersonas(rutaFichero: String): List&lt;PersonaImpl&gt;
+- guardarPersonas(personas: List&lt;PersonaImpl&gt;, rutaFichero: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>288</y><w>429</w><h>831</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>960;10;10;10;10;2750;1410;2740;1410;2240</additional_attributes></element><element><id>Relation</id><coordinates><x>375</x><y>306</y><w>57</w><h>384</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>170;10;170;1260;10;1260</additional_attributes></element><element><id>Relation</id><coordinates><x>567</x><y>0</y><w>606</w><h>921</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>110;890;110;780;20;780;10;20;1980;10;2000;3050;780;3050;780;2810;310;2810</additional_attributes></element><element><id>UMLClass</id><coordinates><x>585</x><y>267</y><w>108</w><h>42</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; CategoriaRepository
+--
++ getCategorias(): List&lt;CategoriaImpl&gt;
++ findByNombre(nombre: String): CategoriaImpl
++ addCategoria(categoria: CategoriaImpl): void
++ removeCategoria(categoria: CategoriaImpl): void
++ updateCategoria(categoria: CategoriaImpl): CategoriaImpl</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>492</x><y>267</y><w>87</w><h>42</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt; GastoRepository
+--
++ getGastos(): List&lt;? extends GastoImpl&gt;
++ findByNombre(nombre: String): GastoImpl</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>582</x><y>75</y><w>138</w><h>63</h></coordinates><panel_attributes>CategoriaRepositoryJSONImpl
+--
+- categorias: List&lt;CategoriaImpl&gt;
+- rutaFichero: String
+--
++ getCategorias(): List&lt;CategoriaImpl&gt;
++ findByNombre(nombre: String): CategoriaImpl
++ addCategoria(categoria: CategoriaImpl): void
++ removeCategoria(categoria: CategoriaImpl): void
++ updateCategoria(categoria: CategoriaImpl): CategoriaImpl
+- cargaCategorias(): void
+- cargarCategorias(rutaFichero: String): List&lt;CategoriaImpl&gt;
+- guardarCategorias(categorias: List&lt;CategoriaImpl&gt;, rutaFichero: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>444</x><y>306</y><w>90</w><h>441</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>280;10;280;340;10;340;10;1450</additional_attributes></element><element><id>UMLClass</id><coordinates><x>924</x><y>774</y><w>150</w><h>102</h></coordinates><panel_attributes>NotificacionImpl
+--
+- id: String
+- mensaje: String
+- fechaHora: LocalDateTime
+- alertaOrigen: AlertaImpl
+- leida: boolean
+- periodoInicio: LocalDate
+- periodoFin: LocalDate
+--
++ NotificacionImpl()
++ NotificacionImpl(alertaOrigen: Alerta, mensaje: String, periodoInicio: LocalDate, 
+periodoFin: LocalDate)
++ NotificacionImpl(id: String, mensaje: String, fechaHora: LocalDateTime, 
+alertaOrigen: Alerta, leida: boolean,  periodoInicio: LocalDate, periodoFin: LocalDate)
++ marcarComoLeida(): void
++ marcarComoNoLeida(): void
++ getFechaHoraFormateada(): String
++ getPeriodoInicio(): LocalDate
++ getPeriodoFin(): LocalDate
++ equals(obj: Object): boolean
++ hashCode(): int
++ toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>876</x><y>786</y><w>54</w><h>15</h></coordinates><panel_attributes>lt=.&gt;&gt;
+implements
+</panel_attributes><additional_attributes>160;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>306</y><w>360</w><h>597</h></coordinates><panel_attributes>lt=.&gt;
+</panel_attributes><additional_attributes>10;10;10;220;1170;220;1180;1970;230;1970;230;1740</additional_attributes></element><element><id>Relation</id><coordinates><x>849</x><y>303</y><w>72</w><h>366</h></coordinates><panel_attributes>lt=.&gt;
+</panel_attributes><additional_attributes>110;10;100;600;220;600;220;1150;10;1150;10;1200</additional_attributes></element></diagram>
