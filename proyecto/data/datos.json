@@ -2,135 +2,473 @@
   "cuentasPersonales" : [ {
     "nombre" : "Principal",
     "gastos" : [ {
-      "nombre" : "Compra",
-      "cantidad" : 3250.0,
-      "fecha" : [ 2025, 12, 27 ],
-      "descripcion" : "Comida año nuevo",
+      "nombre" : "Desayuno en cafetería",
+      "cantidad" : 4.5,
+      "fecha" : [ 2022, 3, 2 ],
+      "descripcion" : "con tarjeta",
       "categoria" : {
-        "nombre" : "Alimentación",
+        "nombre" : "Comida",
         "predefinida" : false
       },
-      "pagador" : null
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
     }, {
-      "nombre" : "pc",
-      "cantidad" : 2000.0,
-      "fecha" : [ 2025, 12, 18 ],
-      "descripcion" : "",
+      "nombre" : "Repostaje en gasolinera",
+      "cantidad" : 45.0,
+      "fecha" : [ 2022, 3, 1 ],
+      "descripcion" : "con tarjeta",
       "categoria" : {
-        "nombre" : "Electrónica",
+        "nombre" : "Gasolina",
         "predefinida" : false
       },
-      "pagador" : null
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
     }, {
-      "nombre" : "ropa nueva",
-      "cantidad" : 1500.0,
-      "fecha" : [ 2025, 12, 23 ],
-      "descripcion" : "",
+      "nombre" : "Billete de autobús urbano",
+      "cantidad" : 1.5,
+      "fecha" : [ 2022, 3, 1 ],
+      "descripcion" : "efectivo",
       "categoria" : {
-        "nombre" : "Ropa",
+        "nombre" : "Transporte Público",
         "predefinida" : false
       },
-      "pagador" : null
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
     }, {
-      "nombre" : "cosas varias",
-      "cantidad" : 3250.0,
-      "fecha" : [ 2025, 12, 4 ],
-      "descripcion" : "ccc",
+      "nombre" : "Juego para móvil",
+      "cantidad" : 2.99,
+      "fecha" : [ 2022, 2, 27 ],
+      "descripcion" : "con paypal",
       "categoria" : {
-        "nombre" : "Ropa",
+        "nombre" : "Ocio",
         "predefinida" : false
       },
-      "pagador" : null
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Cambio de bombilla del coche",
+      "cantidad" : 7.5,
+      "fecha" : [ 2022, 2, 26 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Reparaciones",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Bocadillo y refresco",
+      "cantidad" : 5.25,
+      "fecha" : [ 2022, 2, 26 ],
+      "descripcion" : "efectivo",
+      "categoria" : {
+        "nombre" : "Comida",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Compra de vitaminas",
+      "cantidad" : 12.75,
+      "fecha" : [ 2022, 2, 25 ],
+      "descripcion" : "on line",
+      "categoria" : {
+        "nombre" : "Gastos Médicos",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Taxi nocturno",
+      "cantidad" : 11.0,
+      "fecha" : [ 2022, 2, 24 ],
+      "descripcion" : "efectivo",
+      "categoria" : {
+        "nombre" : "Transporte Público",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Repostaje rápido",
+      "cantidad" : 20.0,
+      "fecha" : [ 2022, 2, 23 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Gasolina",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Alquiler de videojuego",
+      "cantidad" : 5.99,
+      "fecha" : [ 2022, 2, 21 ],
+      "descripcion" : "con paypal",
+      "categoria" : {
+        "nombre" : "Ocio",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Café y bollería",
+      "cantidad" : 3.2,
+      "fecha" : [ 2022, 2, 21 ],
+      "descripcion" : "efectivo",
+      "categoria" : {
+        "nombre" : "Comida",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Me",
+        "saldo" : -22.466,
+        "porcentaje" : 20
+      }
     } ],
     "propietario" : "User1"
   } ],
   "cuentasCompartidas" : [ {
-    "nombre" : "Secundaria",
+    "nombre" : "Compartida 2",
     "gastos" : [ {
-      "nombre" : "cine",
-      "cantidad" : 25.0,
-      "fecha" : [ 2025, 12, 11 ],
-      "descripcion" : "avatar 3",
+      "nombre" : "Alquiler de película en streaming",
+      "cantidad" : 3.99,
+      "fecha" : [ 2022, 3, 1 ],
+      "descripcion" : "on line",
       "categoria" : {
-        "nombre" : "Entretenimiento",
+        "nombre" : "Ocio",
         "predefinida" : false
       },
       "pagador" : {
-        "nombre" : "Nicole",
-        "saldo" : 17.5,
-        "porcentaje" : 30
-      }
-    }, {
-      "nombre" : "otro",
-      "cantidad" : 2410.0,
-      "fecha" : [ 2025, 12, 13 ],
-      "descripcion" : "",
-      "categoria" : {
-        "nombre" : "Transporte",
-        "predefinida" : false
-      },
-      "pagador" : {
-        "nombre" : "Lucia",
-        "saldo" : -12028.0,
-        "porcentaje" : 50
-      }
-    }, {
-      "nombre" : "ropa",
-      "cantidad" : 2560.0,
-      "fecha" : [ 2025, 12, 19 ],
-      "descripcion" : "",
-      "categoria" : {
-        "nombre" : "Ropa",
-        "predefinida" : false
-      },
-      "pagador" : {
-        "nombre" : "Guille",
-        "saldo" : 921.0,
+        "nombre" : "Me",
+        "saldo" : -22.466,
         "porcentaje" : 20
       }
     }, {
-      "nombre" : "pc",
-      "cantidad" : 3200.0,
-      "fecha" : [ 2025, 12, 24 ],
-      "descripcion" : "",
+      "nombre" : "Partida de billar en bar",
+      "cantidad" : 12.0,
+      "fecha" : [ 2022, 3, 1 ],
+      "descripcion" : "efectivo",
       "categoria" : {
-        "nombre" : "Electrónica",
+        "nombre" : "Ocio",
         "predefinida" : false
       },
       "pagador" : {
-        "nombre" : "Nicole",
-        "saldo" : 766.5,
-        "porcentaje" : 30
+        "nombre" : "Bob",
+        "saldo" : 5.033999999999999,
+        "porcentaje" : 20
       }
     }, {
-      "nombre" : "parque atracciones",
-      "cantidad" : 1400.0,
-      "fecha" : [ 2025, 12, 27 ],
-      "descripcion" : "",
+      "nombre" : "Compra en supermercado",
+      "cantidad" : 32.4,
+      "fecha" : [ 2022, 2, 28 ],
+      "descripcion" : "con tarjeta",
       "categoria" : {
-        "nombre" : "Entretenimiento",
+        "nombre" : "Comida",
         "predefinida" : false
       },
       "pagador" : {
-        "nombre" : "Lucia",
-        "saldo" : -987.5,
-        "porcentaje" : 50
+        "nombre" : "Greta",
+        "saldo" : 20.944000000000003,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Cena de hamburguesas",
+      "cantidad" : 21.0,
+      "fecha" : [ 2022, 2, 26 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Comida",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Paco",
+        "saldo" : -5.456000000000001,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Recarga tarjeta de transporte",
+      "cantidad" : 20.0,
+      "fecha" : [ 2022, 2, 26 ],
+      "descripcion" : "on line",
+      "categoria" : {
+        "nombre" : "Transporte Público",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Betty",
+        "saldo" : 1.944,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Compra de música digital",
+      "cantidad" : 4.99,
+      "fecha" : [ 2022, 2, 24 ],
+      "descripcion" : "con paypal",
+      "categoria" : {
+        "nombre" : "Ocio",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Bob",
+        "saldo" : 5.033999999999999,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Compra de tarjeta regalo",
+      "cantidad" : 15.0,
+      "fecha" : [ 2022, 2, 23 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Regalos",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Greta",
+        "saldo" : 20.944000000000003,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Billete de tren",
+      "cantidad" : 14.5,
+      "fecha" : [ 2022, 2, 22 ],
+      "descripcion" : "efectivo",
+      "categoria" : {
+        "nombre" : "Transporte Público",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Bob",
+        "saldo" : 5.033999999999999,
+        "porcentaje" : 20
+      }
+    }, {
+      "nombre" : "Compra de termómetro digital",
+      "cantidad" : 8.4,
+      "fecha" : [ 2022, 2, 21 ],
+      "descripcion" : "on line",
+      "categoria" : {
+        "nombre" : "Gastos Médicos",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Betty",
+        "saldo" : 1.944,
+        "porcentaje" : 20
       }
     } ],
     "personas" : [ {
-      "nombre" : "Lucia",
-      "saldo" : -987.5,
-      "porcentaje" : 50
-    }, {
-      "nombre" : "Guille",
-      "saldo" : 641.0,
+      "nombre" : "Me",
+      "saldo" : -22.466,
       "porcentaje" : 20
     }, {
-      "nombre" : "Nicole",
-      "saldo" : 346.5,
-      "porcentaje" : 30
+      "nombre" : "Bob",
+      "saldo" : 5.033999999999999,
+      "porcentaje" : 20
+    }, {
+      "nombre" : "Greta",
+      "saldo" : 20.944000000000003,
+      "porcentaje" : 20
+    }, {
+      "nombre" : "Paco",
+      "saldo" : -5.456000000000001,
+      "porcentaje" : 20
+    }, {
+      "nombre" : "Betty",
+      "saldo" : 1.944,
+      "porcentaje" : 20
     } ],
-    "estrategiaId" : "PERSONALIZADA"
+    "estrategiaId" : "EQUITATIVA"
+  }, {
+    "nombre" : "Compartida 1",
+    "gastos" : [ {
+      "nombre" : "Billetes de metro",
+      "cantidad" : 6.0,
+      "fecha" : [ 2022, 3, 2 ],
+      "descripcion" : "efectivo",
+      "categoria" : {
+        "nombre" : "Transporte Público",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Anthony",
+        "saldo" : 7.666666666666672,
+        "porcentaje" : 34
+      }
+    }, {
+      "nombre" : "Pizza para cenar",
+      "cantidad" : 18.5,
+      "fecha" : [ 2022, 3, 1 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Comida",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Stephani",
+        "saldo" : 9.566666666666672,
+        "porcentaje" : 33
+      }
+    }, {
+      "nombre" : "Compra de taza personalizada",
+      "cantidad" : 9.9,
+      "fecha" : [ 2022, 2, 28 ],
+      "descripcion" : "on line",
+      "categoria" : {
+        "nombre" : "Regalos",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Mark",
+        "saldo" : -17.23333333333333,
+        "porcentaje" : 33
+      }
+    }, {
+      "nombre" : "Repostaje coche compartido",
+      "cantidad" : 30.0,
+      "fecha" : [ 2022, 2, 26 ],
+      "descripcion" : "efectivo",
+      "categoria" : {
+        "nombre" : "Gasolina",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Anthony",
+        "saldo" : 7.666666666666672,
+        "porcentaje" : 34
+      }
+    }, {
+      "nombre" : "Cerveza en pub",
+      "cantidad" : 6.0,
+      "fecha" : [ 2022, 2, 26 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Ocio",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Mark",
+        "saldo" : -17.23333333333333,
+        "porcentaje" : 33
+      }
+    }, {
+      "nombre" : "Cena en restaurante",
+      "cantidad" : 28.0,
+      "fecha" : [ 2022, 2, 24 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Comida",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Stephani",
+        "saldo" : 9.566666666666672,
+        "porcentaje" : 33
+      }
+    }, {
+      "nombre" : "Pedido de sushi a domicilio",
+      "cantidad" : 24.6,
+      "fecha" : [ 2022, 2, 23 ],
+      "descripcion" : "on line",
+      "categoria" : {
+        "nombre" : "Comida",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Anthony",
+        "saldo" : 7.666666666666672,
+        "porcentaje" : 34
+      }
+    }, {
+      "nombre" : "Compra de herramientas básicas",
+      "cantidad" : 19.8,
+      "fecha" : [ 2022, 2, 21 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Reparaciones",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Mark",
+        "saldo" : -17.23333333333333,
+        "porcentaje" : 33
+      }
+    }, {
+      "nombre" : "Entradas para el cine",
+      "cantidad" : 16.0,
+      "fecha" : [ 2022, 2, 20 ],
+      "descripcion" : "con tarjeta",
+      "categoria" : {
+        "nombre" : "Ocio",
+        "predefinida" : false
+      },
+      "pagador" : {
+        "nombre" : "Stephani",
+        "saldo" : 9.566666666666672,
+        "porcentaje" : 33
+      }
+    } ],
+    "personas" : [ {
+      "nombre" : "Anthony",
+      "saldo" : 7.666666666666672,
+      "porcentaje" : 34
+    }, {
+      "nombre" : "Stephani",
+      "saldo" : 9.566666666666672,
+      "porcentaje" : 33
+    }, {
+      "nombre" : "Mark",
+      "saldo" : -17.23333333333333,
+      "porcentaje" : 33
+    } ],
+    "estrategiaId" : "EQUITATIVA"
+  }, {
+    "nombre" : "otra",
+    "gastos" : [ ],
+    "personas" : [ {
+      "nombre" : "ana",
+      "saldo" : 0.0,
+      "porcentaje" : 34
+    }, {
+      "nombre" : "bea",
+      "saldo" : 0.0,
+      "porcentaje" : 33
+    }, {
+      "nombre" : "pablo",
+      "saldo" : 0.0,
+      "porcentaje" : 33
+    } ],
+    "estrategiaId" : "EQUITATIVA"
   } ],
   "categorias" : [ {
     "nombre" : "Alimentación",
@@ -144,39 +482,44 @@
   }, {
     "nombre" : "Electrónica",
     "predefinida" : false
-  } ],
-  "alertas" : [ {
-    "nombre" : "Navidad",
-    "limite" : 500.0,
-    "periodo" : "SEMANAL",
-    "categoria" : {
-      "nombre" : "Ropa",
-      "predefinida" : false
-    }
   }, {
-    "nombre" : "tas pasao",
-    "limite" : 50.0,
-    "periodo" : "SEMANAL",
-    "categoria" : {
-      "nombre" : "Alimentación",
-      "predefinida" : true
-    }
+    "nombre" : "Comida",
+    "predefinida" : false
+  }, {
+    "nombre" : "Transporte Público",
+    "predefinida" : false
+  }, {
+    "nombre" : "Ocio",
+    "predefinida" : false
+  }, {
+    "nombre" : "Gasolina",
+    "predefinida" : false
+  }, {
+    "nombre" : "Regalos",
+    "predefinida" : false
+  }, {
+    "nombre" : "Reparaciones",
+    "predefinida" : false
+  }, {
+    "nombre" : "Gastos Médicos",
+    "predefinida" : false
   } ],
+  "alertas" : [ ],
   "personas" : [ {
     "nombre" : "Lucia",
-    "saldo" : -512.5,
-    "porcentaje" : 50
+    "saldo" : -400.0,
+    "porcentaje" : 33
   }, {
     "nombre" : "Guille",
-    "saldo" : 795.0,
-    "porcentaje" : 20
+    "saldo" : -400.0,
+    "porcentaje" : 34
   }, {
     "nombre" : "Nicole",
-    "saldo" : -282.5,
-    "porcentaje" : 30
+    "saldo" : 800.0,
+    "porcentaje" : 33
   }, {
     "nombre" : "paco",
-    "saldo" : -1150.0,
+    "saldo" : 0.0,
     "porcentaje" : 34
   }, {
     "nombre" : "kike",
@@ -194,22 +537,90 @@
     "nombre" : "lento",
     "saldo" : -1.0,
     "porcentaje" : 50
+  }, {
+    "nombre" : "p",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "n",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "bea",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "ana",
+    "saldo" : 0.0,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "h",
+    "saldo" : 0.0,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "k",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "an",
+    "saldo" : 0.0,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "bh",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "ui",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "b",
+    "saldo" : 0.0,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "jk",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "kl",
+    "saldo" : 0.0,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "Me",
+    "saldo" : -22.466,
+    "porcentaje" : 20
+  }, {
+    "nombre" : "Bob",
+    "saldo" : 5.033999999999999,
+    "porcentaje" : 20
+  }, {
+    "nombre" : "Greta",
+    "saldo" : 20.944000000000003,
+    "porcentaje" : 20
+  }, {
+    "nombre" : "Paco",
+    "saldo" : -5.456000000000001,
+    "porcentaje" : 20
+  }, {
+    "nombre" : "Betty",
+    "saldo" : 1.944,
+    "porcentaje" : 20
+  }, {
+    "nombre" : "Anthony",
+    "saldo" : 7.666666666666672,
+    "porcentaje" : 34
+  }, {
+    "nombre" : "Stephani",
+    "saldo" : 9.566666666666672,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "Mark",
+    "saldo" : -17.23333333333333,
+    "porcentaje" : 33
+  }, {
+    "nombre" : "pablo",
+    "saldo" : 0.0,
+    "porcentaje" : 33
   } ],
-  "notificaciones" : [ {
-    "id" : "deb25476-1065-484f-8021-93f4e91d0a1b",
-    "mensaje" : "Alerta 'Navidad' superada (categoría: Ropa). Total: 3450,00€ (límite: 500,00€). Periodo mensual 01/01/2026 - 31/01/2026.",
-    "fechaHora" : [ 2026, 1, 4, 12, 51, 41, 945584200 ],
-    "alertaOrigen" : {
-      "nombre" : "Navidad",
-      "limite" : 500.0,
-      "periodo" : "SEMANAL",
-      "categoria" : {
-        "nombre" : "Ropa",
-        "predefinida" : false
-      }
-    },
-    "leida" : false,
-    "periodoInicio" : [ 2026, 1, 1 ],
-    "periodoFin" : [ 2026, 1, 31 ]
-  } ]
+  "notificaciones" : [ ]
 }

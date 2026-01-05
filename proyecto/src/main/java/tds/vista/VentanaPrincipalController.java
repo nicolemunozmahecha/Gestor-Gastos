@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -26,9 +30,11 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
 import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.app.App;
 import tds.controlador.GestorGastos;
+import tds.importacion.ImportacionException;
 import tds.modelo.Alerta;
 import tds.modelo.Categoria;
 import tds.modelo.Cuenta;
@@ -61,9 +67,6 @@ public class VentanaPrincipalController {
     
     private GestorGastos gestor;
     private CuentaPersonal principal;
-    private List<Cuenta> cuentas;
-    private List<Alerta> alertas;
-    private List<Categoria> categorias;
     private final String[] PALETA_COLORES = {
         "#ffca28", "#ffa420", "#ca65e2", "#5c6bc0", "#ef5350", 
         "#66bb6a" };
@@ -86,6 +89,7 @@ public class VentanaPrincipalController {
 
 
     public void init(CuentaPersonal principal, List<CuentaCompartida> compartidas) {
+        gestor = Configuracion.getInstancia().getGestorGastos();
         if (principal != null) {
             setCuenta(principal);
         }
@@ -134,8 +138,6 @@ public class VentanaPrincipalController {
     }
     
     private void cargarGastos() {
-        gestor = Configuracion.getInstancia().getGestorGastos();
-        // AQUI ES GASTOS POR CUENTA, LA CUENTA PRINCIPAL ES POR DEFECTO
         List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
         tablaGastos.getItems().clear();
         tablaGastos.getItems().addAll(gastos);
@@ -165,7 +167,7 @@ public class VentanaPrincipalController {
     private void actualizarGraficas() {
         if (principal == null || barChart == null || pieChart == null) return;
 
-        gestor = Configuracion.getInstancia().getGestorGastos();
+        //gestor = Configuracion.getInstancia().getGestorGastos();
         List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
 
         Map<String, Double> totalPorCategoria = new LinkedHashMap<>();
@@ -210,6 +212,61 @@ public class VentanaPrincipalController {
         }
     }
 
+    /**
+     * Método genérico para llenar menús de eliminación.
+     
+     * @param itemsMenu       Items del menu (menu.getItems()).
+     * @param listaObjetos    Datos que queremos eliminar (List<Cuenta>, List<Gasto>, etc).
+     * @param obtenerTexto    Función para sacar el nombre (ej: Cuenta::getNombre).
+     * @param accionEliminar  Función que llama al gestor y devuelve true/false.
+     * @param nombreEntidad   Nombre para los mensajes (ej: "cuenta", "gasto").
+     * @param alTerminar      Acción para ejecutar tras borrar 
+     * @param <T>             El tipo de objeto (Gasto, Cuenta, Alerta...).
+     */
+    private <T> void configurarMenuBorrado( ObservableList<MenuItem> itemsMenu, List<T> listaObjetos, Function<T, String> obtenerTexto,
+            Predicate<T> accionEliminar, String nombreEntidad, Consumer<T> alTerminar) {
+        itemsMenu.clear();
+
+        if (listaObjetos == null || listaObjetos.isEmpty()) {
+            MenuItem vacio = new MenuItem("No hay " + nombreEntidad + "s");
+            vacio.setDisable(true);
+            itemsMenu.add(vacio);
+            return;
+        }
+
+        for (T objeto : listaObjetos) {
+            // 1. Obtenemos items a mostrar
+            String texto = obtenerTexto.apply(objeto);
+            MenuItem item = new MenuItem(texto);
+            item.getStyleClass().add("boton-peligro2");
+
+            item.setOnAction(e -> {
+                Alert alert = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la " + nombreEntidad + ": " + texto + "?");
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        try {
+                            // 3. Llamamos al gestor
+                            boolean eliminado = accionEliminar.test(objeto);
+                            
+                            if (eliminado) {
+                                mostrarExito(nombreEntidad.substring(0, 1).toUpperCase() + nombreEntidad.substring(1) + " eliminada correctamente.");
+                                // 4. Actualizar
+                                if (alTerminar != null) {
+                                    alTerminar.accept(objeto);
+                                }
+                                itemsMenu.remove(item); 
+                            } else {
+                                mostrarAdvertencia("No se pudo eliminar: " + texto);
+                            }
+                        } catch (Exception ex) {
+                            mostrarError("Error al eliminar", ex.getMessage());
+                        }
+                    }
+                });
+            });
+            itemsMenu.add(item);
+        }
+    }
    
 
     // ========== HANDLERS ==========
@@ -217,7 +274,7 @@ public class VentanaPrincipalController {
     public void crearCuenta() {
         try {
             Configuracion.getInstancia().getSceneManager().showCrearCuenta();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -268,7 +325,6 @@ public class VentanaPrincipalController {
             }
             
         } catch (IOException e) {
-            //System.err.println("ERROR al cargar la vista de cuenta compartida:");
             e.printStackTrace();
         }
     }
@@ -277,7 +333,7 @@ public class VentanaPrincipalController {
     public void cargarPestañasCuentasCompartidasDesdePersistencia() {
         // Mantengo este método por compatibilidad, pero la lógica real está en
         // crearPestanasCompartidas(...) y se alimenta desde el gestor.
-        gestor = Configuracion.getInstancia().getGestorGastos();
+        //gestor = Configuracion.getInstancia().getGestorGastos();
         crearPestanasCompartidas(gestor.getCuentasCompartidas());
     }
 
@@ -318,51 +374,48 @@ public class VentanaPrincipalController {
         }
     }
     
+    private void mostrarError(String titulo, String mensaje) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    private void mostrarExito(String mensaje) {
+        new Alert(AlertType.INFORMATION, mensaje).showAndWait();
+    }
+    
+    private void mostrarAdvertencia(String mensaje) {
+        new Alert(AlertType.WARNING, mensaje).showAndWait();
+    }
+    
     @FXML 
     public void eliminarCuenta() {
-        gestor = Configuracion.getInstancia().getGestorGastos();
-        cuentas = gestor.getCuentas();
-        Menu menu = menuController.getMenuEliminarCuenta();
-        menu.getItems().clear();
-               
-        for (Cuenta c : cuentas) {
-            MenuItem item = new MenuItem(c.getNombre());
-            item.setUserData(c);
-            item.getStyleClass().add("boton-peligro2");
-            
-            item.setOnAction(e -> {
-                Cuenta cuentaAEliminar = (Cuenta) item.getUserData();
-                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la cuenta " + cuentaAEliminar.getNombre() + " ?");
-                a.showAndWait().ifPresent(r -> {
-                    if (r == ButtonType.OK) {
-                    	 // Eliminar del gestor
-		                boolean eliminada = false;;
-						try {
-							eliminada = gestor.eliminarCuenta(cuentaAEliminar);
-						} catch (ErrorPersistenciaException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-		                
-		                if (eliminada) {		                    
-		                    // NUEVO: Actualizar la interfaz inmediatamente
-		                    if (cuentaAEliminar instanceof CuentaCompartida) {
-		                        eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
-		                    }
-		                } else {
-		                    // Mostrar error si no se pudo eliminar
-		                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo eliminar la cuenta: " + cuentaAEliminar.getNombre());
-		                    alert.showAndWait();
-		                }
-                    }
-                });
-            });
-            
-            menu.getItems().add(item);
-        }
-    }
-
-
+	    List<Cuenta> cuentas = gestor.getCuentas();
+	    List<Cuenta> compartidas = cuentas.stream()
+				.filter(c -> c instanceof CuentaCompartida)
+				.collect(Collectors.toList());
+	    
+	    configurarMenuBorrado(
+	        menuController.getMenuEliminarCuenta().getItems(), // Dónde poner los items
+	        compartidas,                                       // lista a recorrer
+	        Cuenta::getNombre,                                 // Cómo obtener el texto
+	        c -> {                                             
+	            try { 
+	            	return gestor.eliminarCuenta(c); 
+	            } 
+	            catch (Exception e) { 
+	            	throw new RuntimeException(e); 
+	            }
+	        }, "cuenta",                                        // Nombre para alertas
+	        cuentaAEliminar -> {                                 
+	            if (cuentaAEliminar instanceof CuentaCompartida) {
+	                eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
+	            }	            
+	        }
+	    );
+	}
+       
     private void eliminarPestañaCuentaCompartida(CuentaCompartida cuenta) {
         if (tabPane == null) {
             return;
@@ -409,34 +462,25 @@ public class VentanaPrincipalController {
         }
     }
     @FXML 
-    public void eliminarCategoria() { 
-    	gestor = Configuracion.getInstancia().getGestorGastos();
-	    categorias = gestor.getCategoriasPersonalizadas();
-	    Menu menu = menuController.getMenuEliminarCategoria();
-	    menu.getItems().clear();
-	           
-	    for (Categoria c : categorias) {
-	        MenuItem item = new MenuItem(c.getNombre());
-	        item.setUserData(c);
-            item.getStyleClass().add("boton-peligro2");
-
-	        item.setOnAction(e -> {
-	        	Categoria categoriaAEliminar = (Categoria) item.getUserData();
-                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la categoria " + categoriaAEliminar.getNombre() + " ?");
-	        	a.showAndWait().ifPresent(r -> {
-	                    if (r == ButtonType.OK) {
-	                    	try {
-								gestor.eliminarCategoria(categoriaAEliminar);
-							} catch (ErrorPersistenciaException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-	                    }
-	        	 });
-	        });
-	        
-	        menu.getItems().add(item);
-	    }
+    public void eliminarCategoria() {         
+        configurarMenuBorrado(
+            menuController.getMenuEliminarCategoria().getItems(),
+            gestor.getCategoriasPersonalizadas(),
+            Categoria::getNombre,
+            cat -> {
+                 try { 
+                	 return gestor.eliminarCategoria(cat); 
+                	} 
+                 catch (Exception e) { 
+ 	            	throw new RuntimeException(e); 
+                 }
+            },
+            "categoría",
+            categoriaBorrada -> { 
+                // Acciones extra si fueran necesarias, como recargar gráficas
+                actualizarGraficas();
+            }
+        );
     }
 
     
@@ -449,53 +493,26 @@ public class VentanaPrincipalController {
         }
     }
     @FXML 
-    public void eliminarAlerta() {
-    	gestor = Configuracion.getInstancia().getGestorGastos();
-    	alertas = gestor.getAlertas();
-        Menu menu = menuController.getMenuEliminarAlerta();
-        menu.getItems().clear();
-
-        if (alertas == null || alertas.isEmpty()) {
-            MenuItem vacio = new MenuItem("No hay alertas");
-            vacio.setDisable(true);
-            menu.getItems().add(vacio);
-            return;
-        }
-               
-        for (Alerta a : alertas) {
-            MenuItem item = new MenuItem(a.getNombre());
-            item.setUserData(a);
-            item.getStyleClass().add("boton-peligro2");
-            
-            item.setOnAction(e -> {
-                Alerta alertaAEliminar = (Alerta) item.getUserData();
-                Alert al = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar la alerta " + alertaAEliminar.getNombre() + " ?");
-                al.showAndWait().ifPresent(r -> {
-                    if (r == ButtonType.OK) {
-                    	 // Eliminar del gestor
-		                boolean eliminada = false;;
-						try {
-							eliminada = gestor.eliminarAlerta(alertaAEliminar);
-						} catch (ErrorPersistenciaException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-		                
-		                if (eliminada) {
-                            // Refrescar el submenú la próxima vez que se abra (y, si sigue visible, también)
-                            javafx.application.Platform.runLater(this::eliminarAlerta);
-		                } else {
-		                    // Mostrar error si no se pudo eliminar
-		                    Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo eliminar la alerta: " + alertaAEliminar.getNombre());
-		                    alert.showAndWait();
-		                }
-                    }
-                });
-            });
-            
-            menu.getItems().add(item);
-        }
+    public void eliminarAlerta() {        
+        configurarMenuBorrado(
+            menuController.getMenuEliminarAlerta().getItems(),
+            gestor.getAlertas(),
+            Alerta::getNombre,
+            alerta -> {
+                try { 
+                	return gestor.eliminarAlerta(alerta); 
+                }
+                catch (Exception e) { 
+                	throw new RuntimeException(e); 
+                }
+            },
+            "alerta",
+            alertaBorrada -> {
+                javafx.application.Platform.runLater(this::eliminarAlerta);
+            }
+        );
     }
+    
 
     @FXML 
     public void mostrarHistorial() {
@@ -532,82 +549,58 @@ public class VentanaPrincipalController {
     
     @FXML
     private void cargarMenuEliminarGasto() {
-        gestor = Configuracion.getInstancia().getGestorGastos();
-        btnEliminarGasto.getItems().clear();
-
-        List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
-
-        for (Gasto g : gastos) {
-            String texto = String.format("%s - %.2f€ - %s - %s",
-                    g.getNombre(), g.getCantidad(), g.getCategoria().getNombre(), g.getFecha());
-            MenuItem item = new MenuItem(texto);
-            item.setUserData(g);
-            item.getStyleClass().add("boton-peligro2");
-
-            item.setOnAction(ev -> {
-                Gasto gastoAEliminar = (Gasto) item.getUserData();
-                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
-                a.showAndWait().ifPresent(r -> {
-                	if (r == ButtonType.OK) {
-		                boolean ok = false;;
-						try {
-							ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
-						} catch (ErrorPersistenciaException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-		                if (ok) {
-		                    cargarGastos();
-		                } else {
-		                    new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
-		                }
-                	}
-               }); 
-            });
-            btnEliminarGasto.getItems().add(item);
-        }
+    	List<Gasto> todosLosGastos = gestor.getGastosPorCuenta(principal);
+        configurarMenuBorrado(
+            btnEliminarGasto.getItems(),
+            todosLosGastos,
+            g -> String.format("%s - %.2f€ - %s", g.getNombre(), g.getCantidad(), g.getFecha()),
+            g -> {
+                try { 
+                	return gestor.eliminarGastoDeCuenta(principal, g); 
+                } 
+                catch (Exception e) { 
+                	throw new RuntimeException(e); 
+                }
+            },
+            "gasto",
+            gastoBorrado -> cargarGastos() 
+        );
     }
-    
+
     @FXML
     private void importarGasto() {
         Window w = (tabPane != null && tabPane.getScene() != null) ? tabPane.getScene().getWindow() : null;
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Importar gastos");
-
-
         File fichero = chooser.showOpenDialog(w);
         if (fichero == null) {
             return;
         }
 
         try {
-            gestor = Configuracion.getInstancia().getGestorGastos();
             boolean ok = gestor.importarGastos(fichero);
 
-            if (!ok) {
-                new Alert(AlertType.ERROR, "No se pudo importar el fichero.").showAndWait();
-                return;
-            }
-
-            // Recargar pestañas cuentas compartidas (por si se han creado)
-            cargarPestañasCuentasCompartidasDesdePersistencia();
-            // RRecargar gastos de la principal
-            try {
-                CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(principal.getNombre());
+            if (ok) {
+            	// Recargar pestañas cuentas compartidas (por si se han creado)
+                // Recargar gastos de la principal
+            	cargarPestañasCuentasCompartidasDesdePersistencia();
+            	CuentaPersonal cuentaActualizada = (CuentaPersonal) gestor.getCuentaPorNombre(principal.getNombre());
                 setCuenta(cuentaActualizada);
                 Configuracion.getInstancia().getSceneManager().setPrincipal((tds.modelo.impl.CuentaPersonalImpl) cuentaActualizada);
-            } catch (Exception e) {
-                // Si falla, recargar tabla con lo que haya en memoria
-                cargarGastos();
-            }
-
-            new Alert(AlertType.INFORMATION, "Gastos importados correctamente.").showAndWait();
-
+            }else {
+                mostrarAdvertencia("No se pudo importar el fichero: " + fichero.getName());
+			}
+        } catch (ImportacionException e) {
+            mostrarError("Error al importar gastos", e.getMessage());
+        } catch (ElementoExistenteException e) {
+            mostrarError("Elemento duplicado", e.getMessage());
+        } catch (ErrorPersistenciaException e) {
+            mostrarError("Error de base de datos", e.getMessage());
         } catch (Exception e) {
+            mostrarError("Error inesperado", e.getMessage());
             e.printStackTrace();
-            new Alert(AlertType.ERROR, "No se pudo importar el fichero.").showAndWait();
-        }
+        }	
     }
 
     public void importarGastosDesdeMenu() {

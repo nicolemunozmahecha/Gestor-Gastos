@@ -34,6 +34,7 @@ import tds.Configuracion;
 import tds.adapters.repository.exceptions.ElementoExistenteException;
 import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
+import tds.importacion.ImportacionException;
 import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.Gasto;
@@ -137,6 +138,21 @@ public class CuentaCompartidaController {
         actualizarGraficas();
     }
 
+    private void mostrarExito(String mensaje) {
+        new Alert(AlertType.INFORMATION, mensaje).showAndWait();
+    }
+
+    private void mostrarAdvertencia(String mensaje) {
+        new Alert(AlertType.WARNING, mensaje).showAndWait();
+    }
+
+    private void mostrarError(String titulo, String mensaje) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
     
     public void añadirGastoTabla(Gasto g) {
     	tablaGastos.getItems().add(g);            
@@ -159,9 +175,7 @@ public class CuentaCompartidaController {
     private void crearGastoCompartida() throws IOException {
     	try {
     		
-            Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida(this);
-            
-            
+            Configuracion.getInstancia().getSceneManager().showCrearGastoCompartida(this);   
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -187,18 +201,16 @@ public class CuentaCompartidaController {
                 Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
                 a.showAndWait().ifPresent(r -> {
                 	if (r == ButtonType.OK) {
-			            boolean ok = false;
-						try {
-							ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
-						} catch (ErrorPersistenciaException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-			            if (ok) {
-			                cargarGastos();
-			            } else {
-			                new Alert(Alert.AlertType.ERROR, "No se pudo eliminar el gasto.").showAndWait();
-			            }
+                		 try {
+                             boolean ok = gestor.eliminarGastoDeCuenta(cuenta, gastoAEliminar);
+                             
+                             if (ok) {
+                                 cargarGastos();
+                                 mostrarExito("Gasto eliminado correctamente.");
+                             } 
+                         } catch (ErrorPersistenciaException e) {
+                             mostrarError("Error al eliminar gasto", e.getMessage());
+                         }
                 	}
                 });
             });
@@ -207,7 +219,7 @@ public class CuentaCompartidaController {
     }
     
     @FXML
-    private void importarGasto() throws ElementoExistenteException, ErrorPersistenciaException {
+    private void importarGasto() {
         Window w = (tabPane != null && tabPane.getScene() != null) ? tabPane.getScene().getWindow() : null;
 
         FileChooser chooser = new FileChooser();
@@ -222,15 +234,27 @@ public class CuentaCompartidaController {
             return;
         }
 
-        gestor = Configuracion.getInstancia().getGestorGastos();
-        boolean ok = gestor.importarGastos(fichero);
-        if (ok) {
-            // Refrescar la tabla
-            cargarGastos();
-            new Alert(AlertType.INFORMATION, "Gastos importados correctamente.").showAndWait();
-        } else {
-            new Alert(AlertType.ERROR, "No se pudo importar el fichero.").showAndWait();
-        }
+        try {
+            gestor = Configuracion.getInstancia().getGestorGastos();
+            boolean ok = gestor.importarGastos(fichero);
+            
+            if (ok) {
+                cargarGastos();
+                mostrarExito("Gastos importados correctamente.");
+            } else {
+                mostrarAdvertencia("No se importó ningún gasto del fichero.");
+            }
+            
+        } catch (ImportacionException e) {
+            mostrarError("Error al importar gastos", e.getMessage());
+        } catch (ElementoExistenteException e) {
+            mostrarError("Elemento duplicado", e.getMessage());
+        } catch (ErrorPersistenciaException e) {
+            mostrarError("Error de base de datos", e.getMessage());
+        } catch (Exception e) {
+            mostrarError("Error inesperado", e.getMessage());
+            e.printStackTrace();
+        }	   
     }
 
 

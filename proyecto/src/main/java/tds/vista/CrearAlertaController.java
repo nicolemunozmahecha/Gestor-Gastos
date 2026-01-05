@@ -9,6 +9,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
 import tds.adapters.repository.exceptions.ElementoExistenteException;
 import tds.adapters.repository.exceptions.ErrorPersistenciaException;
@@ -40,6 +41,14 @@ public class CrearAlertaController {
         cargarCategorias();
     }
     
+    private void mostrarError(String titulo, String mensaje) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    
     // PARA CARGAR LAS CATEGORIAS NUEVAS, Y QUE SOLO DEJE SELECCIONAR UNA
     public void cargarCategorias() {
     	categorias.getItems().clear();
@@ -64,7 +73,6 @@ public class CrearAlertaController {
 	                categorias.setText(TEXTO_DEFECTO2);
 	            }
 	        });
-
             categorias.getItems().add(item);
         }
     }
@@ -77,7 +85,7 @@ public class CrearAlertaController {
     
     
     @FXML
-    private void crearAlerta() throws ElementoExistenteException, ErrorPersistenciaException {
+    private void crearAlerta() {
     	// tienen que estar todos los campos llenos
     	String nombreAlerta = campoNombreAlerta.getText().trim();
         String limiteGasto = campoLimiteGasto.getText().trim();
@@ -105,20 +113,25 @@ public class CrearAlertaController {
 	        }else {
 	        	throw new IllegalArgumentException("La alerta debe tener un tipo de periodo");
 	        }
-    	}catch(IllegalArgumentException e){
-       	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-            return;
+	        
+	        if(ningunoSeleccionado()) {
+	        	gestor.crearAlerta(nombreAlerta, valor, p);
+	        }else {
+	        	gestor.crearAlerta(nombreAlerta, valor, p, cat);
+	        }
+	        
+	    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+
+    	}catch (IllegalArgumentException e) {
+            mostrarError("Datos inválidos", e.getMessage());
+        } catch (ElementoExistenteException e) {
+            mostrarError("Alerta duplicada", "Ya existe una alerta con ese nombre.");
+        } catch (ErrorPersistenciaException e) {
+            mostrarError("Error de guardado", "No se pudo guardar en base de datos.");
+        } catch (Exception e) {
+            mostrarError("Error inesperado", e.getMessage());
         }
-        
-        if(ningunoSeleccionado()) {
-        	gestor.crearAlerta(nombreAlerta, valor, p);
-        }else {
-        	gestor.crearAlerta(nombreAlerta, valor, p, cat);
-        }
-        
-        
-    	Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
-    }
+}
     
     @FXML
     private void atras() {

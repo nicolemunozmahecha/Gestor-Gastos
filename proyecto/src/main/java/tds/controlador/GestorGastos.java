@@ -24,6 +24,8 @@ import tds.modelo.estrategias.EstrategiaDistribucionFactory;
 public class GestorGastos {
     
     private static GestorGastos instancia;
+    private static final String CUENTA_PRINCIPAL = "principal";
+    private static final String CUENTA_PERSONAL = "personal";
     
     private final GastoRepository repositorioGastos;
     private final CuentaRepository repositorioCuentas;
@@ -127,6 +129,14 @@ public class GestorGastos {
         return EstrategiaDistribucionFactory.crearOporDefecto(estrategiaId, participantes);
     }
 
+    private void actualizarCuentaEnLista(CuentaImpl cuenta) {
+        for (int i = 0; i < cuentas.size(); i++) {
+            if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
+                cuentas.set(i, cuenta);
+                break;
+            }
+        }
+    }
 
     public boolean actualizarEstrategiaDistribucion(CuentaCompartida cuenta, EstrategiaDistribucion estrategia)
     		throws ErrorPersistenciaException {
@@ -136,12 +146,7 @@ public class GestorGastos {
         CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
 
         // Actualizar la cuenta en la lista local
-        for (int i = 0; i < cuentas.size(); i++) {
-            if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
-                cuentas.set(i, cuentaActualizada);
-                break;
-            }
-        }
+        actualizarCuentaEnLista(cuentaActualizada);
         return true;
     }
 
@@ -298,7 +303,6 @@ public class GestorGastos {
     public boolean agregarGastoACuenta(Cuenta cuenta, Gasto gasto) 
     		throws ErrorPersistenciaException{
         if (cuenta == null || gasto == null) {
-            //return false;
         	throw new IllegalArgumentException("Cuenta o gasto nulos");
         }
         
@@ -311,12 +315,7 @@ public class GestorGastos {
 	        CuentaImpl cuentaActualizada = repositorioCuentas.updateCuenta((CuentaImpl) cuenta);
 	        
 	        // Actualizar la cuenta en la lista local de cuentas del gestor
-	        for (int i = 0; i < cuentas.size(); i++) {
-	            if (cuentas.get(i).getNombre().equals(cuenta.getNombre())) {
-	                cuentas.set(i, cuentaActualizada);
-	                break;
-	            }
-	        }
+	        actualizarCuentaEnLista(cuentaActualizada);
 	        
 	        // Tras cualquier modificación de gastos, comprobamos alertas y generamos notificaciones si procede.
 	        // (Usando la fecha/categoría del propio gasto para aplicar el periodo natural.)
@@ -330,7 +329,6 @@ public class GestorGastos {
 	    }
         return false;
     }
-    
     
     public Cuenta getCuentaPorNombre(String nombre) throws ElementoNoEncontradoException {
         try {
@@ -596,100 +594,93 @@ public class GestorGastos {
     // ========== IMPORTACIÓN DE GASTOS ==========
 
 
-    public boolean importarGastos(File fichero) throws ElementoExistenteException, ErrorPersistenciaException {
-        try {
-            ImportadorGastos importador = ImportadorGastosFactory.crear(fichero);
-            List<GastoImportado> importados = importador.importar(fichero);
+    public boolean importarGastos(File fichero) throws ElementoExistenteException, ErrorPersistenciaException, ImportacionException {
+        ImportadorGastos importador = ImportadorGastosFactory.crear(fichero);
+        List<GastoImportado> importados = importador.importar(fichero);
 
-            if (importados == null || importados.isEmpty()) {
-            	throw new ImportacionException("El fichero está vacío o no contiene gastos válidos.");
-            }
-
-            // Preparar participantes por cuenta compartida (para crear cuentas si no existen)
-            Map<String, Set<String>> participantesPorCuenta = new HashMap<>();
-            for (GastoImportado g : importados) {
-                String cuenta = normalizarNombreCuenta(g.cuenta());
-                if (esCuentaPersonal(cuenta)) continue;
-                participantesPorCuenta
-                        .computeIfAbsent(cuenta, k -> new LinkedHashSet<>())
-                        .add(g.pagador().trim());
-            }
-
-            // Comprobar que existen las cuentas compartidas necesarias
-            for (Map.Entry<String, Set<String>> e : participantesPorCuenta.entrySet()) {
-                String nombreCuenta = e.getKey();
-                Cuenta existente = buscarCuenta(nombreCuenta);
-                if (existente != null) continue;
-
-                List<Persona> personas = e.getValue().stream()
-                        .filter(n -> n != null && !n.isBlank())
-                        .map(this::buscarOCrearPersona)
-                        .collect(Collectors.toList());
-
-
-                crearCuentaCompartida(nombreCuenta, personas);
-            }
-
-
-            Cuenta principal = buscarCuenta("Principal");
-            if (principal == null) {
-                crearCuentaPersonal(new CuentaPersonalImpl("Principal"));
-                principal = buscarCuenta("Principal");
-            }
-
-            // Importar cada gasto
-            int importadosOk = 0;
-            for (GastoImportado gi : importados) {
-                String nombreCuenta = normalizarNombreCuenta(gi.cuenta());
-                Cuenta cuentaDestino = esCuentaPersonal(nombreCuenta)
-                        ? principal
-                        : buscarCuenta(nombreCuenta);
-
-                if (cuentaDestino == null) {
-                    continue;
-                }
-
-                String nombreCategoria = (gi.categoria() == null || gi.categoria().isBlank())
-                        ? "Sin categoría"
-                        : gi.categoria().trim();
-
-                Categoria categoria = buscarCategoria(nombreCategoria);
-                if (categoria == null) {
-                    categoria = crearCategoria(nombreCategoria);
-                }
-
-                Persona pagador = buscarOCrearPersona(gi.pagador().trim());
-
-                // Si es cuenta compartida y el pagador no está en la cuenta, lo añadimos.
-                if (cuentaDestino instanceof CuentaCompartidaImpl ccImpl) {
-                    ccImpl.addPersonaSiNoExiste(pagador);
-                }
-
-                String descripcion = (gi.descripcion() == null) ? "" : gi.descripcion().trim();
-                String nombre = (gi.nombre() == null || gi.nombre().isBlank())
-                        ? "(Sin nombre)"
-                        : gi.nombre().trim();
-
-                Gasto gasto = crearGasto(nombre, gi.cantidad(), gi.fecha(), descripcion, categoria, pagador);
-                boolean ok = agregarGastoACuenta(cuentaDestino, gasto);
-                if (ok) {
-                    importadosOk++;
-                }
-            }
-
-            return importadosOk > 0;
-
-        } catch (ImportacionException e) {
-            System.err.println("Error en la importación: " + e.getMessage());
-            e.printStackTrace();
-            return false;
+        if (importados == null || importados.isEmpty()) {
+        	throw new ImportacionException("El fichero está vacío o no contiene gastos válidos.");
         }
+
+        // Preparar participantes por cuenta compartida (para crear cuentas si no existen)
+        Map<String, Set<String>> participantesPorCuenta = new HashMap<>();
+        for (GastoImportado g : importados) {
+            String cuenta = normalizarNombreCuenta(g.cuenta());
+            if (esCuentaPersonal(cuenta)) continue;
+            participantesPorCuenta
+                    .computeIfAbsent(cuenta, k -> new LinkedHashSet<>())
+                    .add(g.pagador().trim());
+        }
+
+        // Comprobar que existen las cuentas compartidas necesarias
+        for (Map.Entry<String, Set<String>> e : participantesPorCuenta.entrySet()) {
+            String nombreCuenta = e.getKey();
+            Cuenta existente = buscarCuenta(nombreCuenta);
+            if (existente != null) continue;
+
+            List<Persona> personas = e.getValue().stream()
+                    .filter(n -> n != null && !n.isBlank())
+                    .map(this::buscarOCrearPersona)
+                    .collect(Collectors.toList());
+
+
+            crearCuentaCompartida(nombreCuenta, personas);
+        }
+
+
+        Cuenta principal = buscarCuenta("Principal");
+        if (principal == null) {
+            crearCuentaPersonal(new CuentaPersonalImpl("Principal"));
+            principal = buscarCuenta("Principal");
+        }
+
+        // Importar cada gasto
+        int importadosOk = 0;
+        for (GastoImportado gi : importados) {
+            String nombreCuenta = normalizarNombreCuenta(gi.cuenta());
+            Cuenta cuentaDestino = esCuentaPersonal(nombreCuenta)
+                    ? principal
+                    : buscarCuenta(nombreCuenta);
+
+            if (cuentaDestino == null) {
+                continue;
+            }
+
+            String nombreCategoria = (gi.categoria() == null || gi.categoria().isBlank())
+                    ? "Sin categoría"
+                    : gi.categoria().trim();
+
+            Categoria categoria = buscarCategoria(nombreCategoria);
+            if (categoria == null) {
+                categoria = crearCategoria(nombreCategoria);
+            }
+
+            Persona pagador = buscarOCrearPersona(gi.pagador().trim());
+
+            // Si es cuenta compartida y el pagador no está en la cuenta, lo añadimos.
+            if (cuentaDestino instanceof CuentaCompartidaImpl ccImpl) {
+                ccImpl.addPersonaSiNoExiste(pagador);
+            }
+
+            String descripcion = (gi.descripcion() == null) ? "" : gi.descripcion().trim();
+            String nombre = (gi.nombre() == null || gi.nombre().isBlank())
+                    ? "(Sin nombre)"
+                    : gi.nombre().trim();
+
+            Gasto gasto = crearGasto(nombre, gi.cantidad(), gi.fecha(), descripcion, categoria, pagador);
+            boolean ok = agregarGastoACuenta(cuentaDestino, gasto);
+            if (ok) {
+                importadosOk++;
+            }
+        }
+
+        return importadosOk > 0;
     }
 
     private static boolean esCuentaPersonal(String nombreCuentaNormalizado) {
         if (nombreCuentaNormalizado == null) return true;
         String v = nombreCuentaNormalizado.trim();
-        return "principal".equalsIgnoreCase(v) || "personal".equalsIgnoreCase(v);
+        return CUENTA_PRINCIPAL.equalsIgnoreCase(v) || CUENTA_PERSONAL.equalsIgnoreCase(v);
     }
 
     private static String normalizarNombreCuenta(String raw) {

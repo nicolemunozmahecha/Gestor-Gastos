@@ -17,6 +17,7 @@ public class TotalCuentaController {
     
 	private Cuenta cuentaSeleccionada;
 	private GestorGastos gestor;
+	private final String TEXTO_DEFECTO = "Cuenta";
 
     @FXML
     public void initialize() {
@@ -44,8 +45,12 @@ public class TotalCuentaController {
         if (cuentaSeleccionada != null) {
             double total = gestor.getTotalCuenta(cuentaSeleccionada);
             campoTotal.setText(String.format("%.2f €", total));
+            menuCuentas.setText(cuentaSeleccionada.getNombre());
+
         } else {
             campoTotal.setText("0.00 €");
+            menuCuentas.setText(TEXTO_DEFECTO);
+
         }
     }
     

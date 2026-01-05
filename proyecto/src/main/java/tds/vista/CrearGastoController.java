@@ -11,6 +11,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
 import tds.adapters.repository.exceptions.ElementoExistenteException;
 import tds.adapters.repository.exceptions.ErrorPersistenciaException;
@@ -76,12 +77,17 @@ public class CrearGastoController {
         }
     }
     
-    private void mostrarError(String mensaje) {
-        new Alert(Alert.AlertType.ERROR, mensaje).showAndWait();
+    
+    private void mostrarError(String titulo, String mensaje) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
     
     @FXML
-    private void crearGasto() throws ElementoExistenteException, ErrorPersistenciaException {
+    private void crearGasto() {
     	 String nombre = campoNombreGasto.getText().trim();
          String descripcion = campoDescripcion.getText().trim();
          LocalDate fecha = campoFechaGasto.getValue();
@@ -102,25 +108,20 @@ public class CrearGastoController {
 	            return;
  	        }
     	 	if (fecha == null)  {
-	        throw new IllegalArgumentException ("El gasto debe tener  una fecha");
+    	 		throw new IllegalArgumentException ("El gasto debe tener  una fecha");
     	 	} 
      
     	 	if (ningunoSeleccionado())  {
-	        throw new IllegalArgumentException ("El gasto debe tener una categoria");
+    	 		throw new IllegalArgumentException ("El gasto debe tener una categoria");
     	 	}   
          
-        	 	   
-         }catch(IllegalArgumentException e){
-        	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-             return;
-         }
-        
-        
-        // Añadir gasto, luego cambiar de ventana
-        VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
-        
-        Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
-        if (controller != null) {
+    	 	// Añadir gasto, luego cambiar de ventana
+            VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
+            
+            Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
+            if (controller == null) {
+                throw new RuntimeException("No se pudo conectar con la ventana principal.");
+            }
             // Añadir a la cuenta Y persistir el cambio
             boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
             if (exito) {
@@ -133,17 +134,23 @@ public class CrearGastoController {
                     controller.setCuenta(cuentaActualizada);
                     Configuracion.getInstancia().getSceneManager().setPrincipal((CuentaPersonalImpl) cuentaActualizada);
                 } catch (Exception e) {
-                    mostrarError("Error al recargar cuenta: " + e.getMessage());
+                    mostrarError("Error al recargar cuenta: " , e.getMessage());
                     e.printStackTrace();
                 }
             } else {
-            	mostrarError("ERROR: No se pudo añadir el gasto");
+                throw new ErrorPersistenciaException("El gestor devolvió false al guardar.");
             }
-        } else {
-        	mostrarError("ERROR: No se pudo conectar con la pantalla anterior"); // controller null
-        }
-        
-        Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+            
+            Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
+         }catch (IllegalArgumentException e) {
+             mostrarError("Datos inválidos", e.getMessage());
+         } catch (ElementoExistenteException e) {
+             mostrarError("Gasto duplicado", "Ya existe un gasto con ese nombre.");
+         } catch (ErrorPersistenciaException e) {
+             mostrarError("Error de guardado", "No se pudo guardar en base de datos.");
+         } catch (Exception e) {
+             mostrarError("Error inesperado", e.getMessage());
+         }  
     }
     
     @FXML

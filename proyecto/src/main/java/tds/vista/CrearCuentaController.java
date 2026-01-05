@@ -7,7 +7,10 @@ import java.util.stream.Stream;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import tds.Configuracion;
+import tds.adapters.repository.exceptions.ElementoExistenteException;
+import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.CuentaCompartida;
 
@@ -28,6 +31,14 @@ public class CrearCuentaController {
         gestor = Configuracion.getInstancia().getGestorGastos();
     }
 
+    private void mostrarError(String titulo, String mensaje) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    
     @FXML
     private void crearCuenta() {
         String nombreCuenta = campoNombreCuenta.getText().trim();
@@ -45,13 +56,7 @@ public class CrearCuentaController {
 	        if (nombresPropietarios.size() < 2) {
 	        	throw new IllegalArgumentException ("Una cuenta compartida ha de tener un mínimo de 2 propietarios y un máximo de 6 (hacer diálogo)");
 	        }
-        }catch(IllegalArgumentException e){
-       	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-            return;
-        }
-
-        try {
-            // Llamar al gestor para crear la cuenta compartida
+	        // Llamar al gestor para crear la cuenta compartida
             CuentaCompartida nuevaCuenta = gestor.crearCuentaCompartidaConNombres(nombreCuenta, nombresPropietarios);
 
             // IMPORTANTE: Primero añadir la pestaña, luego cambiar de ventana
@@ -61,10 +66,16 @@ public class CrearCuentaController {
             }
             
             Configuracion.getInstancia().getSceneManager().showVentanaPrincipal();
-
+            
+        } catch (IllegalArgumentException e) {
+            mostrarError("Datos inválidos", e.getMessage());
+        } catch (ElementoExistenteException e) {
+            mostrarError("Cuenta duplicada", "Ya existe una cuenta con ese nombre.");
+        } catch (ErrorPersistenciaException e) {
+            mostrarError("Error de guardado", "No se pudo guardar en base de datos.");
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error desconocido: " + e.getMessage()).showAndWait();
-        }   
+            mostrarError("Error inesperado", e.getMessage());
+        }
     }
     
     @FXML
