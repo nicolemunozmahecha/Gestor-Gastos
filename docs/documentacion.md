@@ -2,7 +2,7 @@
 ## DIAGRAMA DE CLASES DEL DOMINO DEL PROYECTO
 Diseñamos el siguiente diagrama de clases del dominio del proyecto:
 
-![Diagrama de clases del dominio](imagenes/diagrama_clases.png)
+![Diagrama de clases del dominio](imagenes/5enero.png)
 
 En él se muestran las clases principales del dominio junto con sus relaciones dentr de la aplicación.
 
