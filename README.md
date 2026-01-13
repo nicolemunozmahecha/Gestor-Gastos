@@ -1,9 +1,9 @@
 # README
 
 **Integrantes del grupo:**
-* Guillermo Martínez Ruiz - guillermo.martinezr1@um.es
-* Nicole Muñoz Mahecha (G1.1.) - nicole.munozm@um.es
-* Lucía Ludeña López (G1.1.) - lucia.l.l@um.es
+* Guillermo Martínez Ruiz
+* Nicole Muñoz Mahecha
+* Lucía Ludeña López 
 
 **Descripción del proyecto:**
 El proyecto es una aplicación que sirve como un gestor de gastos personales y compartidos. En este podemos registrar gastos, organizarlos por categorías, configurar alertas cuando lleguemos a un máximo de gasto y ver estadísticas de los gastos realizados.
