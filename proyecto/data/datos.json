@@ -452,23 +452,6 @@
       "porcentaje" : 33
     } ],
     "estrategiaId" : "EQUITATIVA"
-  }, {
-    "nombre" : "otra",
-    "gastos" : [ ],
-    "personas" : [ {
-      "nombre" : "ana",
-      "saldo" : 0.0,
-      "porcentaje" : 34
-    }, {
-      "nombre" : "bea",
-      "saldo" : 0.0,
-      "porcentaje" : 33
-    }, {
-      "nombre" : "pablo",
-      "saldo" : 0.0,
-      "porcentaje" : 33
-    } ],
-    "estrategiaId" : "EQUITATIVA"
   } ],
   "categorias" : [ {
     "nombre" : "Alimentación",
