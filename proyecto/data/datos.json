@@ -487,7 +487,15 @@
     "nombre" : "Gastos Médicos",
     "predefinida" : false
   } ],
-  "alertas" : [ ],
+  "alertas" : [ {
+    "nombre" : "Limite regalos",
+    "limite" : 300.0,
+    "periodo" : "SEMANAL",
+    "categoria" : {
+      "nombre" : "Regalos",
+      "predefinida" : false
+    }
+  } ],
   "personas" : [ {
     "nombre" : "Lucia",
     "saldo" : -400.0,
