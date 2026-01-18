@@ -14,7 +14,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Repostaje en gasolinera",
       "cantidad" : 45.0,
@@ -28,7 +29,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Billete de autobús urbano",
       "cantidad" : 1.5,
@@ -42,7 +44,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Juego para móvil",
       "cantidad" : 2.99,
@@ -56,7 +59,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Cambio de bombilla del coche",
       "cantidad" : 7.5,
@@ -70,7 +74,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Bocadillo y refresco",
       "cantidad" : 5.25,
@@ -84,7 +89,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Compra de vitaminas",
       "cantidad" : 12.75,
@@ -98,7 +104,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Taxi nocturno",
       "cantidad" : 11.0,
@@ -112,7 +119,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Repostaje rápido",
       "cantidad" : 20.0,
@@ -126,7 +134,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Alquiler de videojuego",
       "cantidad" : 5.99,
@@ -140,7 +149,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     }, {
       "nombre" : "Café y bollería",
       "cantidad" : 3.2,
@@ -154,7 +164,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Principal"
     } ],
     "propietario" : "User1"
   } ],
@@ -173,7 +184,8 @@
         "nombre" : "Me",
         "saldo" : -22.466,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Partida de billar en bar",
       "cantidad" : 12.0,
@@ -187,7 +199,8 @@
         "nombre" : "Bob",
         "saldo" : 5.033999999999999,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Compra en supermercado",
       "cantidad" : 32.4,
@@ -201,7 +214,8 @@
         "nombre" : "Greta",
         "saldo" : 20.944000000000003,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Cena de hamburguesas",
       "cantidad" : 21.0,
@@ -215,7 +229,8 @@
         "nombre" : "Paco",
         "saldo" : -5.456000000000001,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Recarga tarjeta de transporte",
       "cantidad" : 20.0,
@@ -229,7 +244,8 @@
         "nombre" : "Betty",
         "saldo" : 1.944,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Compra de música digital",
       "cantidad" : 4.99,
@@ -243,7 +259,8 @@
         "nombre" : "Bob",
         "saldo" : 5.033999999999999,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Compra de tarjeta regalo",
       "cantidad" : 15.0,
@@ -257,7 +274,8 @@
         "nombre" : "Greta",
         "saldo" : 20.944000000000003,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Billete de tren",
       "cantidad" : 14.5,
@@ -271,7 +289,8 @@
         "nombre" : "Bob",
         "saldo" : 5.033999999999999,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     }, {
       "nombre" : "Compra de termómetro digital",
       "cantidad" : 8.4,
@@ -285,7 +304,8 @@
         "nombre" : "Betty",
         "saldo" : 1.944,
         "porcentaje" : 20
-      }
+      },
+      "cuenta" : "Compartida 2"
     } ],
     "personas" : [ {
       "nombre" : "Me",
@@ -324,7 +344,8 @@
         "nombre" : "Anthony",
         "saldo" : 7.666666666666672,
         "porcentaje" : 34
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Pizza para cenar",
       "cantidad" : 18.5,
@@ -338,7 +359,8 @@
         "nombre" : "Stephani",
         "saldo" : 9.566666666666672,
         "porcentaje" : 33
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Compra de taza personalizada",
       "cantidad" : 9.9,
@@ -352,7 +374,8 @@
         "nombre" : "Mark",
         "saldo" : -17.23333333333333,
         "porcentaje" : 33
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Repostaje coche compartido",
       "cantidad" : 30.0,
@@ -366,7 +389,8 @@
         "nombre" : "Anthony",
         "saldo" : 7.666666666666672,
         "porcentaje" : 34
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Cerveza en pub",
       "cantidad" : 6.0,
@@ -380,7 +404,8 @@
         "nombre" : "Mark",
         "saldo" : -17.23333333333333,
         "porcentaje" : 33
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Cena en restaurante",
       "cantidad" : 28.0,
@@ -394,7 +419,8 @@
         "nombre" : "Stephani",
         "saldo" : 9.566666666666672,
         "porcentaje" : 33
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Pedido de sushi a domicilio",
       "cantidad" : 24.6,
@@ -408,7 +434,8 @@
         "nombre" : "Anthony",
         "saldo" : 7.666666666666672,
         "porcentaje" : 34
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Compra de herramientas básicas",
       "cantidad" : 19.8,
@@ -422,7 +449,8 @@
         "nombre" : "Mark",
         "saldo" : -17.23333333333333,
         "porcentaje" : 33
-      }
+      },
+      "cuenta" : "Compartida 1"
     }, {
       "nombre" : "Entradas para el cine",
       "cantidad" : 16.0,
@@ -436,7 +464,8 @@
         "nombre" : "Stephani",
         "saldo" : 9.566666666666672,
         "porcentaje" : 33
-      }
+      },
+      "cuenta" : "Compartida 1"
     } ],
     "personas" : [ {
       "nombre" : "Anthony",

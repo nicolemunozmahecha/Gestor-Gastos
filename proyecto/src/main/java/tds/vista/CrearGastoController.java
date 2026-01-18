@@ -118,10 +118,11 @@ public class CrearGastoController {
     	 	// Añadir gasto, luego cambiar de ventana
             VentanaPrincipalController controller = Configuracion.getInstancia().getSceneManager().getVentanaPrincipalController();
             
-            Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat);
             if (controller == null) {
                 throw new RuntimeException("No se pudo conectar con la ventana principal.");
             }
+            String cuenta = controller.getCuenta().getNombre();
+            Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, cuenta);
             // Añadir a la cuenta Y persistir el cambio
             boolean exito = gestor.agregarGastoACuenta(controller.getCuenta(), g);
             if (exito) {

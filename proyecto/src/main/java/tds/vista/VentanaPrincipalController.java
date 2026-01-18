@@ -83,8 +83,8 @@ public class VentanaPrincipalController {
 	    }
     	barChart.setLegendVisible(false);
     	pieChart.setLegendVisible(false);
-    	barChart.getXAxis().setTickLabelFont(Font.font("Times New Roman", 12));
-        barChart.getYAxis().setTickLabelFont(Font.font("Times New Roman", 12));
+    	barChart.getXAxis().setTickLabelFont(Font.font("Segoe UI", 12));
+        barChart.getYAxis().setTickLabelFont(Font.font("Segoe UI", 12));
     }
 
 

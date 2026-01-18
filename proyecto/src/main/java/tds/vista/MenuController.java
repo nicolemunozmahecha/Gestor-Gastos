@@ -8,11 +8,14 @@ import tds.Configuracion;
 public class MenuController {
     
     // Elementos del menú
+	@FXML private Menu cuentas;
     @FXML private MenuItem menuCrearCuenta;
     @FXML private Menu menuEliminarCuenta;
     @FXML private MenuItem menuTotalCuenta;
+	@FXML private Menu gastos;
     @FXML private MenuItem menuFiltrarGastos;
     @FXML private MenuItem menuImportarGastos;
+	@FXML private Menu categorias;
     @FXML private MenuItem menuCrearCategoria;
     @FXML private Menu menuEliminarCategoria;
     @FXML private Menu menuAlertas;
@@ -21,6 +24,7 @@ public class MenuController {
     @FXML private Menu menuEliminarAlerta;
     @FXML private MenuItem menuHistorialNotificaciones;
     @FXML private Menu menuNotificaciones;
+    @FXML private Menu salir;
     @FXML private MenuItem menuSalir;
 
     private String textoBaseNotificaciones = "Notificaciones";
@@ -39,7 +43,18 @@ public class MenuController {
         this.controladorPrincipal = controlador;
         configurarEventos();
         actualizarIndicadorNotificaciones();
+        //configurarColorBoton();
     }
+    
+    /*
+    private void configurarColorBoton() {
+        cuentas.getStyleClass().add("barra-principal");
+        gastos.getStyleClass().add("barra-principal");
+        categorias.getStyleClass().add("barra-principal");
+        menuAlertas.getStyleClass().add("barra-principal");
+        menuNotificaciones.getStyleClass().add("barra-principal");
+        salir.getStyleClass().add("barra-principal");
+    }*/
 
 
     public void actualizarIndicadorNotificaciones() {
@@ -112,7 +127,6 @@ public class MenuController {
         if (menuEliminarAlerta != null) {
 
             menuEliminarAlerta.setOnShowing(e -> controladorPrincipal.eliminarAlerta());
-
             menuEliminarAlerta.setOnMenuValidation(e -> controladorPrincipal.eliminarAlerta());
         }
         

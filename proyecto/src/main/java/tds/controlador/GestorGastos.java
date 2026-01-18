@@ -156,6 +156,12 @@ public class GestorGastos {
                 .map(c -> (CuentaCompartida) c)
                 .collect(Collectors.toList());
     }
+    
+    public List<String> getNombresCuentas() {
+        return cuentas.stream()
+                .map(c -> c.getNombre())
+                .collect(Collectors.toList());
+    }
 
     
     public CuentaPersonal crearCuentaPersonal(CuentaPersonalImpl cuenta) 
@@ -288,15 +294,15 @@ public class GestorGastos {
  // ========== GESTIÓN DE GASTOS ==========
     
 
-    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador)
+    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador, String cuenta)
     		throws ElementoExistenteException, ErrorPersistenciaException{
-        return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador);
+        return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, pagador, cuenta);
     }
     
 
-    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria)
+    public Gasto crearGasto(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, String cuenta)
     		throws ElementoExistenteException, ErrorPersistenciaException{
-        return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria);
+        return new GastoImpl(nombre, cantidad, fecha, descripcion, categoria, cuenta);
     }
     
 
@@ -308,7 +314,7 @@ public class GestorGastos {
         
         // Añadir el gasto a la cuenta
         cuenta.agregarGasto(gasto);
-        
+       // System.out.println("DEBUG: gast añadido: " + gasto);
         try {
 	       
 	        // Actualizar la cuenta en el repositorio para persistir el cambio
@@ -405,10 +411,15 @@ public class GestorGastos {
     }
     
 
-    public Filtro crearFiltroCompuesto(List<String> meses, LocalDate fechaInicio, 
+    public Filtro crearFiltroCompuesto(List<String> cuentas, List<String> meses, LocalDate fechaInicio, 
                                         LocalDate fechaFin, List<Categoria> categorias) {
         // Comienza con filtro vacío
         Filtro filtro = new FiltroVacio();
+        
+        // Decorar con filtro de cuentas si hay categorías seleccionadas
+        if (cuentas != null && !cuentas.isEmpty()) {
+            filtro = new FiltroCuentas(filtro, cuentas);
+        }
         
         // Decorar con filtro de meses si hay meses seleccionados
         if (meses != null && !meses.isEmpty()) {
@@ -667,7 +678,7 @@ public class GestorGastos {
                     ? "(Sin nombre)"
                     : gi.nombre().trim();
 
-            Gasto gasto = crearGasto(nombre, gi.cantidad(), gi.fecha(), descripcion, categoria, pagador);
+            Gasto gasto = crearGasto(nombre, gi.cantidad(), gi.fecha(), descripcion, categoria, pagador, nombreCuenta);
             boolean ok = agregarGastoACuenta(cuentaDestino, gasto);
             if (ok) {
                 importadosOk++;

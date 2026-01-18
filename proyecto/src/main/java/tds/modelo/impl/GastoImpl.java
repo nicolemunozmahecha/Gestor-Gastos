@@ -2,6 +2,7 @@ package tds.modelo.impl;
 
 import tds.modelo.Gasto;
 import tds.modelo.Categoria;
+import tds.modelo.Cuenta;
 import tds.modelo.Persona;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,6 +29,9 @@ public class GastoImpl implements Gasto {
     
     @JsonProperty("pagador")
     private PersonaImpl pagador;  
+    
+    @JsonProperty("cuenta")
+    private String cuenta; 
 
     // Hace que json lo ignore. Solo tienen id en tiempo de ejecucion.
     private transient final UUID id = UUID.randomUUID();
@@ -40,9 +44,10 @@ public class GastoImpl implements Gasto {
         this.descripcion = "";
         this.categoria = null;
         this.pagador = null;
+        this.cuenta = null;
     }
 
-    public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador) {
+    public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, Persona pagador, String cuenta) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.fecha = fecha;
@@ -52,13 +57,14 @@ public class GastoImpl implements Gasto {
                         (categoria != null ? new CategoriaImpl(categoria.getNombre(), categoria.isPredefinida()) : null);
         this.pagador = pagador instanceof PersonaImpl ? (PersonaImpl) pagador :
                       (pagador != null ? new PersonaImpl(pagador.getNombre(), pagador.getSaldo()) : null);
+        this.cuenta = cuenta;
     }
 
-    public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria) {
-        this(nombre, cantidad, fecha, descripcion, categoria, null);
+    public GastoImpl(String nombre, double cantidad, LocalDate fecha, String descripcion, Categoria categoria, String cuenta) {
+        this(nombre, cantidad, fecha, descripcion, categoria, null, cuenta);
     }
-    public GastoImpl(String nombre, double cantidad, LocalDate fecha, Categoria categoria) {
-        this(nombre, cantidad, fecha, "", categoria, null);
+    public GastoImpl(String nombre, double cantidad, LocalDate fecha, Categoria categoria, String cuenta) {
+        this(nombre, cantidad, fecha, "", categoria, null, cuenta);
     }
     
     public GastoImpl(String nombre, double cantidad, Categoria categoria) {
@@ -132,6 +138,16 @@ public class GastoImpl implements Gasto {
     @Override
     public void setPagador(Persona pagador) {
         this.pagador = (PersonaImpl) pagador;
+    }
+    
+    @Override
+    public String getCuenta() {
+        return cuenta;
+    }
+    
+    @Override
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
     }
     
     public UUID getID() {

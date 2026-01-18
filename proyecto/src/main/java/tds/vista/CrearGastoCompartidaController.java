@@ -162,8 +162,8 @@ public class CrearGastoCompartidaController {
        	 	new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             return;
         }
-          
-        Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p);
+        String cuenta = cuentaCompartidaController.getCuenta().getNombre();
+        Gasto g = gestor.crearGasto(nombre, cantidadFinal, fecha, descripcion, cat, p, cuenta);
         if (cuentaCompartidaController != null) {
             boolean exito = gestor.agregarGastoACuenta(cuentaCompartidaController.getCuenta(), g);
             if (exito) {

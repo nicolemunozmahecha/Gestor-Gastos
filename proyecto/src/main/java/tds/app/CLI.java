@@ -174,6 +174,7 @@ public class CLI {
             
             // Pagador (para cuentas compartidas)
             Persona pagador;
+            String cuenta;
             if (cuentaActual instanceof CuentaCompartida) {
                 CuentaCompartida cc = (CuentaCompartida) cuentaActual;
                 List<Persona> participantes = cc.getPersonas();
@@ -187,15 +188,17 @@ public class CLI {
                 if (pagIndex < 0 || pagIndex >= participantes.size()) {
                     pagIndex = 0;
                 }
+                cuenta = cc.getNombre();
                 pagador = participantes.get(pagIndex);
             } else {
                 // Para cuenta personal, crear una persona con el propietario
                 CuentaPersonal cp = (CuentaPersonal) cuentaActual;
                 pagador = new PersonaImpl(cp.getPropietario());
+                cuenta = cp.getNombre();
             }
             
             // Crear el gasto usando el método del gestor
-            Gasto gasto = gestor.crearGasto(nombre, cantidad, fecha, descripcion, categoria, pagador);
+            Gasto gasto = gestor.crearGasto(nombre, cantidad, fecha, descripcion, categoria, pagador, cuenta);
             boolean exito = gestor.agregarGastoACuenta(cuentaActual, gasto);
             
             if (exito) {

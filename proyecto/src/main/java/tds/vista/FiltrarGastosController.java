@@ -16,6 +16,9 @@ import java.util.List;
 
 public class FiltrarGastosController {
     
+	// Lista para Cuentas
+    @FXML private ListView<String> listaCuentas;
+    
     // CheckBoxes de meses
     @FXML private CheckBox checkEnero;
     @FXML private CheckBox checkFebrero;
@@ -45,6 +48,7 @@ public class FiltrarGastosController {
     @FXML private TableColumn<Gasto, String> colDescripcion;
     @FXML private TableColumn<Gasto, String> colCategoria;
     @FXML private TableColumn<Gasto, String> colPagador;
+    @FXML private TableColumn<Gasto, String> colCuenta;
     
     // Label de filtros activos
     @FXML private Label labelFiltrosActivos;
@@ -62,6 +66,7 @@ public class FiltrarGastosController {
         configurarTabla();
         cargarCategorias();
         cargarGastos();
+        cargarCuentas();
         todosLosMeses = List.of(checkEnero, checkFebrero, checkMarzo, checkAbril, 
                 checkMayo, checkJunio, checkJulio, checkAgosto, 
                 checkSeptiembre, checkOctubre, checkNoviembre, checkDiciembre);
@@ -94,6 +99,8 @@ public class FiltrarGastosController {
             }
             return new SimpleStringProperty("-");
         });
+        colCuenta.setCellValueFactory(cellData -> 
+        new SimpleStringProperty(cellData.getValue().getCuenta()));
     }
     
     private void cargarCategorias() {
@@ -103,6 +110,15 @@ public class FiltrarGastosController {
         // Cargar categorías desde el gestor
         List<Categoria> categorias = gestor.getCategorias();
         listaCategorias.getItems().addAll(categorias);
+    }
+    
+    private void cargarCuentas() {
+    	// Permitir selección múltiple
+        listaCuentas.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        // Cargar categorías desde el gestor
+        List<String> cuentas = gestor.getNombresCuentas();
+        listaCuentas.getItems().addAll(cuentas);
     }
     
     private void cargarGastos() {
@@ -116,14 +132,15 @@ public class FiltrarGastosController {
     @FXML
     private void aplicarFiltros() {
         // Recopila criterios de filtrado desde la vista
+        List<String> cuentasSeleccionadas = new ArrayList<>(listaCuentas.getSelectionModel().getSelectedItems());
         List<String> mesesSeleccionados = obtenerMesesSeleccionados();
         LocalDate inicio = fechaDesde.getValue();
         LocalDate fin = fechaHasta.getValue();
-        List<Categoria> categoriasSeleccionadas = 
-            new ArrayList<>(listaCategorias.getSelectionModel().getSelectedItems());
+        List<Categoria> categoriasSeleccionadas = new ArrayList<>(listaCategorias.getSelectionModel().getSelectedItems());
         
         // Delega al controlador la creación del filtro compuesto
         Filtro filtro = gestor.crearFiltroCompuesto(
+        	cuentasSeleccionadas,
             mesesSeleccionados, 
             inicio, 
             fin, 
@@ -163,6 +180,12 @@ public class FiltrarGastosController {
         }
         
         List<String> descripciones = new ArrayList<>();
+        
+        // Mostrar categorías
+        List<String> cuentas = listaCuentas.getSelectionModel().getSelectedItems();
+        if (!cuentas.isEmpty()) {
+            descripciones.add("Cuentas: " + cuentas.size() + " seleccionada(s)");
+        }
         
         // Mostrar meses si están activos
         List<String> meses = obtenerMesesSeleccionados();

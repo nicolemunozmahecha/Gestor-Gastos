@@ -15,4 +15,6 @@ public interface Gasto {
     void setCategoria(Categoria categoria);
     Persona getPagador();
     void setPagador(Persona pagador);
+    String getCuenta();
+    void setCuenta(String cuenta);
 }

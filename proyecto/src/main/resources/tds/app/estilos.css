@@ -1,16 +1,16 @@
 /*BASE DISEÑO APP */
 .root {
-    -fx-font-family: "Times New Roman"; 
+    -fx-font-family: "Segoe UI"; 
     -fx-font-size: 13px; /* Tamaño base para todo */
 }
 
 
 /* ESTILOS BOTONES*/
 .button {
-    -fx-background-color: #b7c9fa;  /* Color de fondo (Azul Material) */
+    -fx-background-color: #5c8ae6;  /* Color de fondo (Azul Material) */
     -fx-text-fill: white;           /* Color del texto */
     -fx-font-size: 14px;            /* Tamaño de letra */
-    -fx-font-family: "Times New Roman";       /* Tipo de letra */
+    -fx-font-family: "Segoe UI";       /* Tipo de letra */
     -fx-background-radius: 5px;     /* Bordes redondeados */
     -fx-padding: 8px 15px;          /* Margen interior */
     -fx-cursor: hand;               /* Que el cursor cambie a manita */
@@ -18,88 +18,89 @@
 
 /* Cuando pasas el ratón por encima (Hover) */
 .button:hover {
-    -fx-background-color: #8ca8f8;  /* Un azul un poco más oscuro */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Sombra */
+    -fx-background-color: #4b70cc;  /* Un azul un poco más oscuro */
+	-fx-effect: dropshadow(three-pass-box, rgba(92, 138, 230, 0.4), 10, 0, 0, 4); /* Sombra suave 'Glow' */
 }
 
 /* Cuando haces clic (Pressed) */
 .button:pressed {
-    -fx-background-color: #668bf5;  /* Azul muy oscuro */
+    -fx-background-color: #3a5cb0;  /* Azul muy oscuro */
     -fx-translate-y: 1;             /* Efecto visual de hundimiento */
 }
 
+
 .menu-button {
-    -fx-background-color: #b7c9fa;
+    -fx-background-color: #5c8ae6;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-background-radius: 5px;
 }
 .menu-button:hover {
-    -fx-background-color: #8ca8f8;
+    -fx-background-color: #4b70cc;
 }
+
 
 /* TEXTO APP */
 .label {
     -fx-font-size: 13px;
     -fx-text-fill: #333333; /* Gris oscuro */
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Segoe UI";
 }
 
 /* Títulos grandes*/
 .titulo-grande {
     -fx-font-size: 24px;
-    -fx-font-weight: bold;
     -fx-text-fill: #2c3e50;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
 }
-
 /*BOTONES ROJOS*/
 .menu-button.boton-peligro {
     -fx-background-color: #b7c9fa;
 }
 .menu-button.boton-peligro:hover {
-    -fx-background-color: #f35649;
+    -fx-background-color: #e53935;
 }
 
 /* Botón de peligro (Rojo) */
 .boton-peligro {
-    -fx-background-color: #fe7776;
-    -fx-text-fill: white;
+    -fx-background-color: #ef5350;
+	-fx-text-fill: white;
 }
 .boton-peligro2 {
-    -fx-background-color: #b7c9fa;
-    -fx-text-fill: white;
+    -fx-background-color: transparent;
 }
 .boton-peligro:hover {
-    -fx-background-color: #f35649;
+    -fx-background-color: #e53935;
+	-fx-effect: dropshadow(three-pass-box, rgba(239, 83, 80, 0.4), 10, 0, 0, 4);
 }
 .boton-peligro2:hover {
-    -fx-background-color: #f35649;
+    -fx-background-color: #e53935;
+	-fx-effect: dropshadow(three-pass-box, rgba(239, 83, 80, 0.4), 10, 0, 0, 4);
 }
 /* Botón de éxito/guardar (Verde) */
 .boton-exito {
-    -fx-background-color: #0ae000;
+    -fx-background-color: #66bb6a;
     -fx-text-fill: white;
 }
 .boton-exito:hover {
-    -fx-background-color: #08c200;
+    -fx-background-color: #43a047;
+	-fx-effect: dropshadow(three-pass-box, rgba(102, 187, 106, 0.4), 10, 0, 0, 4);
 }
 
 /*COLOR BARRA MENU*/
 .menu-bar {
-    -fx-background-color: #b7c9fa; /* Tu azul claro */
-    -fx-border-color: #8ca8f8;
-    -fx-border-width: 0 0 1 0; /* Solo borde abajo */
+    -fx-background-color: #e2e8f0; 
 }
 
 /*COLORES VENTANAS*/
 .tab {
-    -fx-background-color: #b7c9fa; /* Tu azul claro */
-	-fx-font-weight: bold;
+    -fx-background-color: #e2e8f0;
+	-fx-text-fill: #333333;
+	-fx-background-radius: 5px 5px 0 0; /* Redondeada solo arriba */
 }
 
 .tab:hover{
-	-fx-background-color: #8ca8f8;  /* Un azul un poco más oscuro */
+	-fx-background-color: #cbd5e1; 
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1); /* Sombra */
 }
 
@@ -108,31 +109,31 @@
     -fx-background-color: transparent;
 }
 
-/* Pestaña seleccionada (La que estás viendo) */
+/* Pestaña seleccionada */
 .tab:selected {
-    -fx-background-color: white; /* Blanco para que parezca conectada al contenido */
+    -fx-background-color: #5c8ae6; 
+	-fx-text-fill: white;
     -fx-background-radius: 5px 5px 0 0; /* Redondeada solo arriba */
-    -fx-border-color: #b7c9fa;
-    -fx-border-width: 2 2 0 2; /* Borde azul arriba y lados */
 }
 
 /* Color del texto en la pestaña seleccionada */
 .tab:selected .tab-label {
-    -fx-text-fill: #668bf5; /* Letras azules */
+    -fx-text-fill: white;
+	-fx-background-ratius: 5px 5px 0 0;
 }
 
 /*DISEÑO TABLA DE GASTOS*/
 /* Cabecera*/
 .table-view .column-header {
-    -fx-background-color: #b7c9fa; 
+    -fx-background-color: #5c8ae6; 
     -fx-size: 35px;
+	-fx-font-weight: normal;
     -fx-border-color: white;
     -fx-border-width: 0 1 0 0; /* Líneas blancas entre columnas */
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
-    -fx-font-weight: bold;
     -fx-alignment: CENTER_LEFT;
 }
 
@@ -150,7 +151,7 @@
 /* Cuando seleccionas una fila */
 .table-view:focused .table-row-cell:filled:selected, 
 .table-view .table-row-cell:filled:selected {
-    -fx-background-color: #8ca8f8; 
+    -fx-background-color: #4b70cc; 
     -fx-text-fill: white;
 }
 
@@ -166,7 +167,34 @@
 
 /* Cuando click */
 .text-field:focused, .date-picker:focused {
-    -fx-border-color: #668bf5; /* Tu azul oscuro */
+    -fx-border-color: #3a5cb0; /* Tu azul oscuro */
     -fx-background-color: white;
     -fx-effect: dropshadow(three-pass-box, rgba(102, 139, 245, 0.3), 5, 0, 0, 0); /* Brillo azul suave */
+}
+
+
+.menu-bar .menu-button {
+    -fx-background-color: transparent;
+    -fx-padding: 8px 15px; /* Ajusta esto para que no se vean aplastados */
+	-fx-background-ratius: 0;
+}
+
+.menu-bar .menu-button .label {
+    -fx-text-fill: #333333; /* Gris oscuro */
+    -fx-font-family: "Segoe UI";
+}
+
+/* Cambio de color del texto al pasar el ratón para contraste */
+.menu-bar .menu-button:hover .label,
+.menu-bar .menu-button:focused .label,
+.menu-bar .menu-button:showing .label {
+    -fx-text-fill: #1e3a8a; /* Azul oscuro */
+}
+
+/* 4. MENÚ DESPLEGADO (Cuando haces clic y baja la lista) */
+.menu-bar .menu-button:showing {
+    -fx-background-color: #cbd5e1; /* Tu azul corporativo */
+}
+.menu-bar .menu-button:showing .label {
+    -fx-text-fill: #333333; 
 }

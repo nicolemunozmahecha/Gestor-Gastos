@@ -12,7 +12,7 @@
       <MenuBar useSystemMenuBar="false" VBox.vgrow="NEVER">
          <menus>
          <!--============= CUENTAS ==================-->
-            <Menu mnemonicParsing="false" text="Cuentas">
+            <Menu fx:id="cuentas" mnemonicParsing="false" text="Cuentas">
                <items>
                   <MenuItem fx:id="menuCrearCuenta" mnemonicParsing="false"  text="Crear Cuenta" />
                   <Menu fx:id="menuEliminarCuenta" mnemonicParsing="false" text="Eliminar Cuenta">
@@ -24,7 +24,7 @@
             </Menu>
             
 			<!--============= GASTOS ==================-->
-            <Menu mnemonicParsing="false" text="Gastos">
+            <Menu fx:id="gastos" mnemonicParsing="false" text="Gastos">
                <items>
                   <MenuItem fx:id="menuFiltrarGastos" mnemonicParsing="false" text="Filtrar Gastos" />
                   <MenuItem fx:id="menuImportarGastos" mnemonicParsing="false" text="Importar Gastos" />
@@ -32,7 +32,7 @@
             </Menu>
             
 			<!--============= CATEGORIAS ==================-->
-            <Menu mnemonicParsing="false" text="Categorias">
+            <Menu fx:id="categorias" mnemonicParsing="false" text="Categorias">
                <items>
                   <MenuItem fx:id="menuCrearCategoria" mnemonicParsing="false"  text="Crear Categoria" />
                   <Menu fx:id="menuEliminarCategoria" mnemonicParsing="false" text="Eliminar Categoria">
@@ -64,7 +64,7 @@
             </Menu>
 
 			<!--============= SALIR ==================-->
-            <Menu mnemonicParsing="false" text="Salir">
+            <Menu fx:id="salir" mnemonicParsing="false" text="Salir">
                <items>
                   <MenuItem fx:id="menuSalir" mnemonicParsing="false"  text="Salir" />
                </items>
