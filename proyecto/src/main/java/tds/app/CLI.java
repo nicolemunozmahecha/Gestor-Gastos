@@ -30,12 +30,11 @@ public class CLI {
         try {
             this.cuentaActual = gestor.getCuentaPorNombre("Principal");
         } catch (ElementoNoEncontradoException e) {
-            CuentaPersonalImpl principal = new CuentaPersonalImpl("Principal", "User1");
-            gestor.crearCuentaPersonal(principal);
+            gestor.crearCuentaPersonal("Principal");
             try {
                 this.cuentaActual = gestor.getCuentaPorNombre("Principal");
             } catch (ElementoNoEncontradoException ex) {
-                this.cuentaActual = principal;
+                this.cuentaActual = new CuentaPersonalImpl("Principal");
             }
         }
     }

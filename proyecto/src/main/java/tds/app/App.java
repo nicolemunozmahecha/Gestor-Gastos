@@ -22,12 +22,14 @@ public class App extends Application {
 	    // Inicio de la aplicación
 	    // Intentar cargar la cuenta Principal existente
 	    CuentaPersonalImpl p = null;
+
 	    try {
 	        p = (CuentaPersonalImpl) configuracion.getGestorGastos().getCuentaPorNombre("Principal");
+
 	    } catch (Exception e) {
 	        // Si no existe, crear una nueva
-	        p = new CuentaPersonalImpl("Principal", "User1");
-	        configuracion.getGestorGastos().crearCuentaPersonal(p);
+	    	p =new CuentaPersonalImpl("Principal"); 
+	    	configuracion.getGestorGastos().crearCuentaPersonal("Principal");
 	    }
 	    
 	    configuracion.getSceneManager().setPrincipal(p);

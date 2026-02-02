@@ -22,9 +22,9 @@ public class CuentaPersonalImpl extends CuentaImpl implements CuentaPersonal {
         this.propietario = propietario;
     }
     
-    public CuentaPersonalImpl(String propietario) {
-        this("Cuenta de " + propietario, propietario);
-    }
+    public CuentaPersonalImpl(String nombre) {
+        super(nombre);
+    }    
     
     @Override
     public void agregarGasto(Gasto gasto) {

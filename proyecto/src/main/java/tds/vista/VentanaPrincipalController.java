@@ -3,6 +3,7 @@ package tds.vista;
 import java.io.IOException;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -41,6 +44,7 @@ import tds.modelo.Cuenta;
 import tds.modelo.CuentaCompartida;
 import tds.modelo.CuentaPersonal;
 import tds.modelo.Gasto;
+import tds.modelo.impl.CuentaPersonalImpl;
 
 public class VentanaPrincipalController {
 
@@ -271,9 +275,9 @@ public class VentanaPrincipalController {
 
     // ========== HANDLERS ==========
     @FXML
-    public void crearCuenta() {
+    public void crearCuentaCompartidaa() {
         try {
-            Configuracion.getInstancia().getSceneManager().showCrearCuenta();
+            Configuracion.getInstancia().getSceneManager().showCrearCuentaCompartida();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -408,13 +412,15 @@ public class VentanaPrincipalController {
 	            	throw new RuntimeException(e); 
 	            }
 	        }, "cuenta",                                        // Nombre para alertas
-	        cuentaAEliminar -> {                                 
-	            if (cuentaAEliminar instanceof CuentaCompartida) {
-	                eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
-	            }	            
+	        cuentaAEliminar -> {  
+	        	 if (cuentaAEliminar instanceof CuentaCompartida) {
+	        		 eliminarPestañaCuentaCompartida((CuentaCompartida) cuentaAEliminar);
+	        	 }
 	        }
 	    );
+	    
 	}
+   
        
     private void eliminarPestañaCuentaCompartida(CuentaCompartida cuenta) {
         if (tabPane == null) {
@@ -422,17 +428,10 @@ public class VentanaPrincipalController {
         }
         
         // Buscar y eliminar la pestaña que corresponde a esta cuenta
-        boolean eliminado = tabPane.getTabs().removeIf(tab -> {
+        tabPane.getTabs().removeIf(tab -> {
         	return cuenta.getNombre().equals(tab.getText()) ||
                    (tab.getUserData() != null && tab.getUserData().equals(cuenta));
         });
-        
-        if (eliminado) {            
-            // Seleccionar la pestaña "Principal" después de eliminar
-            if (!tabPane.getTabs().isEmpty()) {
-                tabPane.getSelectionModel().select(0);
-            }
-        }
     }
     
     @FXML 
@@ -549,22 +548,59 @@ public class VentanaPrincipalController {
     
     @FXML
     private void cargarMenuEliminarGasto() {
-    	List<Gasto> todosLosGastos = gestor.getGastosPorCuenta(principal);
-        configurarMenuBorrado(
-            btnEliminarGasto.getItems(),
-            todosLosGastos,
-            g -> String.format("%s - %.2f€ - %s", g.getNombre(), g.getCantidad(), g.getFecha()),
-            g -> {
-                try { 
-                	return gestor.eliminarGastoDeCuenta(principal, g); 
-                } 
-                catch (Exception e) { 
-                	throw new RuntimeException(e); 
-                }
-            },
-            "gasto",
-            gastoBorrado -> cargarGastos() 
-        );
+        btnEliminarGasto.getItems().clear();
+
+        List<Gasto> gastos = gestor.getGastosPorCuenta(principal);
+
+        for (Gasto g : gastos) {
+            String texto = String.format("%s - %.2f€ - %s - %s (%s)",
+                    g.getNombre(), g.getCantidad(), g.getCategoria().getNombre(),
+                    g.getFecha(), g.getPagador() != null ? g.getPagador().getNombre() : "-");
+            MenuItem item = new MenuItem(texto);
+            item.setUserData(g);
+            item.getStyleClass().add("boton-peligro2");
+
+            item.setOnAction(ev -> {
+                Gasto gastoAEliminar = (Gasto) item.getUserData();
+                Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar el gasto " + gastoAEliminar.getNombre() + " ?");
+                a.showAndWait().ifPresent(r -> {
+                	if (r == ButtonType.OK) {
+                		 try {
+                             boolean ok = gestor.eliminarGastoDeCuenta(principal, gastoAEliminar);
+                             
+                             if (ok) {
+                                 cargarGastos();
+                                 mostrarExito("Gasto eliminado correctamente.");
+                             } 
+                         } catch (ErrorPersistenciaException e) {
+                             mostrarError("Error al eliminar gasto", e.getMessage());
+                         }
+                	}
+                });
+            });
+            btnEliminarGasto.getItems().add(item);
+        }
+        // SI QUEREMOS BORRAR TODOS LOS GASTOS DE LA CUENTA PRINCIPAL
+	    MenuItem eliminar = new MenuItem("Eliminar todos los gastos");
+	    eliminar.getStyleClass().add("boton-peligro2");
+	    eliminar.setOnAction(e ->{
+		    		List<Gasto> copia = principal.getGastos();
+		    		Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar todos los gastos?");
+	                a.showAndWait().ifPresent(r -> {
+	                	try {
+	                        for (Gasto g : copia) {
+	                            gestor.eliminarGastoDeCuenta(principal, g);
+	                        }
+
+	                        cargarGastos();
+	                        mostrarExito("Todos los gastos han sido eliminados correctamente.");
+
+	                    } catch (ErrorPersistenciaException p) {
+	                        mostrarError("Error al eliminar los gastos", p.getMessage());
+	                    }
+	                });
+	    });
+	    btnEliminarGasto.getItems().add(eliminar);
     }
 
     @FXML
@@ -607,6 +643,14 @@ public class VentanaPrincipalController {
         importarGasto();
     }
 
+    @FXML
+    public void verCalendario() {
+    	try {
+            Configuracion.getInstancia().getSceneManager().showCalendario();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
   
     @FXML
     public void salirAplicacion() {

@@ -86,11 +86,12 @@ public class SceneManager {
         stage.show();
     }
     
-    public void showCrearCuenta() throws IOException {
-        cambiarEscena("crearCuenta");
-        stage.setTitle("Creando cuenta");
+    public void showCrearCuentaCompartida() throws IOException {
+        cambiarEscena("crearCuentaCompartida");
+        stage.setTitle("Creando cuenta compartida");
         stage.show();
     }
+    
     
     public void showTotalCuenta() throws IOException {
         cambiarEscena("totalCuenta");
@@ -101,6 +102,12 @@ public class SceneManager {
     public void showFiltrarGastos() throws IOException {
         cambiarEscena("filtrarGastos");
         stage.setTitle("Filtrando gastos");
+        stage.show();
+    }
+    
+    public void showCalendario() throws IOException {
+        cambiarEscena("calendario");
+        stage.setTitle("Calendario Gastos");
         stage.show();
     }
     

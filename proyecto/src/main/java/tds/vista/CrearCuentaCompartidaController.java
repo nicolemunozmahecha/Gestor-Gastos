@@ -14,7 +14,7 @@ import tds.adapters.repository.exceptions.ErrorPersistenciaException;
 import tds.controlador.GestorGastos;
 import tds.modelo.CuentaCompartida;
 
-public class CrearCuentaController {
+public class CrearCuentaCompartidaController {
 
     @FXML private TextField campoNombreCuenta;
     @FXML private TextField propietario1;

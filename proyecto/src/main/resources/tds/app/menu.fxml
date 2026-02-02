@@ -28,6 +28,7 @@
                <items>
                   <MenuItem fx:id="menuFiltrarGastos" mnemonicParsing="false" text="Filtrar Gastos" />
                   <MenuItem fx:id="menuImportarGastos" mnemonicParsing="false" text="Importar Gastos" />
+				  <MenuItem fx:id="menuCalendario" mnemonicParsing="false" text="Calendario Gastos" />
                </items>
             </Menu>
             
@@ -38,7 +39,7 @@
                   <Menu fx:id="menuEliminarCategoria" mnemonicParsing="false" text="Eliminar Categoria">
                   <items>
 				    	<MenuItem text="Cargando..." />
-				  	</items>
+				  </items>
                   </Menu>
                </items>
             </Menu>

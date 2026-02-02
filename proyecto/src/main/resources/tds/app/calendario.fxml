@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane fx:id="contenedorCalendario" xmlns:fx="http://javafx.com/fxml" fx:controller="tds.vista.CalendarioController">
+	<top>
+        <ToolBar>
+            <items>
+                <Button fx:id="atras" text="Volver a ventana principal" onAction="#atras"/>
+            </items>
+        </ToolBar>
+    </top>
+
+    <center>
+        </center>
+</BorderPane>

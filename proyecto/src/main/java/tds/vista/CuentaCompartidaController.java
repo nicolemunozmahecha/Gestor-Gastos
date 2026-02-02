@@ -216,6 +216,27 @@ public class CuentaCompartidaController {
             });
             btnEliminarGasto.getItems().add(item);
         }
+        
+        // SI QUEREMOS BORRAR TODOS LOS GASTOS DE LA CUENTA PRINCIPAL
+	    MenuItem eliminar = new MenuItem("Eliminar todos los gastos");
+	    eliminar.getStyleClass().add("boton-peligro2");
+	    eliminar.setOnAction(e ->{
+		    		Alert a = new Alert(AlertType.CONFIRMATION, "¿Está seguro que quiere eliminar todos los gastos?");
+	                a.showAndWait().ifPresent(r -> {
+	                	try {
+	                        for (Gasto g : gastos) {
+	                            gestor.eliminarGastoDeCuenta(cuenta, g);
+	                        }
+
+	                        cargarGastos();
+	                        mostrarExito("Todos los gastos han sido eliminados correctamente.");
+
+	                    } catch (ErrorPersistenciaException p) {
+	                        mostrarError("Error al eliminar los gastos", p.getMessage());
+	                    }
+	                });
+	    });
+	    btnEliminarGasto.getItems().add(eliminar);
     }
     
     @FXML

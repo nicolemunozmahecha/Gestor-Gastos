@@ -1,0 +1,30 @@
+Date,Account,Category,Subcategory,Note,Payer,Amount,Currency
+3/2/2026 10:11,Personal,con tarjeta,Comida,Desayuno en cafetería,Me,4.50,EUR
+3/2/2026 10:11,Compartida 1,efectivo,Transporte Público,Billetes de metro,Anthony,6.00,EUR
+3/1/2026 19:50,Compartida 2,on line,Ocio,Alquiler de película en streaming,Me,3.99,EUR
+3/1/2026 18:56,Personal,con tarjeta,Gasolina,Repostaje en gasolinera,Me,45.00,EUR
+3/1/2026 18:22,Compartida 1,con tarjeta,Comida,Pizza para cenar,Stephani,18.50,EUR
+3/1/2026 18:22,Compartida 2,efectivo,Ocio,Partida de billar en bar,Bob,12.00,EUR
+3/1/2026 18:21,Personal,efectivo,Transporte Público,Billete de autobús urbano,Me,1.50,EUR
+2/28/2026 11:56,Compartida 1,on line,Regalos,Compra de taza personalizada,Mark,9.90,EUR
+2/28/2026 11:45,Compartida 2,con tarjeta,Comida,Compra en supermercado,Greta,32.40,EUR
+2/27/2026 15:29,Personal,con paypal,Ocio,Juego para móvil,Me,2.99,EUR
+2/26/2026 20:16,Compartida 2,con tarjeta,Comida,Cena de hamburguesas,Paco,21.00,EUR
+2/26/2026 17:37,Compartida 1,efectivo,Gasolina,Repostaje coche compartido,Anthony,30.00,EUR
+2/26/2026 17:37,Personal,con tarjeta,Reparaciones,Cambio de bombilla del coche,Me,7.50,EUR
+2/26/2026 16:01,Compartida 2,on line,Transporte Público,Recarga tarjeta de transporte,Betty,20.00,EUR
+2/26/2026 14:07,Personal,efectivo,Comida,Bocadillo y refresco,Me,5.25,EUR
+2/26/2026 1:39,Compartida 1,con tarjeta,Ocio,Cerveza en pub,Mark,6.00,EUR
+2/25/2026 12:08,Personal,on line,Gastos Médicos,Compra de vitaminas,Me,12.75,EUR
+2/24/2026 22:32,Compartida 2,con paypal,Ocio,Compra de música digital,Bob,4.99,EUR
+2/24/2026 22:21,Compartida 1,con tarjeta,Comida,Cena en restaurante,Stephani,28.00,EUR
+2/24/2026 19:15,Personal,efectivo,Transporte Público,Taxi nocturno,Me,11.00,EUR
+2/23/2026 17:35,Compartida 2,con tarjeta,Regalos,Compra de tarjeta regalo,Greta,15.00,EUR
+2/23/2026 16:06,Compartida 1,on line,Comida,Pedido de sushi a domicilio,Anthony,24.60,EUR
+2/23/2026 12:38,Personal,con tarjeta,Gasolina,Repostaje rápido,Me,20.00,EUR
+2/22/2026 6:33,Compartida 2,efectivo,Transporte Público,Billete de tren,Bob,14.50,EUR
+2/21/2026 22:15,Personal,con paypal,Ocio,Alquiler de videojuego,Me,5.99,EUR
+2/21/2026 16:06,Compartida 1,con tarjeta,Reparaciones,Compra de herramientas básicas,Mark,19.80,EUR
+2/21/2026 15:40,Compartida 2,on line,Gastos Médicos,Compra de termómetro digital,Betty,8.40,EUR
+2/21/2026 15:38,Personal,efectivo,Comida,Café y bollería,Me,3.20,EUR
+2/20/2026 15:24,Compartida 1,con tarjeta,Ocio,Entradas para el cine,Stephani,16.00,EUR

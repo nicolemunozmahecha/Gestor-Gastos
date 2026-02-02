@@ -15,6 +15,7 @@ public class MenuController {
 	@FXML private Menu gastos;
     @FXML private MenuItem menuFiltrarGastos;
     @FXML private MenuItem menuImportarGastos;
+    @FXML private MenuItem menuCalendario;
 	@FXML private Menu categorias;
     @FXML private MenuItem menuCrearCategoria;
     @FXML private Menu menuEliminarCategoria;
@@ -43,20 +44,8 @@ public class MenuController {
         this.controladorPrincipal = controlador;
         configurarEventos();
         actualizarIndicadorNotificaciones();
-        //configurarColorBoton();
     }
     
-    /*
-    private void configurarColorBoton() {
-        cuentas.getStyleClass().add("barra-principal");
-        gastos.getStyleClass().add("barra-principal");
-        categorias.getStyleClass().add("barra-principal");
-        menuAlertas.getStyleClass().add("barra-principal");
-        menuNotificaciones.getStyleClass().add("barra-principal");
-        salir.getStyleClass().add("barra-principal");
-    }*/
-
-
     public void actualizarIndicadorNotificaciones() {
         if (menuNotificaciones == null) return;
 
@@ -92,12 +81,12 @@ public class MenuController {
             menuSalir.setOnAction(e -> controladorPrincipal.salirAplicacion());
         }
         
-        if (menuCrearCuenta != null) {
-            menuCrearCuenta.setOnAction(e -> controladorPrincipal.crearCuenta());
-        }
-        
         if (menuEliminarCuenta != null) {
         	menuEliminarCuenta.setOnShowing(e -> controladorPrincipal.eliminarCuenta());
+        }
+        
+        if(menuCrearCuenta != null) {
+        	menuCrearCuenta.setOnAction(e -> controladorPrincipal.crearCuentaCompartidaa());
         }
         
         if (menuTotalCuenta != null) {
@@ -110,6 +99,10 @@ public class MenuController {
 
         if (menuImportarGastos != null) {
             menuImportarGastos.setOnAction(e -> controladorPrincipal.importarGastosDesdeMenu());
+        }
+        
+        if (menuCalendario != null) {
+            menuCalendario.setOnAction(e -> controladorPrincipal.verCalendario());
         }
         
         if (menuCrearAlerta != null) {

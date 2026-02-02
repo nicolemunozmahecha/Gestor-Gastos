@@ -130,6 +130,7 @@ public class CrearGastoController {
                 controller.añadirGastoTabla(g);
                 
                 // Recargar la cuenta desde el repositorio
+                // Recargar la cuenta desde el repositorio
                 try {
                     Cuenta cuentaActualizada = gestor.getCuentaPorNombre(controller.getCuenta().getNombre());
                     controller.setCuenta(cuentaActualizada);

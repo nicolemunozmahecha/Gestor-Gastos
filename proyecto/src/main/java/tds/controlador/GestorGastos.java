@@ -164,9 +164,9 @@ public class GestorGastos {
     }
 
     
-    public CuentaPersonal crearCuentaPersonal(CuentaPersonalImpl cuenta) 
+    public CuentaPersonal crearCuentaPersonal(String nombre) 
     		throws ElementoExistenteException, ErrorPersistenciaException{
-        
+        CuentaPersonalImpl cuenta = new CuentaPersonalImpl(nombre);
         repositorioCuentas.addCuenta(cuenta);
         cuentas.add(cuenta);
         return cuenta;
@@ -641,7 +641,7 @@ public class GestorGastos {
 
         Cuenta principal = buscarCuenta("Principal");
         if (principal == null) {
-            crearCuentaPersonal(new CuentaPersonalImpl("Principal"));
+            crearCuentaPersonal("Principal");
             principal = buscarCuenta("Principal");
         }
 
