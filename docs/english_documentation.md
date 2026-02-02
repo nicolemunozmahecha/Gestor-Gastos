@@ -41,8 +41,6 @@ We start at the **main window**. Upon opening the application, the "Principal" (
 ![Main Window](imagenes/Ventana_Principal.png)
 
 In addition to seeing the list of expenses for the Principal account in a list (or table) format, we can also view it as a **bar chart or pie chart**. To do this, click on the "Gráfica de barras" (Bar Chart) or "Gráfica circular" (Pie Chart) tabs, respectively.
-![Bar Chart](imagenes/Grafica_Barras.png)
-![Pie Chart](imagenes/Grafica_Circular.png)
 
 To **create a new expense in the Principal account**, click the "Crear Gasto" (Create Expense) button located to the right of the expense list. Then, click "Gasto Nuevo" (New Expense). A tab will open where you must enter the expense details and click "Aceptar" (Accept).
 ![Create Expense](imagenes/Crear_Gasto.png)
