@@ -52,6 +52,6 @@ mvn javafx:run
 (For CLI)
 mvn exec:java -Dexec.mainClass="tds.app.App" -Dexec.args="-cli"
 ```
-- [Full Project Documentation](docs/documentation.md)
+- [Full Project Documentation](docs/english_documentation.md)
 
 
