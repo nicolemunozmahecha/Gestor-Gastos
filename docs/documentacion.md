@@ -42,8 +42,6 @@ Comenzamos en la **ventana principal**. Al abrir la aplicación se crea automát
 ![Ventana Principal](imagenes/Ventana_Principal.png)
 
 Además de ver el listado de gastos de la cuenta Principal en formato de listado (o tabla) también podemos verlo como **gráfica de barras o como gráfica circular**. Para ello, pulsamos las pestañas Gráfica de barras o Gráfica circular respectivamente.
-![Grafica Barras](imagenes/Grafica_Barras.png)
-![Grafica Circular](imagenes/Grafica_Circular.png)
 
 Para **crear un gasto nuevo en la cuenta Principal**, debemos pulsar el botón "Crear Gasto" que queda a la derecha del listado de gastos. A continuación, se debe pulsar "Gasto Nuevo". Se nos abrirá una pestaña en la que deberemos introducir los datos del gasto y pulsar "Aceptar".
 ![Crear Gasto](imagenes/Crear_Gasto.png)
